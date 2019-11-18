@@ -1,0 +1,18 @@
+{
+  "type": "container",
+  "layout": {
+    
+  },
+  "children": [
+    {
+      "type": "component",
+      "name": "h2",
+      "props": {
+        "children": "标题"
+      }
+    },
+    {
+      "type": "container"
+    }
+  ]
+}
