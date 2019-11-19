@@ -1,18 +1,38 @@
 {
-  "type": "container",
-  "layout": {
-    
+  "type": "div",
+  "key": "form",
+  "state": {
+    "name": "xxx"
   },
   "children": [
     {
-      "type": "component",
-      "name": "h2",
+      "type": "Input",
+      "key": "name",
       "props": {
-        "children": "标题"
+        "placeholder": "输入标题标题"
       }
     },
     {
-      "type": "container"
+      "type": "div",
+      "key": "form",
+      "state": {
+        "name": "xxx"
+      },
+      "children": [
+        {
+          "type": "Input",
+          "key": "name",
+          "props": {
+            "placeholder": "输入标题标题"
+          }
+        },
+        {
+          "type": "Button",
+          "props": {
+            "children": "按钮"
+          }
+        }
+      ]
     }
   ]
 }
