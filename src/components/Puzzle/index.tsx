@@ -1,17 +1,15 @@
 import React from 'react';
-import Dnd from './Dnd';
 import Dragger from './Dragger';
 
 const antd = require('antd');
 
-// 递归去展示
 const Puzzle = (props: any): any => {
   const { data, onChange, path = [] } = props;
 
   // data 为字符串
   if (typeof(data) === 'string') {
     return (
-      <Dragger path={path} onChange={onChange}>
+      <Dragger type="element" path={path} onChange={onChange}>
         {data}
       </Dragger>
     );
@@ -22,7 +20,7 @@ const Puzzle = (props: any): any => {
   if (!data.children) {
     // 不包含子元素
     return (
-      <Dragger path={path} onChange={onChange}>
+      <Dragger type="element" path={path} onChange={onChange}>
         <C {...data.props} />
       </Dragger>
     );
@@ -30,8 +28,8 @@ const Puzzle = (props: any): any => {
 
   // 包含子元素
   return (
-    <C {...data.props}>
-      <Dnd path={path} onChange={onChange} >
+    <Dragger type="container" path={path} onChange={onChange}>
+      <C {...data.props}>
         {data.children.map((d: any, i: number) => (
           <Puzzle
             key={i}
@@ -40,8 +38,8 @@ const Puzzle = (props: any): any => {
             onChange={onChange}
           />
         ))}
-      </Dnd>
-    </C>
+      </C>
+    </Dragger>
   );
 }
 

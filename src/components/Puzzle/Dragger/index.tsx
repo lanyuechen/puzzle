@@ -3,8 +3,8 @@ import { useDrag, useDrop } from 'react-dnd';
 
 import style from './style.less';
 
-const Block: React.FC<any> = (props) => {
-  const { children, onChange, path } = props;
+const Dragger: React.FC<any> = (props) => {
+  const { children, onChange, path, type } = props;
 
   const ref = useRef(null);
 
@@ -45,12 +45,16 @@ const Block: React.FC<any> = (props) => {
     },
   });
 
-  drag(drop(ref));
+  if (type === 'container') {
+    drag(drop(ref));
+  } else if (type === 'element') {
+    drag(ref);
+  }
 
   return (
     <div 
       ref={ref}
-      className={style.container}
+      className={style[type]}
       style={{
         background: isOver ? 'rgba(0, 0, 0, 0.1)' : undefined,
         opacity: isDragging ? 0.2 : 1,
@@ -62,4 +66,4 @@ const Block: React.FC<any> = (props) => {
   );
 }
 
-export default Block;
+export default Dragger;
