@@ -1,27 +1,17 @@
 {
   "type": "div",
-  "key": "form",
-  "state": {
-    "name": "xxx"
-  },
   "children": [
     {
       "type": "Input",
-      "key": "name",
       "props": {
         "placeholder": "输入标题标题"
       }
     },
     {
       "type": "div",
-      "key": "form",
-      "state": {
-        "name": "xxx"
-      },
       "children": [
         {
           "type": "Input",
-          "key": "name",
           "props": {
             "placeholder": "输入标题标题"
           }
@@ -32,6 +22,18 @@
             "children": "按钮"
           }
         }
+      ]
+    },
+    {
+      "type": "div",
+      "children": [
+        "22222"
+      ]
+    },
+    {
+      "type": "div",
+      "children": [
+        "33333"
       ]
     }
   ]
