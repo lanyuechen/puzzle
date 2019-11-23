@@ -7,8 +7,6 @@ import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
 import { Layout } from 'antd';
 
-import demo from './demo.json';
-
 const getSpec = (path: any, spec: any) => {
   if (typeof(path) === 'string') {
     path = path.split('.');
@@ -19,11 +17,14 @@ const getSpec = (path: any, spec: any) => {
 
 const Editor: React.FC<any> = (props) => {
 
-  const [ data, setData ] = useState(demo);
+  const defaultValue = JSON.parse(localStorage.__data || '{"type": "div", "children": []}');
+  const [ data, setData ] = useState(defaultValue);
 
-  const handleChange = (key: string, spec: any) => {
-    console.log('>>>key', key, spec)
-    setData(update(data, getSpec(key, spec)));
+  const handleChange = (path: any, spec: any) => {
+    console.log('>>> path', path, spec);
+    const newData = update(data, getSpec(path, spec));
+    setData(newData);
+    localStorage.__data = JSON.stringify(newData);
   }
 
   return (
@@ -32,7 +33,7 @@ const Editor: React.FC<any> = (props) => {
         <Layout.Sider theme="light">
           <Elements />
         </Layout.Sider>
-        <Layout.Content>
+        <Layout.Content style={{padding: 15}}>
           <Puzzle data={data} onChange={handleChange} />
         </Layout.Content>
       </Layout>
