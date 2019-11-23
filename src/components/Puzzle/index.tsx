@@ -9,7 +9,7 @@ const Puzzle = (props: any): any => {
   // data 为字符串
   if (typeof(data) === 'string') {
     return (
-      <Dragger type="element" path={path} onChange={onChange}>
+      <Dragger type="element" path={path} onChange={onChange} data={data}>
         {data}
       </Dragger>
     );
@@ -20,7 +20,7 @@ const Puzzle = (props: any): any => {
   if (!data.children) {
     // 不包含子元素
     return (
-      <Dragger type="element" path={path} onChange={onChange}>
+      <Dragger type="element" path={path} onChange={onChange} data={data}>
         <C {...data.props} />
       </Dragger>
     );
@@ -28,7 +28,7 @@ const Puzzle = (props: any): any => {
 
   // 包含子元素
   return (
-    <Dragger type="container" path={path} onChange={onChange}>
+    <Dragger type="container" path={path} onChange={onChange} data={data}>
       <C {...data.props}>
         {data.children.map((d: any, i: number) => (
           <Puzzle

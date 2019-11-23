@@ -4,19 +4,16 @@ import { useDrag, useDrop } from 'react-dnd';
 import style from './style.less';
 
 const Dragger: React.FC<any> = (props) => {
-  const { children, onChange, path, type } = props;
+  const { children, onChange, path, type, data } = props;
 
   const ref = useRef(null);
 
   const [ { isDragging }, drag ] = useDrag({
-    item: { type: 'PUZZLE' },
+    item: { type: 'PUZZLE', data },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
-    end: (item: any, monitor: any) => {
-      if (monitor.didDrop()) {
-        return;
-      }
+    end: (item: any, monitor: any) => { // 每次drop都删除旧的元素，以此实现移动元素
       const idx = path[path.length - 1];
       if (typeof(idx) !== 'number') {
         return;
@@ -36,12 +33,11 @@ const Dragger: React.FC<any> = (props) => {
       if (monitor.didDrop()) {
         return;
       }
-      onChange(path.concat('children'), {
-        $push: [{
-          type: 'div',
-          children: [],
-        }],
-      });
+      if (item.data) {
+        onChange(path.concat('children'), {
+          $push: [item.data],
+        });
+      }
     },
   });
 

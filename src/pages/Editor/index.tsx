@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'dva';
 import Puzzle from '@/components/Puzzle';
-import Block from './Block';
+import Elements from './Elements';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
+import { Layout } from 'antd';
 
 import demo from './demo.json';
 
@@ -26,13 +27,16 @@ const Editor: React.FC<any> = (props) => {
   }
 
   return (
-    <div>
-      Editor
-      <DndProvider backend={HTML5Backend}>
-        <Puzzle data={data} onChange={handleChange} />
-        <Block />
-      </DndProvider>
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <Layout>
+        <Layout.Sider theme="light">
+          <Elements />
+        </Layout.Sider>
+        <Layout.Content>
+          <Puzzle data={data} onChange={handleChange} />
+        </Layout.Content>
+      </Layout>
+    </DndProvider>
   );
 }
 

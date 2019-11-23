@@ -1,0 +1,8 @@
+[
+  {
+    "type": "Button",
+    "props": {
+      "children": "按钮"
+    }
+  }
+]
