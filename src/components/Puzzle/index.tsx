@@ -4,12 +4,19 @@ import Dragger from './Dragger';
 const antd = require('antd');
 
 const Puzzle = (props: any): any => {
-  const { data, onChange, path = [] } = props;
+  const { data, onChange, onClick, path = [], currentPath = [] } = props;
 
   // data 为字符串
   if (typeof(data) === 'string') {
     return (
-      <Dragger type="element" path={path} onChange={onChange} data={data}>
+      <Dragger
+        type="element"
+        data={data}
+        path={path}
+        currentPath={currentPath}
+        onChange={onChange}
+        onClick={onClick}
+      >
         {data}
       </Dragger>
     );
@@ -20,7 +27,14 @@ const Puzzle = (props: any): any => {
   if (!data.children) {
     // 不包含子元素
     return (
-      <Dragger type="element" path={path} onChange={onChange} data={data}>
+      <Dragger
+        type="element"
+        data={data}
+        path={path}
+        currentPath={currentPath}
+        onChange={onChange}
+        onClick={onClick}
+      >
         <C {...data.props} />
       </Dragger>
     );
@@ -28,14 +42,23 @@ const Puzzle = (props: any): any => {
 
   // 包含子元素
   return (
-    <Dragger type="container" path={path} onChange={onChange} data={data}>
+    <Dragger
+      type="container"
+      data={data}
+      path={path}
+      currentPath={currentPath}
+      onChange={onChange}
+      onClick={onClick}
+    >
       <C {...data.props}>
         {data.children.map((d: any, i: number) => (
           <Puzzle
             key={i}
             data={d}
             path={path.concat('children', i)}
+            currentPath={currentPath}
             onChange={onChange}
+            onClick={onClick}
           />
         ))}
       </C>

@@ -4,7 +4,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import style from './style.less';
 
 const Dragger: React.FC<any> = (props) => {
-  const { children, onChange, path, type, data } = props;
+  const { children, onChange, onClick, path, currentPath, type, data } = props;
 
   const ref = useRef(null);
 
@@ -47,14 +47,21 @@ const Dragger: React.FC<any> = (props) => {
     drag(ref);
   }
 
+  const handleClick = (e: any) => {
+    e.stopPropagation();
+    onClick(path, data);
+  };
+
   return (
     <div 
       ref={ref}
       className={style[type]}
+      onClick={handleClick}
       style={{
         background: isOver ? 'rgba(0, 0, 0, 0.1)' : undefined,
         opacity: isDragging ? 0.2 : 1,
         pointerEvents: isDragging ? 'none' : 'all',
+        borderColor: currentPath.join() === path.join() ? 'orange' : undefined,
       }}
     >
       {children}
