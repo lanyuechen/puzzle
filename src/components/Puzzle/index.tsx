@@ -4,7 +4,7 @@ import Dragger from './Dragger';
 const antd = require('antd');
 
 const Puzzle = (props: any): any => {
-  const { data, onChange, onClick, path = [], currentPath = [] } = props;
+  const { data, onChange, onClick, path = [], currentPath } = props;
 
   // data 为字符串
   if (typeof(data) === 'string') {

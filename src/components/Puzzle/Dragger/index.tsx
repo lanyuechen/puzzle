@@ -61,7 +61,7 @@ const Dragger: React.FC<any> = (props) => {
         background: isOver ? 'rgba(0, 0, 0, 0.1)' : undefined,
         opacity: isDragging ? 0.2 : 1,
         pointerEvents: isDragging ? 'none' : 'all',
-        borderColor: currentPath.join() === path.join() ? 'orange' : undefined,
+        borderColor: currentPath && currentPath.join() === path.join() ? 'orange' : undefined,
       }}
     >
       {children}
