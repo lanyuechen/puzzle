@@ -5,7 +5,8 @@ import Elements from './Elements';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
-import { Layout, Drawer, Tag } from 'antd';
+import { Layout, Drawer } from 'antd';
+import Props from './Props';
 
 const getSpec = (path: any, spec: any) => {
   if (typeof(path) === 'string') {
@@ -50,17 +51,15 @@ const Editor: React.FC<any> = (props) => {
       </Layout>
       <Drawer
         title="属性"
-        placement="right"
+        placement="bottom"
         visible={!!selected}
         onClose={() => setSelected(undefined)}
       >
         {selected && (
-          <Tag>{selected.path.join('/')}</Tag>
-        )}
-        {selected && (
-          <pre>
-            {JSON.stringify(selected.data, undefined, 2)}
-          </pre>
+          <Props
+            path={selected.path}
+            data={selected.data}
+          />
         )}
       </Drawer>
     </DndProvider>
