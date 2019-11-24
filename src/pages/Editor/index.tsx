@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { connect } from 'dva';
 import Puzzle from '@/components/Puzzle';
-import Elements from './Elements';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
-import { Layout, Drawer } from 'antd';
+import { Layout } from 'antd';
+import _ from 'lodash';
+import Elements from './Elements';
 import Props from './Props';
 
 const getSpec = (path: any, spec: any) => {
@@ -34,6 +35,14 @@ const Editor: React.FC<any> = (props) => {
     setSelected({ path, data });
   };
 
+  const handleSelect = (path: any) => {
+    console.log('>>> handleSelect', path);
+    setSelected({
+      path,
+      data: path.length ? _.get(data, path) : data,
+    });
+  };
+
   return (
     <DndProvider backend={HTML5Backend}>
       <Layout>
@@ -49,19 +58,15 @@ const Editor: React.FC<any> = (props) => {
           />
         </Layout.Content>
       </Layout>
-      <Drawer
-        title="属性"
-        placement="bottom"
-        visible={!!selected}
-        onClose={() => setSelected(undefined)}
-      >
         {selected && (
           <Props
+            visible={!!selected}
+            onClose={() => setSelected(undefined)}
+            onSelect={handleSelect}
             path={selected.path}
             data={selected.data}
           />
         )}
-      </Drawer>
     </DndProvider>
   );
 }
