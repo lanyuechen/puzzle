@@ -18,6 +18,39 @@ export default [
     }
   },
   {
+    type: 'Rate',
+  },
+  {
+    type: 'Checkbox',
+  },
+  {
+    type: 'Radio',
+  },
+  {
+    type: 'Switch',
+  },
+  {
+    type: 'Slider',
+  },
+  {
+    type: 'Avatar',
+  },
+  {
+    type: 'Badge',
+  },
+  {
+    type: 'Empty',
+  },
+  {
+    type: 'Tag',
+  },
+  {
+    type: 'Alert',
+  },
+  {
+    type: 'Divider',
+  },
+  {
     type: 'span',
     props: {
       children: '文本'

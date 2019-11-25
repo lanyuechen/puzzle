@@ -1,6 +1,7 @@
 import React from 'react';
 import Dragger from './Dragger';
 
+import 'antd/dist/antd.css';
 const antd = require('antd');
 
 const Puzzle = (props: any): any => {
