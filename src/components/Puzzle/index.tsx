@@ -6,17 +6,12 @@ const antd = require('antd');
 const Puzzle = (props: any): any => {
   const { data, onChange, onClick, path = [], currentPath } = props;
 
+  const draggerProps = { data, path, currentPath, onChange, onClick };
+
   // data 为字符串
   if (typeof(data) === 'string') {
     return (
-      <Dragger
-        type="element"
-        data={data}
-        path={path}
-        currentPath={currentPath}
-        onChange={onChange}
-        onClick={onClick}
-      >
+      <Dragger type="element" {...draggerProps}>
         {data}
       </Dragger>
     );
@@ -24,17 +19,10 @@ const Puzzle = (props: any): any => {
 
   const C = antd[data.type] || data.type;
 
+  // 不包含子元素
   if (!data.children) {
-    // 不包含子元素
     return (
-      <Dragger
-        type="element"
-        data={data}
-        path={path}
-        currentPath={currentPath}
-        onChange={onChange}
-        onClick={onClick}
-      >
+      <Dragger type="element" {...draggerProps}>
         <C {...data.props} />
       </Dragger>
     );
@@ -42,14 +30,7 @@ const Puzzle = (props: any): any => {
 
   // 包含子元素
   return (
-    <Dragger
-      type="container"
-      data={data}
-      path={path}
-      currentPath={currentPath}
-      onChange={onChange}
-      onClick={onClick}
-    >
+    <Dragger type="container" {...draggerProps}>
       <C {...data.props}>
         {data.children.map((d: any, i: number) => (
           <Puzzle
