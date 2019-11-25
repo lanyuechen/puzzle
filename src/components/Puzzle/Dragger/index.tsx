@@ -4,7 +4,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import style from './style.less';
 
 const Dragger: React.FC<any> = (props) => {
-  const { children, onChange, onClick, path, currentPath, type, data } = props;
+  const { children, onChange, onClick, path, currentPath, type = 'container', data } = props;
 
   const ref = useRef(null);
 

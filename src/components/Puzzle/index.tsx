@@ -8,6 +8,11 @@ const Puzzle = (props: any): any => {
 
   const draggerProps = { data, path, currentPath, onChange, onClick };
 
+  // data 为null、false、undefined
+  if (!data) {
+    return null;
+  }
+
   // data 为字符串
   if (typeof(data) === 'string') {
     return (
