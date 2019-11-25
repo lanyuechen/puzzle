@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'dva';
-import Puzzle from '@/components/Puzzle';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
 import { Layout } from 'antd';
 import _ from 'lodash';
+import Puzzle from './Puzzle';
 import Elements from './Elements';
 import Props from './Props';
 
@@ -58,15 +58,15 @@ const Editor: React.FC<any> = (props) => {
           />
         </Layout.Content>
       </Layout>
-        {selected && (
-          <Props
-            visible={!!selected}
-            onClose={() => setSelected(undefined)}
-            onSelect={handleSelect}
-            path={selected.path}
-            data={selected.data}
-          />
-        )}
+      {selected && (
+        <Props
+          visible={!!selected}
+          onClose={() => setSelected(undefined)}
+          onSelect={handleSelect}
+          path={selected.path}
+          data={selected.data}
+        />
+      )}
     </DndProvider>
   );
 }
