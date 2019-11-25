@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { Drawer, Breadcrumb, Select, Input } from 'antd';
+import { Row, Col, Drawer, Breadcrumb, Select, Input } from 'antd';
+
+import EditableTable from './EditableTable';
 
 export default function(props: any) {
-  const { path, data, visible, onClose, onSelect } = props;
+  const { path, data, visible, onClose, onSelect, onChange } = props;
 
   const simplePath = path.reduce((p: any, n: any, i: number, ds: any) => (
     i % 2 ? p : p.concat([`${n}${ds[i + 1]}`])
   ), []);
-
-  const { children, ...others } = data;
 
   const Bread = (
     <Breadcrumb>
@@ -25,16 +25,16 @@ export default function(props: any) {
           {d}
         </Breadcrumb.Item>
       ))}
-      {children && (
+      {data.children && (
         <Breadcrumb.Item>
           <Select
             defaultValue="选择子组件"
             size="small"
             onChange={(idx: number) => onSelect([...path, 'children', idx])}
           >
-            {children.map((d: any, i: number) => (
+            {data.children.map((d: any, i: number) => (
               <Select.Option key={i} value={i}>
-                children{i}
+                data.children{i}
               </Select.Option>
             ))}
           </Select>
@@ -50,11 +50,20 @@ export default function(props: any) {
       visible={visible}
       onClose={onClose}
     >
-      <Input placeholder="组件类型" />
-      <Input placeholder="组件名称" />
-      <pre>
-        {JSON.stringify(others, undefined, 2)}
-      </pre>
+      <Row>
+        <Col span={8}>
+          <Input placeholder="组件名称" />
+        </Col>
+        <Col span={8}>
+          <EditableTable
+            data={data.props}
+            onChange={(value: any) => onChange([...path, 'props'], {$merge: value})}
+          />
+        </Col>
+        <Col span={8}>
+          其它
+        </Col>
+      </Row>
     </Drawer>
   )
 }

@@ -1,13 +1,13 @@
 export default [
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/test',
   },
   {
-    path: '/welcome',
-    name: 'welcome',
+    path: '/test',
+    name: 'test',
     icon: 'smile',
-    component: './Welcome',
+    component: './Test',
   },
   {
     path: '/editor',

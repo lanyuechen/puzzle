@@ -63,10 +63,11 @@ const Editor: React.FC<any> = (props) => {
       {selected && (
         <Props
           visible={!!selected}
+          data={selected.data}
+          path={selected.path}
           onClose={() => setSelected(undefined)}
           onSelect={handleSelect}
-          path={selected.path}
-          data={selected.data}
+          onChange={handleChange}
         />
       )}
     </DndProvider>
