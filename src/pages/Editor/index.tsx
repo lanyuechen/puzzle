@@ -6,6 +6,7 @@ import update from 'immutability-helper';
 import { Layout } from 'antd';
 import _ from 'lodash';
 import Puzzle from './Puzzle';
+import View from './View';
 import Elements from './Elements';
 import Props from './Props';
 
@@ -56,6 +57,7 @@ const Editor: React.FC<any> = (props) => {
             onClick={handleClick}
             currentPath={selected && selected.path}
           />
+          <View data={data} />
         </Layout.Content>
       </Layout>
       {selected && (

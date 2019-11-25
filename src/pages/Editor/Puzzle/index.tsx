@@ -28,7 +28,7 @@ const Puzzle = (props: any): any => {
   if (!data.children) {
     return (
       <Dragger type="element" {...draggerProps}>
-        <C {...data.props} />
+        <C {...(data.props || {})} />
       </Dragger>
     );
   }
@@ -36,7 +36,7 @@ const Puzzle = (props: any): any => {
   // 包含子元素
   return (
     <Dragger type="container" {...draggerProps}>
-      <C {...data.props}>
+      <C {...(data.props || {})}>
         {data.children.map((d: any, i: number) => (
           <Puzzle
             key={i}

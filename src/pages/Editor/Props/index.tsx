@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Drawer, Breadcrumb, Select } from 'antd';
+import { Drawer, Breadcrumb, Select, Input } from 'antd';
 
 export default function(props: any) {
   const { path, data, visible, onClose, onSelect } = props;
@@ -8,6 +8,8 @@ export default function(props: any) {
   const simplePath = path.reduce((p: any, n: any, i: number, ds: any) => (
     i % 2 ? p : p.concat([`${n}${ds[i + 1]}`])
   ), []);
+
+  const { children, ...others } = data;
 
   const Bread = (
     <Breadcrumb>
@@ -23,14 +25,14 @@ export default function(props: any) {
           {d}
         </Breadcrumb.Item>
       ))}
-      {data.children && (
+      {children && (
         <Breadcrumb.Item>
           <Select
             defaultValue="选择子组件"
             size="small"
             onChange={(idx: number) => onSelect([...path, 'children', idx])}
           >
-            {data.children.map((d: any, i: number) => (
+            {children.map((d: any, i: number) => (
               <Select.Option key={i} value={i}>
                 children{i}
               </Select.Option>
@@ -48,8 +50,10 @@ export default function(props: any) {
       visible={visible}
       onClose={onClose}
     >
+      <Input placeholder="组件类型" />
+      <Input placeholder="组件名称" />
       <pre>
-        {JSON.stringify(data, undefined, 2)}
+        {JSON.stringify(others, undefined, 2)}
       </pre>
     </Drawer>
   )
