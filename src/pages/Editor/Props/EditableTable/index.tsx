@@ -44,12 +44,19 @@ export default function(props: any): any {
     {
       title: 'key',
       dataIndex: 'key',
-      width: '30%',
+      width: '45%',
+      onCell: (record: any) => ({
+        record,
+        editable: true,
+        dataIndex: 'key',
+        title: 'key',
+        handleSave,
+      }),
     },
     {
       title: 'value',
       dataIndex: 'value',
-      width: '80%',
+      width: '45%',
       onCell: (record: any) => ({
         record,
         editable: true,
@@ -74,7 +81,6 @@ export default function(props: any): any {
 
   return (
     <Table
-      scroll={{ y: 300 }}
       size="small"
       components={components}
       className={style.table}
@@ -82,7 +88,7 @@ export default function(props: any): any {
       columns={columns}
       pagination={false}
       footer={() => (
-        <Button onClick={handleAdd} type="dashed" block>
+        <Button onClick={handleAdd} type="dashed" size="small" block>
           + 添加新属性
         </Button>
       )}

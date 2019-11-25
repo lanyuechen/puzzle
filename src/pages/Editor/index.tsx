@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
-import { Layout } from 'antd';
+import { Layout, Drawer } from 'antd';
 import _ from 'lodash';
 import Puzzle from './Puzzle';
 import View from './View';
@@ -22,7 +22,7 @@ const Editor: React.FC<any> = (props) => {
 
   const defaultValue = JSON.parse(localStorage.__data || '{"type": "div", "children": []}');
   const [ data, setData ] = useState(defaultValue);
-  const [ selected, setSelected] = useState();
+  const [ currentPath, setCurrentPath ] = useState();
 
   const handleChange = (path: any, spec: any) => {
     console.log('>>> handleChange', path, spec);
@@ -33,15 +33,12 @@ const Editor: React.FC<any> = (props) => {
 
   const handleClick = (path: any, data: any) => {
     console.log('>>> handleClick', path, data);
-    setSelected({ path, data });
+    setCurrentPath(path);
   };
 
   const handleSelect = (path: any) => {
     console.log('>>> handleSelect', path);
-    setSelected({
-      path,
-      data: path.length ? _.get(data, path) : data,
-    });
+    setCurrentPath(path);
   };
 
   return (
@@ -55,21 +52,27 @@ const Editor: React.FC<any> = (props) => {
             data={data}
             onChange={handleChange}
             onClick={handleClick}
-            currentPath={selected && selected.path}
+            currentPath={currentPath}
           />
           <View data={data} />
         </Layout.Content>
       </Layout>
-      {selected && (
+      <Drawer
+        title="属性"
+        placement="right"
+        visible={!!currentPath}
+        onClose={() => setCurrentPath(undefined)}
+        mask={false}
+        bodyStyle={{
+          padding: 0,
+        }}
+      >
         <Props
-          visible={!!selected}
-          data={selected.data}
-          path={selected.path}
-          onClose={() => setSelected(undefined)}
-          onSelect={handleSelect}
+          data={currentPath && currentPath.length ? _.get(data, currentPath) : data}
+          path={currentPath}
           onChange={handleChange}
         />
-      )}
+      </Drawer>
     </DndProvider>
   );
 }

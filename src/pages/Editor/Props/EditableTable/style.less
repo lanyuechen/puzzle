@@ -1,15 +1,18 @@
 .editable {
   margin: 0;
   outline: none!important;
-  height: 40px;
-  line-height: 40px;
+  height: 26px;
+  line-height: 26px;
   border: none;
   padding: 0 10px;
 }
-.table [class="ant-table-body"] {
+.table [class~="ant-table-body"] {
   margin: 0!important;
 }
-.table [class="ant-table-footer"] {
+.table [class~="ant-table-footer"] {
   padding: 0;
   border: none;
+}
+.table [class~="ant-form-item-control"] {
+  line-height: initial!important;
 }
