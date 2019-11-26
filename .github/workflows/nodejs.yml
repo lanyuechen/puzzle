@@ -27,4 +27,5 @@ jobs:
       uses: maxheld83/ghpages@v0.2.1
       env:
         BUILD_DIR: "dist/"
+      secrets: "75871bd5debde2afa92346e69dd1d8be9738e5d8"
 
