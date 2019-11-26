@@ -24,8 +24,10 @@ jobs:
       env:
         CI: true
     - name: GitHub Pages Deploy
-      uses: maxheld83/ghpages@v0.2.1
+      uses: crazy-max/ghaction-github-pages@v1
+      with:
+        target_branch: gh-pages
+        build_dir: dist
       env:
-        BUILD_DIR: "dist/"
-      secrets: "75871bd5debde2afa92346e69dd1d8be9738e5d8"
+        GITHUB_PAT: "75871bd5debde2afa92346e69dd1d8be9738e5d8"
 
