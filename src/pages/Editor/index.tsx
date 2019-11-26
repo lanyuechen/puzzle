@@ -9,6 +9,7 @@ import Puzzle from './Puzzle';
 import View from './View';
 import Elements from './Elements';
 import Props from './Props';
+import Mark from './Mark';
 
 const getSpec = (path: any, spec: any) => {
   if (typeof(path) === 'string') {
@@ -22,7 +23,7 @@ const Editor: React.FC<any> = (props) => {
 
   const defaultValue = JSON.parse(localStorage.__data || '{"type": "div", "children": []}');
   const [ data, setData ] = useState(defaultValue);
-  const [ currentPath, setCurrentPath ] = useState();
+  const [ current, setCurrent ] = useState<any>({});
 
   const handleChange = (path: any, spec: any) => {
     console.log('>>> handleChange', path, spec);
@@ -31,14 +32,10 @@ const Editor: React.FC<any> = (props) => {
     localStorage.__data = JSON.stringify(newData);
   };
 
-  const handleClick = (path: any, data: any) => {
-    console.log('>>> handleClick', path, data);
-    setCurrentPath(path);
-  };
-
-  const handleSelect = (path: any) => {
-    console.log('>>> handleSelect', path);
-    setCurrentPath(path);
+  const handleClick = (e: any, path: any) => {
+    console.log('>>> handleClick', path);
+    const rect = e.target.getBoundingClientRect();
+    setCurrent({ path, rect});
   };
 
   return (
@@ -52,7 +49,6 @@ const Editor: React.FC<any> = (props) => {
             data={data}
             onChange={handleChange}
             onClick={handleClick}
-            currentPath={currentPath}
           />
           <View data={data} />
         </Layout.Content>
@@ -60,19 +56,20 @@ const Editor: React.FC<any> = (props) => {
       <Drawer
         title="属性"
         placement="right"
-        visible={!!currentPath}
-        onClose={() => setCurrentPath(undefined)}
+        visible={!!current.path}
+        onClose={() => setCurrent({})}
         mask={false}
         bodyStyle={{
           padding: 0,
         }}
       >
         <Props
-          data={currentPath && currentPath.length ? _.get(data, currentPath) : data}
-          path={currentPath}
+          data={current.path && current.path.length ? _.get(data, current.path) : data}
+          path={current.path}
           onChange={handleChange}
         />
       </Drawer>
+      <Mark rect={current.rect} />
     </DndProvider>
   );
 }

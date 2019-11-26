@@ -5,9 +5,9 @@ import 'antd/dist/antd.css';
 const antd = require('antd');
 
 const Puzzle = (props: any): any => {
-  const { data, onChange, onClick, path = [], currentPath } = props;
+  const { data, onChange, onClick, path = [] } = props;
 
-  const draggerProps = { data, path, currentPath, onChange, onClick };
+  const draggerProps = { data, path, onChange, onClick };
 
   // data 为null、false、undefined
   if (!data) {
@@ -43,7 +43,6 @@ const Puzzle = (props: any): any => {
             key={i}
             data={d}
             path={path.concat('children', i)}
-            currentPath={currentPath}
             onChange={onChange}
             onClick={onClick}
           />

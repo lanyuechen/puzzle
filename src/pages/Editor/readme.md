@@ -6,7 +6,6 @@
 | ---- | ---- | ---- | ---- | ---- |
 | data | any | [组件描述对象](#组件描述对象) | - | 否 |
 | path | array | 组件在根组件中的索引 | [] | 否 |
-| currentPath | 当前选中的组件 | undefined | 否 |
 | onChange | function(path, data) | 组件内容变化回调 | - | 是 |
 | onClick | function(path) | 组件单击事件回调 | - | 是 |
 
@@ -17,7 +16,6 @@
 | type | string | `container`: 容器，`element`: 组件 | container | 是 |
 | data | 同Puzzle |
 | path | 同Puzzle |
-| currentPath | 同Puzzle |
 | onChange | 同Puzzle |
 | onClick | 同Puzzle |
 
