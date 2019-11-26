@@ -68,8 +68,6 @@ if (isAntDesignProPreview) {
 }
 
 export default {
-  publicPath: '/puzzle/',
-  base: 'puzzle/',
   plugins,
   block: {
     // 国内用户可以使用码云
