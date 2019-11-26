@@ -68,6 +68,7 @@ if (isAntDesignProPreview) {
 }
 
 export default {
+  // history: 'hash',
   publicPath: '/puzzle/',
   base: 'puzzle/',
   plugins,
