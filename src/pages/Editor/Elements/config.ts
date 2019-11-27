@@ -1,6 +1,7 @@
 export default [
   {
     type: 'Input',
+    block: true,
     props: {
       placeholder: '输入文本'
     }
@@ -40,15 +41,18 @@ export default [
   },
   {
     type: 'Empty',
+    block: true,
   },
   {
     type: 'Tag',
   },
   {
     type: 'Alert',
+    block: true,
   },
   {
     type: 'Divider',
+    block: true,
   },
   {
     type: 'span',

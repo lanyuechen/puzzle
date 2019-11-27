@@ -6,13 +6,15 @@ import { Tabs, Layout, Icon } from 'antd';
 import Elements from '../Editor/Elements';
 import Editor from '../Editor';
 
+import style from './style.less';
+
 export default function(props: any) {
 
   return (
     <DndProvider backend={HTML5Backend}>
       <Layout>
         <Layout.Sider theme="light" width={256}>
-          <Tabs tabPosition="left" style={{height: '100%'}}>
+          <Tabs tabPosition="left" className={style.tabs}>
             <Tabs.TabPane key="1" tab={<Icon type="appstore" />}>
               <Elements />
             </Tabs.TabPane>

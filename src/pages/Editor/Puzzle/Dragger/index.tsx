@@ -49,7 +49,7 @@ const Dragger: React.FC<any> = (props) => {
 
   const handleClick = (e: any) => {
     e.stopPropagation();
-    onClick(e, path);
+    onClick(ref, path);
   };
 
   return (
@@ -61,6 +61,7 @@ const Dragger: React.FC<any> = (props) => {
         background: isOver ? 'rgba(0, 0, 0, 0.1)' : undefined,
         opacity: isDragging ? 0.2 : 1,
         pointerEvents: isDragging ? 'none' : 'all',
+        display: (type === 'container') || data.block ? 'block' : 'inline-block',
       }}
     >
       {children}

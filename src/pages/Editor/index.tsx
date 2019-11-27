@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'dva';
 import update from 'immutability-helper';
-import { Layout, Drawer } from 'antd';
+import { Drawer } from 'antd';
 import _ from 'lodash';
 import Puzzle from './Puzzle';
 import View from './View';
-import Elements from './Elements';
 import Props from './Props';
 import Mark from './Mark';
 
@@ -30,9 +29,9 @@ const Editor: React.FC<any> = (props) => {
     localStorage.__data = JSON.stringify(newData);
   };
 
-  const handleClick = (e: any, path: any) => {
+  const handleClick = (ref: any, path: any) => {
     console.log('>>> handleClick', path);
-    const rect = e.target.getBoundingClientRect();
+    const rect = ref.current.getBoundingClientRect();
     setCurrent({ path, rect});
   };
 
@@ -43,7 +42,7 @@ const Editor: React.FC<any> = (props) => {
         onChange={handleChange}
         onClick={handleClick}
       />
-      <View data={data} />
+      {/* <View data={data} /> */}
       <Drawer
         title="属性"
         placement="right"
