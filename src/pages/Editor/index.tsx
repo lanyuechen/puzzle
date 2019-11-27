@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { connect } from 'dva';
-import HTML5Backend from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
 import { Layout, Drawer } from 'antd';
 import _ from 'lodash';
@@ -39,20 +37,13 @@ const Editor: React.FC<any> = (props) => {
   };
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <Layout>
-        <Layout.Sider theme="light">
-          <Elements />
-        </Layout.Sider>
-        <Layout.Content style={{padding: 15}}>
-          <Puzzle
-            data={data}
-            onChange={handleChange}
-            onClick={handleClick}
-          />
-          <View data={data} />
-        </Layout.Content>
-      </Layout>
+    <React.Fragment>
+      <Puzzle
+        data={data}
+        onChange={handleChange}
+        onClick={handleClick}
+      />
+      <View data={data} />
       <Drawer
         title="属性"
         placement="right"
@@ -70,7 +61,7 @@ const Editor: React.FC<any> = (props) => {
         />
       </Drawer>
       <Mark rect={current.rect} />
-    </DndProvider>
+    </React.Fragment>
   );
 }
 

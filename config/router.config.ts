@@ -9,10 +9,9 @@ export default [
     component: './Home',
   },
   {
-    path: '/editor',
-    name: 'editor',
-    icon: 'edit',
-    component: './Editor',
+    path: '/workspace',
+    name: 'workspace',
+    component: './Workspace',
   },
   {
     path: '/test',
