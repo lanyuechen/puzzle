@@ -69,8 +69,8 @@ if (isAntDesignProPreview) {
 
 export default {
   history: 'hash',
-  // publicPath: '/puzzle/',
-  // base: 'puzzle/',
+  publicPath: '/puzzle/',
+  // base: '/dist/',
   plugins,
   block: {
     // 国内用户可以使用码云
