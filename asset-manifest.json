@@ -1,9 +1,9 @@
 {
-  "/umi.css": "/umi.850c3559.css",
-  "/umi.js": "/umi.b4b3a3bb.js",
-  "/favicon.png": "/favicon.png",
-  "/icons/icon-128x128.png": "/icons/icon-128x128.png",
-  "/icons/icon-192x192.png": "/icons/icon-192x192.png",
-  "/icons/icon-512x512.png": "/icons/icon-512x512.png",
-  "/index.html": "/index.html"
+  "/umi.css": "/puzzle/umi.850c3559.css",
+  "/umi.js": "/puzzle/umi.bba64c4b.js",
+  "/favicon.png": "/puzzle/favicon.png",
+  "/icons/icon-128x128.png": "/puzzle/icons/icon-128x128.png",
+  "/icons/icon-192x192.png": "/puzzle/icons/icon-192x192.png",
+  "/icons/icon-512x512.png": "/puzzle/icons/icon-512x512.png",
+  "/index.html": "/puzzle/index.html"
 }
