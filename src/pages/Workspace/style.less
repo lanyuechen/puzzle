@@ -1,11 +1,28 @@
-.tabs {
+.sider {
+  width: 256px;
+  height: 100vh;
+  overflow: auto;
+  position: fixed;
+  left: 0;
+}
+.content {
+  margin-left: 256px;
+}
+
+.tabsLeft {
   height: 100%;
   [class~="ant-tabs-content"] {
     padding: 0;
   }
 }
-.tree {
-  [class~="ant-tree-switcher"] {
-    display: none!important;
+
+.tabsRight {
+  [class~="ant-tabs-bar"] {
+    margin: 0;
+  }
+  [class~="ant-tabs-content"] {
+    padding: 16px;
+    height: calc(100vh - 40px);
+    overflow: auto;
   }
 }

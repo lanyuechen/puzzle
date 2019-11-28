@@ -1,32 +1,24 @@
 import React, { useState } from 'react';
 import { connect } from 'dva';
-import update from 'immutability-helper';
 import { Drawer } from 'antd';
 import _ from 'lodash';
+import { updateByPath } from '@/utils/utils';
 import Puzzle from './Puzzle';
 import View from './View';
 import Props from './Props';
 import Mark from './Mark';
 
-const getSpec = (path: any, spec: any) => {
-  if (typeof(path) === 'string') {
-    path = path.split('.');
-  }
-
-  return path.reduceRight((p: any, k: any) => ({ [k]: p }), spec);
-}
-
 const Editor: React.FC<any> = (props) => {
+  const {
+    onChange,
+    data = {"type": "div", "children": []},
+  } = props;
 
-  const defaultValue = JSON.parse(localStorage.__data || '{"type": "div", "children": []}');
-  const [ data, setData ] = useState(defaultValue);
   const [ current, setCurrent ] = useState<any>({});
 
   const handleChange = (path: any, spec: any) => {
     console.log('>>> handleChange', path, spec);
-    const newData = update(data, getSpec(path, spec));
-    setData(newData);
-    localStorage.__data = JSON.stringify(newData);
+    onChange(updateByPath(data, path, spec));
   };
 
   const handleClick = (ref: any, path: any) => {
