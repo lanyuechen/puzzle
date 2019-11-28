@@ -17,16 +17,16 @@ const getSpec = (path: any, spec: any) => {
 }
 
 const Editor: React.FC<any> = (props) => {
+  const {
+    onChange,
+    data = {"type": "div", "children": []},
+  } = props;
 
-  const defaultValue = JSON.parse(localStorage.__data || '{"type": "div", "children": []}');
-  const [ data, setData ] = useState(defaultValue);
   const [ current, setCurrent ] = useState<any>({});
 
   const handleChange = (path: any, spec: any) => {
     console.log('>>> handleChange', path, spec);
-    const newData = update(data, getSpec(path, spec));
-    setData(newData);
-    localStorage.__data = JSON.stringify(newData);
+    onChange(update(data, getSpec(path, spec)));
   };
 
   const handleClick = (ref: any, path: any) => {
