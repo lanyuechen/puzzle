@@ -1,5 +1,14 @@
 import { parse } from 'querystring';
 import pathRegexp from 'path-to-regexp';
+import update from 'immutability-helper';
+
+export const updateByPath = (data: any, path: any, spec: any) => {
+  if (typeof(path) === 'string') {
+    path = path.split('.');
+  }
+  spec = path.reduceRight((p: any, k: any) => ({ [k]: p }), spec);
+  return update(data, spec);
+}
 
 /* eslint no-useless-escape:0 import/prefer-default-export:0 */
 const reg = /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;

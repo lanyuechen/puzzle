@@ -9,7 +9,7 @@ export default (props: any) => {
 
   const handleOk = () => {
     const target: any = ref.current;
-    onOk(target.value);
+    onOk(target.state.value);
   };
 
   return (

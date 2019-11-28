@@ -1,20 +1,12 @@
 import React, { useState } from 'react';
 import { connect } from 'dva';
-import update from 'immutability-helper';
 import { Drawer } from 'antd';
 import _ from 'lodash';
+import { updateByPath } from '@/utils/utils';
 import Puzzle from './Puzzle';
 import View from './View';
 import Props from './Props';
 import Mark from './Mark';
-
-const getSpec = (path: any, spec: any) => {
-  if (typeof(path) === 'string') {
-    path = path.split('.');
-  }
-
-  return path.reduceRight((p: any, k: any) => ({ [k]: p }), spec);
-}
 
 const Editor: React.FC<any> = (props) => {
   const {
@@ -26,7 +18,7 @@ const Editor: React.FC<any> = (props) => {
 
   const handleChange = (path: any, spec: any) => {
     console.log('>>> handleChange', path, spec);
-    onChange(update(data, getSpec(path, spec)));
+    onChange(updateByPath(data, path, spec));
   };
 
   const handleClick = (ref: any, path: any) => {

@@ -1,5 +1,6 @@
 import { Effect } from 'dva';
 import { Reducer } from 'redux';
+import { updateByPath } from '@/utils/utils';
 
 import { load, save } from '@/services/workspace';
 
@@ -19,6 +20,7 @@ export interface ModelType {
     setWorkspace: Reducer<StateType>;
     setCurrentProject: Reducer<StateType>;
     setActiveProjects: Reducer<StateType>;
+    setProject: Reducer<StateType>;
     setComponent: Reducer<StateType>;
   };
 }
@@ -103,6 +105,12 @@ const Model: ModelType = {
           ...state.project,
           actives: action.payload,
         },
+      };
+    },
+    setProject(state: StateType, action) {
+      return {
+        ...state,
+        project: action.payload,
       };
     },
     setComponent(state: StateType, action) {

@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
+import { updateByPath } from '@/utils/utils';
 import { Tree, Dropdown, Menu } from 'antd';
 
 import NameModal from './NameModal';
 
 import style from './style.less';
 
-const Project = (props: any) => {
-  let action: string;
-  let actionPath: any[];
+let action: string;
+let actionPath: any[]; // 定义在函数中会读不到
 
+const Project = (props: any) => {
   const { dispatch, project } = props;
   const { list, current } = project;
 
@@ -19,19 +20,50 @@ const Project = (props: any) => {
     action = key;
     actionPath = path;
     if (key === 'delete') {
+      const idx = actionPath.pop();
+      dispatch({
+        type: 'workspace/setProject',
+        payload: updateByPath(project, ['list', ...actionPath], {
+          $splice: [
+            [idx, 1],
+          ],
+        }),
+      });
       return;
     }
     setNameModalVisible(true);
   }
 
   const handleNameOk = (value: string) => {
-    if (action === 'add-file') {
-
-    } else if (action === 'add-folder') {
-
+    if (action === 'new-file') {
+      dispatch({
+        type: 'workspace/setProject',
+        payload: updateByPath(project, ['list', ...actionPath, 'children'], {
+          $push: [{
+            name: value,
+            isFile: true,
+          }],
+        }),
+      });
+    } else if (action === 'new-folder') {
+      dispatch({
+        type: 'workspace/setProject',
+        payload: updateByPath(project, ['list', ...actionPath, 'children'], {
+          $push: [{
+            name: value,
+            children: [],
+          }],
+        }),
+      });
     } else if (action === 'rename') {
-
+      dispatch({
+        type: 'workspace/setProject',
+        payload: updateByPath(project, ['list', ...actionPath, 'name'], {
+          $set: value,
+        }),
+      });
     }
+    setNameModalVisible(false);
   }
   
   const renderTreeNode = (node: any, path: any[] = []) => {

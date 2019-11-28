@@ -15,8 +15,6 @@ const Workspace = (props: any) => {
   const { dispatch, project, component } = props;
   const { actives, current } = project;
 
-  console.log('>>>', actives, current)
-
   useEffect(() => {
     dispatch({
       type: 'workspace/load',
@@ -72,6 +70,7 @@ const Workspace = (props: any) => {
           <Tabs
             className={style.tabsRight}
             type="editable-card"
+            hideAdd
             activeKey={current}
             onEdit={(key: any, action: any) => handleTabsChange(key, action)}
             onChange={(key: string) => handleTabsChange(key, 'select')}
