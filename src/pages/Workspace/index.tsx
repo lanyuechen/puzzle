@@ -52,36 +52,40 @@ const Workspace = (props: any) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <Layout>
-        <Layout.Sider theme="light" width={256}>
-          <Tabs tabPosition="left" className={style.tabsLeft}>
-            <Tabs.TabPane key="files" tab={<Icon type="folder" />}>
-              <Project project={project} dispatch={dispatch} />
-            </Tabs.TabPane>
-            <Tabs.TabPane key="antd" tab={<Icon type="appstore" />}>
-              <Elements />
-            </Tabs.TabPane>
-            <Tabs.TabPane key="other" tab={<Icon type="smile" />}>
-              there is nothing
-            </Tabs.TabPane>
-          </Tabs>
-        </Layout.Sider>
-        <Layout.Content style={{padding: 15}}>
-          <Tabs
-            type="editable-card"
-            activeKey={current}
-            onEdit={(key: any, action: any) => handleTabsChange(key, action)}
-            onChange={(key: string) => handleTabsChange(key, 'select')}
-          >
-            {actives && actives.map((d: any) => (
-              <Tabs.TabPane key={d.path} tab={d.path}>
-                <Editor
-                  data={component[d.path]}
-                  onChange={(data: any) => handleEdit(d.path, data)}
-                />
+        <Layout.Header className={style.header}>header</Layout.Header>
+        <Layout>
+          <Layout.Sider theme="light" width={256}>
+            <Tabs tabPosition="left" className={style.tabsLeft}>
+              <Tabs.TabPane key="files" tab={<Icon type="folder" />}>
+                <Project project={project} dispatch={dispatch} />
               </Tabs.TabPane>
-            ))}
-          </Tabs>
-        </Layout.Content>
+              <Tabs.TabPane key="antd" tab={<Icon type="appstore" />}>
+                <Elements />
+              </Tabs.TabPane>
+              <Tabs.TabPane key="other" tab={<Icon type="smile" />}>
+                there is nothing
+              </Tabs.TabPane>
+            </Tabs>
+          </Layout.Sider>
+          <Layout.Content style={{padding: 15}}>
+            <Tabs
+              type="editable-card"
+              activeKey={current}
+              onEdit={(key: any, action: any) => handleTabsChange(key, action)}
+              onChange={(key: string) => handleTabsChange(key, 'select')}
+            >
+              {actives && actives.map((d: any) => (
+                <Tabs.TabPane key={d.path} tab={d.path}>
+                  <Editor
+                    data={component[d.path]}
+                    onChange={(data: any) => handleEdit(d.path, data)}
+                  />
+                </Tabs.TabPane>
+              ))}
+            </Tabs>
+          </Layout.Content>
+        </Layout>
+        <Layout.Footer className={style.footer}>Footer</Layout.Footer>
       </Layout>
     </DndProvider>
   )
