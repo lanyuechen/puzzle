@@ -4,9 +4,9 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import { Tabs, Layout, Icon } from 'antd';
 
-import Elements from '../Editor/Elements';
-import Editor from '../Editor';
+import Elements from './Elements';
 import Project from './Project';
+import Editor from '../Editor';
 
 import style from './style.less';
 
@@ -32,6 +32,11 @@ const Workspace = (props: any) => {
       dispatch({
         type: 'workspace/setActiveProjects',
         payload: actives.filter((path: any) => path !== key),
+      });
+    } else if (act === 'select') {
+      dispatch({
+        type: 'workspace/setCurrentProject',
+        payload: key,
       });
     }
   }
@@ -62,9 +67,10 @@ const Workspace = (props: any) => {
         </Layout.Sider>
         <Layout.Content style={{padding: 15}}>
           <Tabs
-            activeKey={current}
             type="editable-card"
+            activeKey={current}
             onEdit={(key: any, action: any) => handleTabsChange(key, action)}
+            onChange={(key: string) => handleTabsChange(key, 'select')}
           >
             {actives && actives.map((d: any) => (
               <Tabs.TabPane key={d.path} tab={d.path}>
