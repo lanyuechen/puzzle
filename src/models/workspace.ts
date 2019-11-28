@@ -52,10 +52,10 @@ const Model: ModelType = {
         }
       ],
       actives: [
-        'test/test1-1',
-        'test2/test2-2',
+        '0.children.0',
+        '1.children.1',
       ],
-      current: 'test2/test2-2'
+      current: '0.children.0'
     },
     component: {
       

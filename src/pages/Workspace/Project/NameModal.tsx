@@ -14,6 +14,7 @@ export default (props: any) => {
 
   return (
     <Modal
+      title="输入名称"
       visible={visible}
       onOk={handleOk}
       onCancel={onCancel}

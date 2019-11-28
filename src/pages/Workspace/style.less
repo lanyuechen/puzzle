@@ -1,6 +1,12 @@
-.header {
-  background: red;
-  height: 24px;
+.sider {
+  width: 256px;
+  height: 100vh;
+  overflow: auto;
+  position: fixed;
+  left: 0;
+}
+.content {
+  margin-left: 256px;
 }
 
 .tabsLeft {
@@ -10,7 +16,13 @@
   }
 }
 
-.footer {
-  background: green;;
-  height: 24px;
+.tabsRight {
+  [class~="ant-tabs-bar"] {
+    margin: 0;
+  }
+  [class~="ant-tabs-content"] {
+    padding: 16px;
+    height: calc(100vh - 40px);
+    overflow: auto;
+  }
 }

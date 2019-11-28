@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import _ from 'lodash';
 import { Tree, Dropdown, Menu } from 'antd';
 
 import NameModal from './NameModal';
@@ -40,12 +41,8 @@ const Project = (props: any) => {
         selectable={false}
         theme="dark"
       >
-        {!node.isFile && (
-          <React.Fragment>
-            <Menu.Item key="new-file">新建文件</Menu.Item>
-            <Menu.Item key="new-folder">新建文件夹</Menu.Item>
-          </React.Fragment>
-        )}
+        {!node.isFile && <Menu.Item key="new-file">新建文件</Menu.Item>}
+        {!node.isFile && <Menu.Item key="new-folder">新建文件夹</Menu.Item>}
         <Menu.Item key="rename">重命名</Menu.Item>
         <Menu.Item key="delete">删除</Menu.Item>
       </Menu>
@@ -53,7 +50,7 @@ const Project = (props: any) => {
 
     const title = (
       <Dropdown overlay={menu} trigger={['contextMenu']}>
-        {node.name}
+        <span>{node.name}</span>
       </Dropdown>
     );
 
@@ -68,10 +65,13 @@ const Project = (props: any) => {
   };
 
   const handleSelect = (selectedKeys: string[]) => {
-    dispatch({
-      type: 'workspace/setCurrentProject',
-      payload: selectedKeys[0],
-    })
+    const key = selectedKeys[0];
+    if (_.get(list, key, {}).isFile) {
+      dispatch({
+        type: 'workspace/setCurrentProject',
+        payload: key,
+      });
+    }
   };
 
   return (
@@ -82,7 +82,7 @@ const Project = (props: any) => {
         selectedKeys={[current]}
         defaultExpandAll
       >
-        {list.map((d: any) => renderTreeNode(d))}
+        {list.map((d: any, i: number) => renderTreeNode(d, [i]))}
       </Tree.DirectoryTree>
       <NameModal
         visible={nameModalVisible}
