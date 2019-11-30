@@ -4,7 +4,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import style from './style.less';
 
 const Dragger: React.FC<any> = (props) => {
-  const { children, onChange, onClick, path, type = 'container', data } = props;
+  const { children, onChange, onClick, path, currentPath, type = 'container', data } = props;
 
   const ref = useRef(null);
 
@@ -49,8 +49,10 @@ const Dragger: React.FC<any> = (props) => {
 
   const handleClick = (e: any) => {
     e.stopPropagation();
-    onClick(ref, path);
+    onClick(path);
   };
+
+  const selected = currentPath && path.join() === currentPath.join();
 
   return (
     <div 
@@ -62,6 +64,7 @@ const Dragger: React.FC<any> = (props) => {
         opacity: isDragging ? 0.2 : 1,
         pointerEvents: isDragging ? 'none' : 'all',
         display: (type === 'container') || data.block ? 'block' : 'inline-block',
+        borderColor: selected ? '#23c132' : undefined,
       }}
     >
       {children}
