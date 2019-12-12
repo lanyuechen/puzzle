@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'dva';
+import _ from 'lodash';
 
 const antd = require('antd');
 
-const prepareProps = (props: any, parentProps: any) => {
+const prepareProps = (props: any = {}, parentProps: any) => {
   const res = {};
   Object.entries(props).map(([k, v]: any) => {
     if (v.includes('props.')) {
-      res[k] = _.get(parentProps, v) || v;
+      res[k] = _.get(parentProps, v.replace('props.', '')) || v;
     } else {
       res[k] = v;
     }
@@ -26,15 +27,15 @@ const View = (props: any): any => {
     return data;
   }
 
+  const parsedProps = prepareProps(data.props, parentProps);
+
   if (data.ref) {
     return (
-      <View data={component[data.ref.join('.')]} />
+      <View data={component[data.ref.join('.')]} parentProps={parsedProps} />
     );
   }
 
-  const C = antd[data.type] || data.type;
-
-  const parsedProps = prepareProps(data.props, parentProps)
+  const C = _.get(antd, data.type) || data.type;
 
   if (!data.children) {
     return (

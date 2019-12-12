@@ -88,13 +88,15 @@ const Project = (props: any) => {
 
     if (node.isFile) {
       return (
-        <Block path={path} name={node.name}>
-          <Tree.TreeNode
-            title={title}
-            key={path.join('.')}
-            isLeaf
-          />
-        </Block>
+        <Tree.TreeNode
+          title={(
+            <Block path={path} name={node.name}>
+              {title}
+            </Block>
+          )}
+          key={path.join('.')}
+          isLeaf
+        />
       );
     }
 
@@ -151,9 +153,9 @@ const Block: React.FC<any> = (props) => {
   });
 
   return (
-    <div ref={drag}>
+    <span ref={drag}>
       {children}
-    </div>
+    </span>
   );
 }
 

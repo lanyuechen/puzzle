@@ -6,11 +6,11 @@ import _ from 'lodash';
 import 'antd/dist/antd.css';
 const antd = require('antd');
 
-const prepareProps = (props: any, parentProps: any) => {
+const prepareProps = (props: any = {}, parentProps: any) => {
   const res = {};
   Object.entries(props).map(([k, v]: any) => {
     if (v.includes('props.')) {
-      res[k] = _.get(parentProps, v) || v;
+      res[k] = _.get(parentProps, v.replace('props.', '')) || v;
     } else {
       res[k] = v;
     }
@@ -37,18 +37,18 @@ const Puzzle = (props: any): any => {
     );
   }
 
+  const parsedProps = prepareProps(data.props, parentProps);
+
   // todo 如果data为引用，则加载引用的组件data并跟当前对象合并，次组件内部不可编辑，只可以编辑整体的属性
   if (data.ref) {
     return (
       <Dragger type="element" {...draggerProps}>
-        <View data={data} />
+        <View data={data} parentProps={parsedProps} />
       </Dragger>
     );
   }
 
   const C = _.get(antd, data.type) || data.type;
-
-  const parsedProps = prepareProps(data.props, parentProps);
 
   // 不包含子元素
   if (!data.children) {

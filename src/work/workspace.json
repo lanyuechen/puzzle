@@ -22,7 +22,7 @@
     "0.children.1": {
       "type": "Form.Item",
       "props": {
-        "placeholder": "pass by parents"
+        "placeholder": "props.placeholder"
       },
       "children": [
         {
