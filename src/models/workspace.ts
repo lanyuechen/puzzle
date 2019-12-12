@@ -4,26 +4,40 @@ import { updateByPath } from '@/utils/utils';
 
 import { load, save } from '@/services/workspace';
 
-export interface StateType {
-  projects: any[];
+export interface Project {
+  name: string;
+  children: Project[];
+  isFile: boolean;
+}
+
+export interface Component {
+  type: string;
+  ref?: string[];
+  props?: any;
+  children?: Component[];
+  block?: boolean;
+}
+
+export interface Workspace {
+  projects: Project[];
   actives: string[];
   current?: string;
-  component: any;
+  component: {[key: string]: Component};
 }
 
 export interface ModelType {
   namespace: 'workspace';
-  state: StateType;
+  state: Workspace;
   effects: {
     load: Effect;
     save: Effect;
   };
   reducers: {
-    setWorkspace: Reducer<StateType>;
-    setCurrentProject: Reducer<StateType>;
-    setActiveProjects: Reducer<StateType>;
-    setProject: Reducer<StateType>;
-    setComponent: Reducer<StateType>;
+    setWorkspace: Reducer<Workspace>;
+    setCurrentProject: Reducer<Workspace>;
+    setActiveProjects: Reducer<Workspace>;
+    setProject: Reducer<Workspace>;
+    setComponent: Reducer<Workspace>;
   };
 }
 
@@ -48,13 +62,13 @@ const Model: ModelType = {
     },
   },
   reducers: {
-    setWorkspace(state: StateType, action) {
+    setWorkspace(state: Workspace, action) {
       return {
         ...state,
         ...action.payload,
       };
     },
-    setCurrentProject(state: StateType, action) {
+    setCurrentProject(state: Workspace, action) {
       const actives = [...state.actives];
       if (!actives.includes(action.payload)) {
         actives.push(action.payload);
@@ -66,19 +80,19 @@ const Model: ModelType = {
         current: action.payload,
       };
     },
-    setActiveProjects(state: StateType, action) {
+    setActiveProjects(state: Workspace, action) {
       return {
         ...state,
         actives: action.payload,
       };
     },
-    setProject(state: StateType, action) {
+    setProject(state: Workspace, action) {
       return {
         ...state,
         projects: action.payload,
       };
     },
-    setComponent(state: StateType, action) {
+    setComponent(state: Workspace, action) {
       return {
         ...state,
         component: {

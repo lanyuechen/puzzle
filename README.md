@@ -1,6 +1,8 @@
 ## Puzzle
 分布式设计开发平台
 
+- [数据结构](./src/doc/data-structure.md)
+
 ### 定位
 - 设计与开发平台
 
