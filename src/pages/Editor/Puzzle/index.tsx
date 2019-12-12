@@ -1,12 +1,25 @@
 import React from 'react';
 import Dragger from './Dragger';
 import View from '../View';
+import _ from 'lodash';
 
 import 'antd/dist/antd.css';
 const antd = require('antd');
 
+const prepareProps = (props: any, parentProps: any) => {
+  const res = {};
+  Object.entries(props).map(([k, v]: any) => {
+    if (v.includes('props.')) {
+      res[k] = _.get(parentProps, v) || v;
+    } else {
+      res[k] = v;
+    }
+  });
+  return res;
+};
+
 const Puzzle = (props: any): any => {
-  const { data, onChange, onClick, path = [] } = props;
+  const { data, onChange, onClick, path = [], parentProps } = props;
 
   const draggerProps = { data, path, onChange, onClick };
 
@@ -33,13 +46,15 @@ const Puzzle = (props: any): any => {
     );
   }
 
-  const C = antd[data.type] || data.type;
+  const C = _.get(antd, data.type) || data.type;
+
+  const parsedProps = prepareProps(data.props, parentProps);
 
   // 不包含子元素
   if (!data.children) {
     return (
       <Dragger type="element" {...draggerProps}>
-        <C {...(data.props || {})} />
+        <C {...parsedProps} />
       </Dragger>
     );
   }
@@ -47,7 +62,7 @@ const Puzzle = (props: any): any => {
   // 包含子元素
   return (
     <Dragger type="container" {...draggerProps}>
-      <C {...(data.props || {})}>
+      <C {...parsedProps}>
         {data.children.map((d: any, i: number) => (
           <Puzzle
             key={i}
@@ -55,6 +70,7 @@ const Puzzle = (props: any): any => {
             path={path.concat('children', i)}
             onChange={onChange}
             onClick={onClick}
+            parentProps={parsedProps}
           />
         ))}
       </C>
