@@ -4,64 +4,49 @@ import { updateByPath } from '@/utils/utils';
 
 import { load, save } from '@/services/workspace';
 
-export interface StateType {
-  project: any;
-  component: any;
+export interface Project {
+  name: string;
+  children: Project[];
+  isFile: boolean;
+}
+
+export interface Component {
+  type: string;
+  ref?: string[];
+  props?: any;
+  children?: Component[];
+  block?: boolean;
+}
+
+export interface Workspace {
+  projects: Project[];
+  actives: string[];
+  current?: string;
+  component: {[key: string]: Component};
 }
 
 export interface ModelType {
   namespace: 'workspace';
-  state: StateType;
+  state: Workspace;
   effects: {
     load: Effect;
     save: Effect;
   };
   reducers: {
-    setWorkspace: Reducer<StateType>;
-    setCurrentProject: Reducer<StateType>;
-    setActiveProjects: Reducer<StateType>;
-    setProject: Reducer<StateType>;
-    setComponent: Reducer<StateType>;
+    setWorkspace: Reducer<Workspace>;
+    setCurrentProject: Reducer<Workspace>;
+    setActiveProjects: Reducer<Workspace>;
+    setProject: Reducer<Workspace>;
+    setComponent: Reducer<Workspace>;
   };
 }
 
 const Model: ModelType = {
   namespace: 'workspace',
   state: {
-    project: {
-      list: [
-        {
-          name: 'test',
-          children: [
-            {
-              name: 'test1-1',
-              isFile: true,
-            }
-          ]
-        },
-        {
-          name: 'test2',
-          children: [
-            {
-              name: 'test2-1',
-              isFile: true,
-            },
-            {
-              name: 'test2-2',
-              isFile: true,
-            }
-          ]
-        }
-      ],
-      actives: [
-        '0.children.0',
-        '1.children.1',
-      ],
-      current: '0.children.0'
-    },
-    component: {
-      
-    }
+    projects: [],
+    actives: [],
+    component: {}
   },
   effects: {
     *load(action, { call, put }) {
@@ -77,43 +62,37 @@ const Model: ModelType = {
     },
   },
   reducers: {
-    setWorkspace(state: StateType, action) {
+    setWorkspace(state: Workspace, action) {
       return {
         ...state,
         ...action.payload,
       };
     },
-    setCurrentProject(state: StateType, action) {
-      const actives = [...state.project.actives];
+    setCurrentProject(state: Workspace, action) {
+      const actives = [...state.actives];
       if (!actives.includes(action.payload)) {
         actives.push(action.payload);
       }
 
       return {
         ...state,
-        project: {
-          ...state.project,
-          actives,
-          current: action.payload,
-        },
+        actives,
+        current: action.payload,
       };
     },
-    setActiveProjects(state: StateType, action) {
+    setActiveProjects(state: Workspace, action) {
       return {
         ...state,
-        project: {
-          ...state.project,
-          actives: action.payload,
-        },
+        actives: action.payload,
       };
     },
-    setProject(state: StateType, action) {
+    setProject(state: Workspace, action) {
       return {
         ...state,
-        project: action.payload,
+        projects: action.payload,
       };
     },
-    setComponent(state: StateType, action) {
+    setComponent(state: Workspace, action) {
       return {
         ...state,
         component: {

@@ -12,8 +12,8 @@ import Editor from '../Editor';
 import style from './style.less';
 
 const Workspace = (props: any) => {
-  const { dispatch, project, component } = props;
-  const { actives, current } = project;
+  const { dispatch, workspace } = props;
+  const { component, projects, actives, current } = workspace;
 
   useEffect(() => {
     dispatch({
@@ -26,7 +26,7 @@ const Workspace = (props: any) => {
     dispatch({
       type: 'workspace/save',
     });
-  }, [project, component]);
+  }, [workspace]);
 
   const handleTabsChange = (key: string, act: string) => {
     if (act === 'remove') {
@@ -56,7 +56,7 @@ const Workspace = (props: any) => {
         <Layout.Sider className={style.sider} theme="light" width={256}>
           <Tabs tabPosition="left" className={style.tabsLeft}>
             <Tabs.TabPane key="files" tab={<Icon type="folder" />}>
-              <Project project={project} dispatch={dispatch} />
+              <Project projects={projects} current={current} dispatch={dispatch} />
             </Tabs.TabPane>
             <Tabs.TabPane key="antd" tab={<Icon type="appstore" />}>
               <Elements />
@@ -78,7 +78,7 @@ const Workspace = (props: any) => {
             {actives && actives.map((path: any) => (
               <Tabs.TabPane
                 key={path} 
-                tab={_.get(project.list, path, {}).name}
+                tab={_.get(projects, path, {}).name}
               >
                 <Editor
                   data={component[path]}
@@ -94,5 +94,5 @@ const Workspace = (props: any) => {
 };
 
 export default connect(({ workspace }: any) => ({
-  ...workspace
+  workspace
 }))(Workspace);

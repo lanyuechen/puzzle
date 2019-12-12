@@ -1,0 +1,85 @@
+{
+  "actives": [
+    "0.children.0"
+  ],
+  "current": "0.children.0",
+  "projects": [
+    {
+      "name": "demo",
+      "children": [
+        {
+          "name": "form",
+          "isFile": true
+        },
+        {
+          "name": "form-item",
+          "isFile": true
+        }
+      ]
+    }
+  ],
+  "component": {
+    "0.children.1": {
+      "type": "Form.Item",
+      "props": {
+        "placeholder": "pass by parents"
+      },
+      "children": [
+        {
+          "type": "Input",
+          "props": {
+            "prefix": "￥",
+            "placeholder": "props.placeholder"
+          }
+        }
+      ]
+    },
+    "0.children.0": {
+      "type": "Form",
+      "children": [
+        {
+          "type": "Form.Item",
+          "children": [
+            {
+              "type": "Input",
+              "props": {
+                "placeholder": "username"
+              }
+            }
+          ]
+        },
+        {
+          "type": "Form.Item",
+          "children": [
+            {
+              "type": "Input",
+              "props": {
+                "type": "password",
+                "placeholder": "password"
+              }
+            }
+          ]
+        },
+        {
+          "type": "FormItem",
+          "ref": [0, "children", 1],
+          "props": {
+            "placeholder": "pass to children"
+          }
+        },
+        {
+          "type": "Form.Item",
+          "children": [
+            {
+              "type": "Button",
+              "props": {
+                "type": "primary",
+                "children": "提交"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
