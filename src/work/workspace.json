@@ -1,0 +1,18 @@
+{
+  "component": {},
+  "actives": [
+    "0.children.0"
+  ],
+  "current": "0.children.0",
+  "projects": [
+    {
+      "name": "form",
+      "children": [
+        {
+          "name": "test1-1",
+          "isFile": true
+        }
+      ]
+    }
+  ]
+}

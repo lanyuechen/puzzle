@@ -1,9 +1,11 @@
+import workspace from '@/work/workspace.json';
+
 /**
  * 加载工作空间
  */
 export async function load() {
   if (!localStorage.__puzzle_workspace) {
-    return;
+    return workspace;
   }
   try {
     return JSON.parse(localStorage.__puzzle_workspace);

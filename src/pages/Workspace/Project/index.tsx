@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
-import { updateByPath } from '@/utils/utils';
+import { useDrag } from 'react-dnd';
+import { updateByPath, toCamelCase } from '@/utils/utils';
 import { Tree, Dropdown, Menu } from 'antd';
 
 import NameModal from './NameModal';
@@ -11,8 +12,7 @@ let action: string;
 let actionPath: any[]; // 定义在函数中会读不到
 
 const Project = (props: any) => {
-  const { dispatch, project } = props;
-  const { list, current } = project;
+  const { dispatch, projects, current } = props;
 
   const [ nameModalVisible, setNameModalVisible ] = useState(false);
 
@@ -23,7 +23,7 @@ const Project = (props: any) => {
       const idx = actionPath.pop();
       dispatch({
         type: 'workspace/setProject',
-        payload: updateByPath(project, ['list', ...actionPath], {
+        payload: updateByPath(projects, actionPath, {
           $splice: [
             [idx, 1],
           ],
@@ -38,7 +38,7 @@ const Project = (props: any) => {
     if (action === 'new-file') {
       dispatch({
         type: 'workspace/setProject',
-        payload: updateByPath(project, ['list', ...actionPath, 'children'], {
+        payload: updateByPath(projects, [...actionPath, 'children'], {
           $push: [{
             name: value,
             isFile: true,
@@ -48,7 +48,7 @@ const Project = (props: any) => {
     } else if (action === 'new-folder') {
       dispatch({
         type: 'workspace/setProject',
-        payload: updateByPath(project, ['list', ...actionPath, 'children'], {
+        payload: updateByPath(projects, [...actionPath, 'children'], {
           $push: [{
             name: value,
             children: [],
@@ -58,7 +58,7 @@ const Project = (props: any) => {
     } else if (action === 'rename') {
       dispatch({
         type: 'workspace/setProject',
-        payload: updateByPath(project, ['list', ...actionPath, 'name'], {
+        payload: updateByPath(projects, [...actionPath, 'name'], {
           $set: value,
         }),
       });
@@ -86,6 +86,18 @@ const Project = (props: any) => {
       </Dropdown>
     );
 
+    if (node.isFile) {
+      return (
+        <Block path={path} name={node.name}>
+          <Tree.TreeNode
+            title={title}
+            key={path.join('.')}
+            isLeaf
+          />
+        </Block>
+      );
+    }
+
     return (
       <Tree.TreeNode
         title={title}
@@ -98,7 +110,7 @@ const Project = (props: any) => {
 
   const handleSelect = (selectedKeys: string[]) => {
     const key = selectedKeys[0];
-    if (_.get(list, key, {}).isFile) {
+    if (_.get(projects, key, {}).isFile) {
       dispatch({
         type: 'workspace/setCurrentProject',
         payload: key,
@@ -114,7 +126,7 @@ const Project = (props: any) => {
         selectedKeys={[current]}
         defaultExpandAll
       >
-        {list.map((d: any, i: number) => renderTreeNode(d, [i]))}
+        {projects.map((d: any, i: number) => renderTreeNode(d, [i]))}
       </Tree.DirectoryTree>
       <NameModal
         visible={nameModalVisible}
@@ -124,5 +136,25 @@ const Project = (props: any) => {
     </React.Fragment>
   );
 };
+
+const Block: React.FC<any> = (props) => {
+  const { children, path, name } = props;
+
+  const [, drag] = useDrag({
+    item: {
+      type: 'PUZZLE',
+      data: {
+        type: toCamelCase(name),
+        ref: path,
+      },
+    },
+  });
+
+  return (
+    <div ref={drag}>
+      {children}
+    </div>
+  );
+}
 
 export default Project;

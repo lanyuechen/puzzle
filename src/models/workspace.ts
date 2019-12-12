@@ -5,7 +5,9 @@ import { updateByPath } from '@/utils/utils';
 import { load, save } from '@/services/workspace';
 
 export interface StateType {
-  project: any;
+  projects: any[];
+  actives: string[];
+  current?: string;
   component: any;
 }
 
@@ -28,40 +30,9 @@ export interface ModelType {
 const Model: ModelType = {
   namespace: 'workspace',
   state: {
-    project: {
-      list: [
-        {
-          name: 'test',
-          children: [
-            {
-              name: 'test1-1',
-              isFile: true,
-            }
-          ]
-        },
-        {
-          name: 'test2',
-          children: [
-            {
-              name: 'test2-1',
-              isFile: true,
-            },
-            {
-              name: 'test2-2',
-              isFile: true,
-            }
-          ]
-        }
-      ],
-      actives: [
-        '0.children.0',
-        '1.children.1',
-      ],
-      current: '0.children.0'
-    },
-    component: {
-      
-    }
+    projects: [],
+    actives: [],
+    component: {}
   },
   effects: {
     *load(action, { call, put }) {
@@ -84,33 +55,27 @@ const Model: ModelType = {
       };
     },
     setCurrentProject(state: StateType, action) {
-      const actives = [...state.project.actives];
+      const actives = [...state.actives];
       if (!actives.includes(action.payload)) {
         actives.push(action.payload);
       }
 
       return {
         ...state,
-        project: {
-          ...state.project,
-          actives,
-          current: action.payload,
-        },
+        actives,
+        current: action.payload,
       };
     },
     setActiveProjects(state: StateType, action) {
       return {
         ...state,
-        project: {
-          ...state.project,
-          actives: action.payload,
-        },
+        actives: action.payload,
       };
     },
     setProject(state: StateType, action) {
       return {
         ...state,
-        project: action.payload,
+        projects: action.payload,
       };
     },
     setComponent(state: StateType, action) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'dva';
 
 const antd = require('antd');
 
@@ -7,7 +8,7 @@ const prepareProps = (props: any) => {
 };
 
 const View = (props: any): any => {
-  const { data } = props;
+  const { data, component } = props;
 
   if (!data) {
     return null;
@@ -15,6 +16,12 @@ const View = (props: any): any => {
 
   if (typeof(data) === 'string') {
     return data;
+  }
+
+  if (data.ref) {
+    return (
+      <View data={component[data.ref.join('.')]} />
+    );
   }
 
   const C = antd[data.type] || data.type;
@@ -34,4 +41,6 @@ const View = (props: any): any => {
   );
 }
 
-export default View;
+export default connect(({ workspace }: any) => ({
+  component: workspace.component,
+}))(View);

@@ -1,5 +1,6 @@
 import React from 'react';
 import Dragger from './Dragger';
+import View from '../View';
 
 import 'antd/dist/antd.css';
 const antd = require('antd');
@@ -19,6 +20,15 @@ const Puzzle = (props: any): any => {
     return (
       <Dragger type="element" {...draggerProps}>
         {data}
+      </Dragger>
+    );
+  }
+
+  // todo 如果data为引用，则加载引用的组件data并跟当前对象合并，次组件内部不可编辑，只可以编辑整体的属性
+  if (data.ref) {
+    return (
+      <Dragger type="element" {...draggerProps}>
+        <View data={data} />
       </Dragger>
     );
   }
