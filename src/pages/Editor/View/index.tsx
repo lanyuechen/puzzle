@@ -1,20 +1,9 @@
 import React from 'react';
 import { connect } from 'dva';
 import _ from 'lodash';
+import { prepareProps } from '@/utils/utils';
 
 const antd = require('antd');
-
-const prepareProps = (props: any = {}, parentProps: any) => {
-  const res = {};
-  Object.entries(props).map(([k, v]: any) => {
-    if (v.includes('props.')) {
-      res[k] = _.get(parentProps, v.replace('props.', '')) || v;
-    } else {
-      res[k] = v;
-    }
-  });
-  return res;
-};
 
 const View = (props: any): any => {
   const { data, component, parentProps } = props;

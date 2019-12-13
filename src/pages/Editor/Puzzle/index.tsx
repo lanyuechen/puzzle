@@ -2,21 +2,10 @@ import React from 'react';
 import Dragger from './Dragger';
 import View from '../View';
 import _ from 'lodash';
+import { prepareProps } from '@/utils/utils';
 
 import 'antd/dist/antd.css';
 const antd = require('antd');
-
-const prepareProps = (props: any = {}, parentProps: any) => {
-  const res = {};
-  Object.entries(props).map(([k, v]: any) => {
-    if (v.includes('props.')) {
-      res[k] = _.get(parentProps, v.replace('props.', '')) || v;
-    } else {
-      res[k] = v;
-    }
-  });
-  return res;
-};
 
 const Puzzle = (props: any): any => {
   const { data, onChange, onClick, path = [], currentPath, parentProps } = props;
