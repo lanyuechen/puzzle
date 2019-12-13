@@ -8,7 +8,7 @@
       "name": "demo",
       "children": [
         {
-          "name": "form",
+          "name": "my-form",
           "isFile": true
         },
         {

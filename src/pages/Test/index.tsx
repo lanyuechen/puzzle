@@ -1,11 +1,21 @@
 import React from 'react';
-import Workspace from '../Workspace';
+import { Button } from 'antd';
+
+import workspace from '@/work/workspace';
+import Builder from '@/utils/builder';
+
+const builder = new Builder(workspace);
 
 export default function(props: any): any {
 
+
+  const handleClick = () => {
+    builder.build();
+  }
+
   return (
     <div>
-      <Workspace />
+      <Button onClick={handleClick}>导出</Button>
     </div>
   );
 }
