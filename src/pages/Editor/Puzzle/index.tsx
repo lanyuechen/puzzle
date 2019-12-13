@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Dragger from '../Dragger';
 import View from '../View';
 import _ from 'lodash';
 import { prepareProps } from '@/utils/utils';
 
-import 'antd/dist/antd.css';
-const antd = require('antd');
+import { WorkspaceContext } from '@/pages/Workspace';
 
 const Puzzle = (props: any): any => {
   const { data, onChange, onClick, path = [], currentPath, parentProps } = props;
 
   const draggerProps = { data, path, onChange, onClick, currentPath };
+
+  const { libs } = useContext(WorkspaceContext);
 
   // data 为null、false、undefined
   if (!data) {
@@ -37,7 +38,7 @@ const Puzzle = (props: any): any => {
     );
   }
 
-  const C = _.get(antd, data.type) || data.type;
+  const C = _.get(libs, data.type) || data.type;
 
   // 不包含子元素
   if (!data.children) {

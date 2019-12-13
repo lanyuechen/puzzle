@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, createContext } from 'react';
 import { connect } from 'dva';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
@@ -10,6 +10,13 @@ import Project from './Project';
 import Editor from '../Editor';
 
 import style from './style.less';
+
+import 'antd/dist/antd.css';
+const antd = require('antd');
+
+export const WorkspaceContext = createContext({
+  libs: antd,
+});
 
 const Workspace = (props: any) => {
   const { dispatch, workspace } = props;
@@ -52,43 +59,45 @@ const Workspace = (props: any) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <Layout>
-        <Layout.Sider className={style.sider} theme="light" width={256}>
-          <Tabs tabPosition="left" className={style.tabsLeft}>
-            <Tabs.TabPane key="files" tab={<Icon type="folder" />}>
-              <Project projects={projects} current={current} dispatch={dispatch} />
-            </Tabs.TabPane>
-            <Tabs.TabPane key="antd" tab={<Icon type="appstore" />}>
-              <Elements />
-            </Tabs.TabPane>
-            <Tabs.TabPane key="other" tab={<Icon type="smile" />}>
-              there is nothing
-            </Tabs.TabPane>
-          </Tabs>
-        </Layout.Sider>
-        <Layout.Content className={style.content}>
-          <Tabs
-            className={style.tabsRight}
-            type="editable-card"
-            hideAdd
-            activeKey={current}
-            onEdit={(key: any, action: any) => handleTabsChange(key, action)}
-            onChange={(key: string) => handleTabsChange(key, 'select')}
-          >
-            {actives && actives.map((path: any) => (
-              <Tabs.TabPane
-                key={path} 
-                tab={_.get(projects, path, {}).name}
-              >
-                <Editor
-                  data={component[path]}
-                  onChange={(data: any) => handleEdit(path, data)}
-                />
+      <WorkspaceContext.Provider value={{libs: antd}}>
+        <Layout>
+          <Layout.Sider className={style.sider} theme="light" width={256}>
+            <Tabs tabPosition="left" className={style.tabsLeft}>
+              <Tabs.TabPane key="files" tab={<Icon type="folder" />}>
+                <Project projects={projects} current={current} dispatch={dispatch} />
               </Tabs.TabPane>
-            ))}
-          </Tabs>
-        </Layout.Content>
-      </Layout>
+              <Tabs.TabPane key="antd" tab={<Icon type="appstore" />}>
+                <Elements />
+              </Tabs.TabPane>
+              <Tabs.TabPane key="other" tab={<Icon type="smile" />}>
+                there is nothing
+              </Tabs.TabPane>
+            </Tabs>
+          </Layout.Sider>
+          <Layout.Content className={style.content}>
+            <Tabs
+              className={style.tabsRight}
+              type="editable-card"
+              hideAdd
+              activeKey={current}
+              onEdit={(key: any, action: any) => handleTabsChange(key, action)}
+              onChange={(key: string) => handleTabsChange(key, 'select')}
+            >
+              {actives && actives.map((path: any) => (
+                <Tabs.TabPane
+                  key={path} 
+                  tab={_.get(projects, path, {}).name}
+                >
+                  <Editor
+                    data={component[path]}
+                    onChange={(data: any) => handleEdit(path, data)}
+                  />
+                </Tabs.TabPane>
+              ))}
+            </Tabs>
+          </Layout.Content>
+        </Layout>
+      </WorkspaceContext.Provider>
     </DndProvider>
   )
 };

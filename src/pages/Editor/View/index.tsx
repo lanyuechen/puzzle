@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { connect } from 'dva';
 import _ from 'lodash';
 import { prepareProps } from '@/utils/utils';
-
-const antd = require('antd');
+import { WorkspaceContext } from '@/pages/Workspace';
 
 const View = (props: any): any => {
   const { data, component, parentProps } = props;
+
+  const { libs } = useContext(WorkspaceContext);
 
   if (!data) {
     return null;
@@ -24,7 +25,7 @@ const View = (props: any): any => {
     );
   }
 
-  const C = _.get(antd, data.type) || data.type;
+  const C = _.get(libs, data.type) || data.type;
 
   if (!data.children) {
     return (
