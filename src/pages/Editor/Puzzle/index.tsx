@@ -1,5 +1,5 @@
 import React from 'react';
-import Dragger from './Dragger';
+import Dragger from '../Dragger';
 import View from '../View';
 import _ from 'lodash';
 import { prepareProps } from '@/utils/utils';
