@@ -9,6 +9,7 @@
 | data | any | [组件描述对象](#组件描述对象) | - | 否 |
 | parentProps | any | 父组件的props，用来实现组件的封装，使父组件的属性传递给子组件 | - | 否 |
 | path | array | 组件在根组件中的索引 | [] | 否 |
+| currentPath | array | 当前选中组件的索引 | [] | 否 |
 | onChange | function(path, data) | 组件内容变化回调 | - | 是 |
 | onClick | function(path) | 组件单击事件回调 | - | 是 |
 
