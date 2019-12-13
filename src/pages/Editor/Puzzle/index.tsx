@@ -6,7 +6,18 @@ import { prepareProps } from '@/utils/utils';
 
 import { WorkspaceContext } from '@/pages/Workspace';
 
-const Puzzle = (props: any): any => {
+import { Component } from '@/models/workspace';
+
+export interface PuzzleProps {
+  data: Component;
+  onChange: Function;
+  onClick: Function;
+  path?: any[];  // todo 使用自定义对象
+  currentPath?: any[];
+  parentProps?: any;
+}
+
+const Puzzle = (props: PuzzleProps): any => {
   const { data, onChange, onClick, path = [], currentPath, parentProps } = props;
 
   const draggerProps = { data, path, onChange, onClick, currentPath };
@@ -53,7 +64,7 @@ const Puzzle = (props: any): any => {
   return (
     <Dragger type="container" {...draggerProps}>
       <C {...parsedProps}>
-        {data.children.map((d: any, i: number) => (
+        {data.children.map((d: Component, i: number) => (
           <Puzzle
             key={i}
             data={d}
