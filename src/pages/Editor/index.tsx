@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'dva';
-import { Drawer } from 'antd';
+import { Drawer, Tabs } from 'antd';
 import _ from 'lodash';
 import { updateByPath } from '@/utils/utils';
 import Puzzle from './Puzzle';
@@ -27,13 +27,24 @@ const Editor: React.FC<any> = (props) => {
 
   return (
     <React.Fragment>
-      <Puzzle
-        data={data}
-        onChange={handleChange}
-        onClick={handleClick}
-        currentPath={current}
-      />
-      {/* <View data={data} /> */}
+      <Tabs tabPosition="bottom">
+        <Tabs.TabPane tab="Puzzle" key="puzzle">
+          <Puzzle
+            data={data}
+            onChange={handleChange}
+            onClick={handleClick}
+            currentPath={current}
+          />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="Code" key="code">
+          <pre>
+            {JSON.stringify(data, undefined, 2)}
+          </pre>
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="Preview" key="preview">
+          <View data={data} />
+        </Tabs.TabPane>
+      </Tabs>
       <Drawer
         title="属性"
         placement="right"
