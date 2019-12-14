@@ -8,6 +8,7 @@ import { Tabs, Layout, Icon } from 'antd';
 import Elements from './Elements';
 import Project from './Project';
 import Editor from '../Editor';
+import Welcome from './Welcome';
 
 import style from './style.less';
 
@@ -69,7 +70,6 @@ const Workspace = (props: any) => {
       <WorkspaceContext.Provider value={{libs: antd}}>
         <Layout>
           <Layout.Header className={style.header}>
-            Puzzle
             <Icon 
               type={theme === 'dark' ? 'frown' : 'smile'}
               onClick={handleTheme}
@@ -85,32 +85,36 @@ const Workspace = (props: any) => {
                 <Tabs.TabPane key="antd" tab={<Icon type="appstore" />}>
                   <Elements />
                 </Tabs.TabPane>
-                <Tabs.TabPane key="other" tab={<Icon type="smile" />}>
-                  there is nothing
+                <Tabs.TabPane key="web" tab={<Icon type="global" />}>
+                  global
                 </Tabs.TabPane>
               </Tabs>
             </Layout.Sider>
             <Layout.Content className={style.content}>
-              <Tabs
-                className={style.tabsRight}
-                type="editable-card"
-                hideAdd
-                activeKey={current}
-                onEdit={(key: any, action: any) => handleTabsChange(key, action)}
-                onChange={(key: string) => handleTabsChange(key, 'select')}
-              >
-                {actives && actives.map((path: any) => (
-                  <Tabs.TabPane
-                    key={path} 
-                    tab={_.get(projects, path, {}).name}
-                  >
-                    <Editor
-                      data={component[path]}
-                      onChange={(data: any) => handleEdit(path, data)}
-                    />
-                  </Tabs.TabPane>
-                ))}
-              </Tabs>
+              {actives && actives.length > 0 ? (
+                <Tabs
+                  className={style.tabsRight}
+                  type="editable-card"
+                  hideAdd
+                  activeKey={current}
+                  onEdit={(key: any, action: any) => handleTabsChange(key, action)}
+                  onChange={(key: string) => handleTabsChange(key, 'select')}
+                >
+                  {actives.map((path: any) => (
+                    <Tabs.TabPane
+                      key={path} 
+                      tab={_.get(projects, path, {}).name}
+                    >
+                      <Editor
+                        data={component[path]}
+                        onChange={(data: any) => handleEdit(path, data)}
+                      />
+                    </Tabs.TabPane>
+                  ))}
+                </Tabs>
+              ) : (
+                <Welcome />
+              )}
             </Layout.Content>
           </Layout>
         </Layout>

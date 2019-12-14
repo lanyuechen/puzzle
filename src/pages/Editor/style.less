@@ -2,9 +2,21 @@
   height: 100%;
   &>[class~="ant-tabs-bar"] {
     margin: 0;
+    &>[class~=ant-tabs-nav-container] {
+      height: 24px!important;
+    }
+    [class~=ant-tabs-tab] {
+      height: 24px!important;
+      line-height: 24px!important;
+      padding: 0px 16px;
+      margin-right: 16px;
+      i {
+        margin: 0; // Icon
+      }
+    }
   }
   &>[class~="ant-tabs-content"] {
-    height: calc(100% - 40px);
+    height: calc(100% - 24px);
     &>[class~="ant-tabs-tabpane-active"] {
       padding: 16px;
       height: 100%;
