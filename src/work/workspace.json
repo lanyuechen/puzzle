@@ -27,6 +27,7 @@
       "children": [
         {
           "type": "Input",
+          "block": true,
           "props": {
             "prefix": "￥",
             "placeholder": "props.placeholder"
@@ -42,6 +43,7 @@
           "children": [
             {
               "type": "Input",
+              "block": true,
               "props": {
                 "placeholder": "username"
               }
@@ -53,6 +55,7 @@
           "children": [
             {
               "type": "Input",
+              "block": true,
               "props": {
                 "type": "password",
                 "placeholder": "password"
@@ -63,6 +66,7 @@
         {
           "type": "FormItem",
           "ref": [0, "children", 1],
+          "block": true,
           "props": {
             "placeholder": "pass to children"
           }
