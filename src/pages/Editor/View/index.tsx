@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { prepareProps } from '@/utils/utils';
 import { WorkspaceContext } from '@/pages/Workspace';
 
-const View = (props: any): any => {
+const _View = (props: any): any => {
   const { data, component, parentProps } = props;
 
   const { libs } = useContext(WorkspaceContext);
@@ -42,6 +42,8 @@ const View = (props: any): any => {
   );
 }
 
-export default connect(({ workspace }: any) => ({
+const View = connect(({ workspace }: any) => ({
   component: workspace.component,
-}))(View);
+}))(_View);
+
+export default View;

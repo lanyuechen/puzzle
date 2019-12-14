@@ -11,7 +11,6 @@ import Editor from '../Editor';
 
 import style from './style.less';
 
-import 'antd/dist/antd.css';
 const antd = require('antd');
 
 export const WorkspaceContext = createContext({

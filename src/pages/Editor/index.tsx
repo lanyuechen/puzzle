@@ -7,6 +7,8 @@ import Puzzle from './Puzzle';
 import View from './View';
 import Props from './Props';
 
+import style from './style.less';
+
 const Editor: React.FC<any> = (props) => {
   const {
     onChange,
@@ -27,7 +29,7 @@ const Editor: React.FC<any> = (props) => {
 
   return (
     <React.Fragment>
-      <Tabs tabPosition="bottom">
+      <Tabs tabPosition="bottom" className={style.tabs}>
         <Tabs.TabPane tab="Puzzle" key="puzzle">
           <Puzzle
             data={data}

@@ -1,0 +1,14 @@
+.tabs {
+  height: 100%;
+  &>[class~="ant-tabs-bar"] {
+    margin: 0;
+  }
+  &>[class~="ant-tabs-content"] {
+    height: calc(100% - 40px);
+    &>[class~="ant-tabs-tabpane-active"] {
+      padding: 16px;
+      height: 100%;
+      overflow: auto;
+    }
+  }
+}

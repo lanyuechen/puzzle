@@ -11,18 +11,19 @@
 
 .tabsLeft {
   height: 100%;
-  [class~="ant-tabs-content"] {
+  &>[class~="ant-tabs-content"] {
     padding: 0;
   }
 }
 
 .tabsRight {
-  [class~="ant-tabs-bar"] {
+  &>[class~="ant-tabs-bar"] {
     margin: 0;
   }
-  [class~="ant-tabs-content"] {
-    padding: 16px;
+  &>[class~="ant-tabs-content"] {
     height: calc(100vh - 40px);
-    overflow: auto;
+    &>[class~="ant-tabs-tabpane-active"] {
+      height: 100%;
+    }
   }
 }
