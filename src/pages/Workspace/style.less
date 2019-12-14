@@ -1,3 +1,15 @@
+.header {
+  height: 24px;
+  line-height: 24px;
+  padding: 0 16px;
+  background: hsla(0, 0%, 100%, .8);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
+  z-index: 1;
+}
+.body {
+  min-height: 0!important;
+  height: calc(100vh - 64px);
+}
 .sider {
   width: 256px;
   height: 100vh;
@@ -17,11 +29,19 @@
 }
 
 .tabsRight {
+  height: 100%;
   &>[class~="ant-tabs-bar"] {
     margin: 0;
+    background: #e6e8eb;
+    [class~=ant-tabs-tab] {
+      border-bottom: none!important;
+    }
+    [class~=ant-tabs-tab-active] {
+      background: #f0f2f5!important;
+    }
   }
   &>[class~="ant-tabs-content"] {
-    height: calc(100vh - 40px);
+    height: calc(100% - 40px);
     &>[class~="ant-tabs-tabpane-active"] {
       height: 100%;
     }
