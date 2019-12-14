@@ -1,13 +1,28 @@
-import React from 'react';
-import Dragger from './Dragger';
+import React, { useContext } from 'react';
+import Dragger from '../Dragger';
+import View from '../View';
+import _ from 'lodash';
+import { prepareProps } from '@/utils/utils';
 
-import 'antd/dist/antd.css';
-const antd = require('antd');
+import { WorkspaceContext } from '@/pages/Workspace';
 
-const Puzzle = (props: any): any => {
-  const { data, onChange, onClick, path = [] } = props;
+import { Component } from '@/models/workspace';
 
-  const draggerProps = { data, path, onChange, onClick };
+export interface PuzzleProps {
+  data: Component;
+  onChange: Function;
+  onClick: Function;
+  path?: any[];  // todo 使用自定义对象
+  currentPath?: any[];
+  parentProps?: any;
+}
+
+const Puzzle = (props: PuzzleProps): any => {
+  const { data, onChange, onClick, path = [], currentPath, parentProps } = props;
+
+  const draggerProps = { data, path, onChange, onClick, currentPath };
+
+  const { libs } = useContext(WorkspaceContext);
 
   // data 为null、false、undefined
   if (!data) {
@@ -23,13 +38,24 @@ const Puzzle = (props: any): any => {
     );
   }
 
-  const C = antd[data.type] || data.type;
+  const parsedProps = prepareProps(data.props, parentProps);
+
+  // todo 如果data为引用，则加载引用的组件data并跟当前对象合并，次组件内部不可编辑，只可以编辑整体的属性
+  if (data.ref) {
+    return (
+      <Dragger type="element" {...draggerProps}>
+        <View data={data} parentProps={parsedProps} />
+      </Dragger>
+    );
+  }
+
+  const C = _.get(libs, data.type) || data.type;
 
   // 不包含子元素
   if (!data.children) {
     return (
       <Dragger type="element" {...draggerProps}>
-        <C {...(data.props || {})} />
+        <C {...parsedProps} />
       </Dragger>
     );
   }
@@ -37,14 +63,16 @@ const Puzzle = (props: any): any => {
   // 包含子元素
   return (
     <Dragger type="container" {...draggerProps}>
-      <C {...(data.props || {})}>
-        {data.children.map((d: any, i: number) => (
+      <C {...parsedProps}>
+        {data.children.map((d: Component, i: number) => (
           <Puzzle
             key={i}
             data={d}
             path={path.concat('children', i)}
+            currentPath={currentPath}
             onChange={onChange}
             onClick={onClick}
+            parentProps={parsedProps}
           />
         ))}
       </C>

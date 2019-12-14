@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { connect } from 'dva';
+import _ from 'lodash';
+import { prepareProps } from '@/utils/utils';
+import { WorkspaceContext } from '@/pages/Workspace';
 
-const antd = require('antd');
+const _View = (props: any): any => {
+  const { data, component, parentProps } = props;
 
-const prepareProps = (props: any) => {
-  return props || {};
-};
-
-const View = (props: any): any => {
-  const { data } = props;
+  const { libs } = useContext(WorkspaceContext);
 
   if (!data) {
     return null;
@@ -17,21 +17,33 @@ const View = (props: any): any => {
     return data;
   }
 
-  const C = antd[data.type] || data.type;
+  const parsedProps = prepareProps(data.props, parentProps);
+
+  if (data.ref) {
+    return (
+      <View data={component[data.ref.join('.')]} parentProps={parsedProps} />
+    );
+  }
+
+  const C = _.get(libs, data.type) || data.type;
 
   if (!data.children) {
     return (
-      <C {...prepareProps(data.props)} />
+      <C {...parsedProps} />
     );
   }
 
   return (
-    <C {...prepareProps(data.props)}>
+    <C {...parsedProps}>
       {data.children.map((d: any, i: number) => (
-        <View data={d} key={i} />
+        <View data={d} key={i} parentProps={parsedProps} />
       ))}
     </C>
   );
 }
+
+const View = connect(({ workspace }: any) => ({
+  component: workspace.component,
+}))(_View);
 
 export default View;

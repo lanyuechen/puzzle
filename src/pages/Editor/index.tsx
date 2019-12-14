@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { connect } from 'dva';
-import { Drawer } from 'antd';
+import { Drawer, Tabs, Icon } from 'antd';
 import _ from 'lodash';
 import { updateByPath } from '@/utils/utils';
 import Puzzle from './Puzzle';
 import View from './View';
 import Props from './Props';
-import Mark from './Mark';
+
+import style from './style.less';
 
 const Editor: React.FC<any> = (props) => {
   const {
@@ -14,44 +15,54 @@ const Editor: React.FC<any> = (props) => {
     data = {"type": "div", "children": []},
   } = props;
 
-  const [ current, setCurrent ] = useState<any>({});
+  const [ current, setCurrent ] = useState<any>();
 
   const handleChange = (path: any, spec: any) => {
     console.log('>>> handleChange', path, spec);
     onChange(updateByPath(data, path, spec));
   };
 
-  const handleClick = (ref: any, path: any) => {
+  const handleClick = (path: any) => {
     console.log('>>> handleClick', path);
-    const rect = ref.current.getBoundingClientRect();
-    setCurrent({ path, rect});
+    setCurrent(path);
   };
 
   return (
     <React.Fragment>
-      <Puzzle
-        data={data}
-        onChange={handleChange}
-        onClick={handleClick}
-      />
-      {/* <View data={data} /> */}
+      <Tabs tabPosition="bottom" className={style.tabs}>
+        <Tabs.TabPane tab={<Icon type="build" />} key="puzzle">
+          <Puzzle
+            data={data}
+            onChange={handleChange}
+            onClick={handleClick}
+            currentPath={current}
+          />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab={<Icon type="code" />} key="code">
+          <pre>
+            {JSON.stringify(data, undefined, 2)}
+          </pre>
+        </Tabs.TabPane>
+        <Tabs.TabPane tab={<Icon type="eye" />} key="preview">
+          <View data={data} />
+        </Tabs.TabPane>
+      </Tabs>
       <Drawer
         title="属性"
         placement="right"
-        visible={!!current.path}
-        onClose={() => setCurrent({})}
+        visible={!!current}
+        onClose={() => setCurrent(null)}
         mask={false}
         bodyStyle={{
           padding: 0,
         }}
       >
         <Props
-          data={current.path && current.path.length ? _.get(data, current.path) : data}
-          path={current.path}
+          data={current && current.length ? _.get(data, current) : data}
+          path={current}
           onChange={handleChange}
         />
       </Drawer>
-      <Mark rect={current.rect} />
     </React.Fragment>
   );
 }
