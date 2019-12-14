@@ -26,6 +26,7 @@ const Workspace = (props: any) => {
     dispatch({
       type: 'workspace/load',
     });
+    document.body.style.filter = theme === 'dark' ? 'invert(1)' : 'none';
   }, []);
 
   // 自动保存 // todo 更好的方式代替
@@ -37,6 +38,7 @@ const Workspace = (props: any) => {
 
   const handleTheme = () => {
     localStorage.theme = theme === 'dark' ? 'light' : 'dark';
+    document.body.style.filter = theme === 'dark' ? 'none' : 'invert(1)';
     setTheme(localStorage.theme);
   };
 
@@ -65,10 +67,7 @@ const Workspace = (props: any) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <WorkspaceContext.Provider value={{libs: antd}}>
-        <Layout
-          style={theme === 'dark' ? {filter: 'invert(1)', overflow: 'hidden'} : {}}
-          // filter存在时会出现滚动条，原因未知，所以添加overflow: hidden去掉滚动条
-        >
+        <Layout>
           <Layout.Header className={style.header}>
             Puzzle
             <Icon 
