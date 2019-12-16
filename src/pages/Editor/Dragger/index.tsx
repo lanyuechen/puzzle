@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
+import { withId } from '@/models/workspace';
 
 import style from './style.less';
-import uuid from '@/utils/uuid';
 
 const Dragger: React.FC<any> = (props) => {
   const { children, onChange, onClick, path, currentPath, type = 'container', data } = props;
@@ -42,10 +42,7 @@ const Dragger: React.FC<any> = (props) => {
       if (item.path.join('.') !== path.join('.')) {
         // 添加新组件
         onChange(path.concat('children'), {
-          $push: [{
-            ...item.data,
-            id: item.data.id || uuid(),
-          }],
+          $push: [ withId(item.data) ],
         });
         // 移除旧组件
         onChange(item.path.slice(0, -1), {

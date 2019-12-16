@@ -42,7 +42,7 @@ export interface ModelType {
   };
 }
 
-const withId = (data: Component): Component => {
+export const withId = (data: Component): Component => {
   if (typeof(data) !== 'object') {
     return data;
   }
