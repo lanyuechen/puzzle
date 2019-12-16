@@ -1,3 +1,24 @@
+export const test = [
+  {
+    type: 'Button',
+    children: [
+      {
+        type: 'Button',
+        props: {
+          children: '按钮'
+        },
+      },
+      {
+        type: 'Button',
+        props: {
+          type: 'primary',
+          children: '按钮'
+        },
+      },
+    ],
+  },
+]
+
 export default [
   {
     type: 'Input',
