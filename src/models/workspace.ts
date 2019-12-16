@@ -1,8 +1,8 @@
 import { Effect } from 'dva';
 import { Reducer } from 'redux';
-import { updateByPath } from '@/utils/utils';
 
 import { load, save } from '@/services/workspace';
+import uuid from '@/utils/uuid';
 
 export interface Project {
   name: string;
@@ -11,6 +11,7 @@ export interface Project {
 }
 
 export interface Component {
+  id: string;
   type: string;
   ref?: string[];
   props?: any;
@@ -41,6 +42,17 @@ export interface ModelType {
   };
 }
 
+const withId = (data: Component): Component => {
+  if (typeof(data) !== 'object') {
+    return data;
+  }
+  return {
+    ...data,
+    id: data.id || uuid(),
+    children: data.children && data.children.map(withId),
+  }
+}
+
 const Model: ModelType = {
   namespace: 'workspace',
   state: {
@@ -53,7 +65,13 @@ const Model: ModelType = {
       const res = yield call(load);
       yield put({
         type: 'setWorkspace',
-        payload: res,
+        payload: {
+          ...res,
+          component: Object.entries(res.component).reduce((p: any, [k, v]: any) => ({
+            ...p,
+            [k]: withId(v),
+          }), {}),
+        },
       });
     },
     *save(action, { call, select }) {

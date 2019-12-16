@@ -66,7 +66,7 @@ const Puzzle = (props: PuzzleProps): any => {
       <C {...parsedProps}>
         {data.children.map((d: Component, i: number) => (
           <Puzzle
-            key={i}
+            key={d.id || i}
             data={d}
             path={path.concat('children', i)}
             currentPath={currentPath}

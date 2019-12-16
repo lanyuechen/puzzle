@@ -3,12 +3,20 @@ import pathRegexp from 'path-to-regexp';
 import update from 'immutability-helper';
 import _ from 'lodash';
 
+// updateByPath如果连续调用的话，会导致data的旧值覆盖新值，这里通过缓存的方式防止覆盖
+const CACHE = Symbol('cache');
+const DATA_IDX = Symbol('data_idx');
 export const updateByPath = (data: any, path: any, spec: any) => {
+  if (window[DATA_IDX] !== data) {
+    window[DATA_IDX] = data;
+    window[CACHE] = data;
+  }
   if (typeof(path) === 'string') {
     path = path.split('.');
   }
   spec = path.reduceRight((p: any, k: any) => ({ [k]: p }), spec);
-  return update(data, spec);
+  window[CACHE] = update(window[CACHE], spec);
+  return window[CACHE];
 }
 
 export const toCamelCase = (name: string) => {

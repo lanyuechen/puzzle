@@ -1,6 +1,6 @@
 {
   "actives": [
-    "0.children.0"
+    "0.children.2"
   ],
   "current": "0.children.0",
   "projects": [
@@ -19,6 +19,23 @@
     }
   ],
   "component": {
+    "0.children.2": {
+      "type": "div",
+      "children": [
+        {
+          "type": "div",
+          "children": ["1111"]
+        },
+        {
+          "type": "div",
+          "children": ["2222"]
+        },
+        {
+          "type": "div",
+          "children": ["3333"]
+        }
+      ]
+    },
     "0.children.1": {
       "type": "Form.Item",
       "props": {

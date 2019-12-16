@@ -1,21 +1,38 @@
-import React from 'react';
-import { Button } from 'antd';
+import React, { useEffect } from 'react';
+import { connect } from 'dva';
 
-import workspace from '@/work/workspace';
-import Builder from '@/utils/builder';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
+import Editor from '../Editor';
 
-const builder = new Builder(workspace);
+const Test = function(props: any): any {
+  const { workspace, dispatch } = props;
+  const { component, projects, actives, current } = workspace;
 
-export default function(props: any): any {
+  useEffect(() => {
+    dispatch({
+      type: 'workspace/load',
+    });
+  }, []);
 
-
-  const handleClick = () => {
-    builder.build();
-  }
+  const handleEdit = (path: string, data: any) => {
+    dispatch({
+      type: 'workspace/setComponent',
+      path,
+      payload: data,
+    });
+  };
 
   return (
-    <div>
-      <Button onClick={handleClick}>导出</Button>
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <Editor
+        data={component[actives[0]]}
+        onChange={(data: any) => handleEdit(actives[0], data)}
+      />
+    </DndProvider>
   );
 }
+
+export default connect(({ workspace }: any) => ({
+  workspace
+}))(Test);
