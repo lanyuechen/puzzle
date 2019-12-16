@@ -100,7 +100,7 @@ const Workspace = (props: any) => {
                   onEdit={(key: any, action: any) => handleTabsChange(key, action)}
                   onChange={(key: string) => handleTabsChange(key, 'select')}
                 >
-                  {actives.map((path: any) => (
+                  {actives.filter((path: any) => _.get(projects, path)).map((path: any) => (
                     <Tabs.TabPane
                       key={path} 
                       tab={_.get(projects, path, {}).name}

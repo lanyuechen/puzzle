@@ -99,9 +99,11 @@ const Model: ModelType = {
       };
     },
     setActiveProjects(state: Workspace, action) {
+      const { current } = state;
       return {
         ...state,
         actives: action.payload,
+        current: action.payload.includes(current) ? current : action.payload[0],
       };
     },
     setProject(state: Workspace, action) {
