@@ -30,13 +30,13 @@ const Elements: React.FC<any> = (props) => {
   };
 
   return (
-    <div className={style.container} style={{width: 256}}>
-      <Collapse accordion>
+    <div className={style.container}>
+      <Collapse accordion bordered={false}>
         {config.map((component: any) => (
           <Collapse.Panel 
             header={component.type} 
             key={component.type}
-            extra={<Block data={component.groups[0].elements[0]}><Icon type="inbox" /></Block>}
+            extra={<Block data={component.groups[0].elements[0]}><Icon style={{fontSize: '18px'}} type="inbox" /></Block>}
           >
             {component.groups.map((group: any, i: number) => (
               <CodeBox title={group.title} description={group.desc} key={i}>
