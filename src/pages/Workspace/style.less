@@ -34,6 +34,10 @@
   }
   &>[class~="ant-tabs-content"] {
     padding: 0;
+    height: calc(100% - 24px);
+    &>[class~="ant-tabs-tabpane-active"] {
+      height: 100%;
+    }
   }
 }
 

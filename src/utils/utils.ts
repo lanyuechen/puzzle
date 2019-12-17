@@ -36,7 +36,7 @@ export const toUpperFirstCase = (str: string) => {
 export const prepareProps = (props: any = {}, parentProps: any) => {
   const res = {};
   Object.entries(props).map(([k, v]: any) => {
-    if (v.includes('props.')) {
+    if (typeof(v) === 'string' && v.includes('props.')) {
       res[k] = _.get(parentProps, v.replace('props.', '')) || v;
     } else {
       res[k] = v;

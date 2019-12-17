@@ -65,6 +65,8 @@ const Workspace = (props: any) => {
     });
   };
 
+  console.log('++++++++++===', actives)
+
   return (
     <DndProvider backend={HTML5Backend}>
       <WorkspaceContext.Provider value={{libs: antd}}>

@@ -29,9 +29,18 @@ const Elements: React.FC<any> = (props) => {
     });
   };
 
+  const scale = 0.5;
+
   return (
-    <div className={style.container}>
-      <Collapse accordion bordered={false}>
+    <div 
+      className={style.container}
+      style={{
+        height: `${1 / scale * 100}%`,
+        width: `${1 / scale * 100}%`,
+        transform: `scale(${scale})`,
+      }}
+    >
+      <Collapse bordered={false}>
         {config.map((component: any) => (
           <Collapse.Panel 
             header={component.type} 
@@ -68,7 +77,7 @@ const Block: React.FC<any> = (props) => {
   });
 
   return (
-    <span ref={drag} style={{display: 'inline-block', margin: 4}}>
+    <span ref={drag} className={style.block}>
       {children}
     </span>
   );

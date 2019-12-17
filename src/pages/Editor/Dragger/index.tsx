@@ -37,14 +37,22 @@ const Dragger: React.FC<any> = (props) => {
       if (monitor.didDrop()) {
         return;
       }
-      const dragIdx = item.path[item.path.length - 1];
+      if (type === 'element') { // 元素组件不可拖入
+        return;
+      }
 
-      if (item.path.join('.') !== path.join('.')) {
+      if (!item.path) {
+        // 添加新组件
+        onChange(path.concat('children'), {
+          $push: [ withId(item.data) ],
+        });
+      } else if (item.path.join('.') !== path.join('.')) {
         // 添加新组件
         onChange(path.concat('children'), {
           $push: [ withId(item.data) ],
         });
         // 移除旧组件
+        const dragIdx = item.path[item.path.length - 1];
         onChange(item.path.slice(0, -1), {
           $splice: [[dragIdx, 1]],
         });
@@ -54,7 +62,7 @@ const Dragger: React.FC<any> = (props) => {
       if (!ref.current) {
         return;
       }
-      if (item.path.length !== path.length) {
+      if (!item.path || item.path.length !== path.length) {
         return;
       }
       const dragIdx = item.path[item.path.length - 1];
@@ -107,18 +115,14 @@ const Dragger: React.FC<any> = (props) => {
     }
   });
 
-  if (type === 'container') {
-    drag(drop(ref));
-  } else if (type === 'element') {
-    drag(ref);
-  }
-
   const handleClick = (e: any) => {
     e.stopPropagation();
     onClick(path);
   };
 
   const selected = currentPath && path.join() === currentPath.join();
+
+  drag(drop(ref));
 
   return (
     <div 
