@@ -8,10 +8,6 @@ import Elements from '../Workspace/Elements';
 
 import { read } from '@/services/git';
 
-read('master:components/button/demo/basic.md').then(res => {
-  console.log('+++res', res);
-});
-
 const Test = function(props: any): any {
   const { workspace, dispatch } = props;
   const { component, projects, actives, current } = workspace;

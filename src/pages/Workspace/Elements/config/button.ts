@@ -125,4 +125,33 @@ export default [
       },
     ],
   },
+  {
+    title: '按钮组合',
+    desc: '可以将多个 Button 放入 Button.Group 的容器中。通过设置 size 为 large small 分别把按钮组合设为大、小尺寸。若不设置 size，则尺寸为中。',
+    elements: [
+      {
+        type: 'Button.Group',
+        children: [
+          {
+            type: 'Button',
+            props: {
+              children: 'L',
+            },
+          },
+          {
+            type: 'Button',
+            props: {
+              children: 'M',
+            },
+          },
+          {
+            type: 'Button',
+            props: {
+              children: 'R',
+            },
+          },
+        ],
+      },
+    ],
+  },
 ];

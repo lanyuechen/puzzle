@@ -13,6 +13,22 @@ import style from './style.less';
 const antd = require('antd');
 
 const Elements: React.FC<any> = (props) => {
+  
+  const renderChildren = (children: any, defaultValue: any): any => {
+    if (!Array.isArray(children)) {
+      return defaultValue;
+    }
+    return children.map((child: any, i: number) => {
+      const { type, props = {}, children } = child;
+      const C = _.get(antd, type) || type;
+      return (
+        <C {...props} key={i}>
+          {renderChildren(children, props.children)}
+        </C>
+      );
+    });
+  };
+
   return (
     <div className={style.container} style={{width: 256}}>
       <Collapse accordion>
@@ -25,13 +41,16 @@ const Elements: React.FC<any> = (props) => {
             {component.groups.map((group: any, i: number) => (
               <CodeBox title={group.title} description={group.desc} key={i}>
                 {group.elements.map((d: Component, j: number) => {
-                    const C = _.get(antd, d.type) || d.type;
-                    return (
-                      <Block data={d} key={j}>
-                        <C {...(d.props || {})} />
-                      </Block>
-                    );
-                  })}
+                  const { type, props = {}, children } = d;
+                  const C = _.get(antd, type) || type;
+                  return (
+                    <Block data={d} key={j}>
+                      <C {...props}>
+                        {renderChildren(children, props.children)}
+                      </C>
+                    </Block>
+                  );
+                })}
               </CodeBox>
             ))}
           </Collapse.Panel>
