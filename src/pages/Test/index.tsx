@@ -4,6 +4,7 @@ import { connect } from 'dva';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import Editor from '../Editor';
+import Elements from '../Workspace/Elements';
 
 const Test = function(props: any): any {
   const { workspace, dispatch } = props;
@@ -25,10 +26,7 @@ const Test = function(props: any): any {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <Editor
-        data={component[actives[0]]}
-        onChange={(data: any) => handleEdit(actives[0], data)}
-      />
+      <Elements />
     </DndProvider>
   );
 }

@@ -1,38 +1,42 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import { Row, Col, Collapse, Button } from 'antd';
+import { Collapse, Icon } from 'antd';
+import { Component } from '@/models/workspace';
+import _ from 'lodash';
+
+import CodeBox from './CodeBox';
 
 import config from './config';
 
 import style from './style.less';
 
+const antd = require('antd');
+
 const Elements: React.FC<any> = (props) => {
   return (
-    <div className={style.container}>
+    <div className={style.container} style={{width: 256}}>
       <Collapse accordion>
-        <Collapse.Panel 
-          header="Button" 
-          key="Button"
-          extra={<Button>按钮</Button>}
-        >
-          按钮
-        </Collapse.Panel>
-        <Collapse.Panel header="Icon" key="Icon">
-          222
-        </Collapse.Panel>
-        <Collapse.Panel header="Typography" key="Typography">
-          333
-        </Collapse.Panel>
-      </Collapse>
-      <Row gutter={[8, 8]}>
-        {config.map((d: any) => (
-          <Col span={12} key={d.type}>
-            <Block data={d}>
-              <a className={style.btn}>{d.type}</a>
-            </Block>
-          </Col>
+        {config.map((component: any) => (
+          <Collapse.Panel 
+            header={component.type} 
+            key={component.type}
+            extra={<Block data={component.groups[0].elements[0]}><Icon type="inbox" /></Block>}
+          >
+            {component.groups.map((group: any, i: number) => (
+              <CodeBox title={group.title} description={group.desc} key={i}>
+                {group.elements.map((d: Component, j: number) => {
+                    const C = _.get(antd, d.type) || d.type;
+                    return (
+                      <Block data={d} key={j}>
+                        <C {...(d.props || {})} />
+                      </Block>
+                    );
+                  })}
+              </CodeBox>
+            ))}
+          </Collapse.Panel>
         ))}
-      </Row>
+      </Collapse>
     </div>
   );
 }
@@ -45,9 +49,9 @@ const Block: React.FC<any> = (props) => {
   });
 
   return (
-    <div ref={drag}>
+    <span ref={drag} style={{display: 'inline-block', margin: 4}}>
       {children}
-    </div>
+    </span>
   );
 }
 

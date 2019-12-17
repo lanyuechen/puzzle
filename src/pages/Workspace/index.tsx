@@ -82,7 +82,7 @@ const Workspace = (props: any) => {
                 <Tabs.TabPane key="files" tab={<Icon type="folder" />}>
                   <Project projects={projects} current={current} dispatch={dispatch} />
                 </Tabs.TabPane>
-                <Tabs.TabPane key="antd" tab={<Icon type="appstore" />}>
+                <Tabs.TabPane key="antd" tab={<Icon type="ant-design" />}>
                   <Elements />
                 </Tabs.TabPane>
                 <Tabs.TabPane key="web" tab={<Icon type="global" />}>
