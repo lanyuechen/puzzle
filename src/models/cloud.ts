@@ -1,10 +1,11 @@
 import { Effect } from 'dva';
 import { Reducer } from 'redux';
 
-import { query } from '@/services/cloud';
+import { query, comments } from '@/services/cloud';
 
 export interface Cloud {
   list: any[];
+  comments: any[];
 }
 
 export interface ModelType {
@@ -12,6 +13,7 @@ export interface ModelType {
   state: Cloud;
   effects: {
     list: Effect;
+    comments: Effect;
   };
   reducers: {
     setWorkspace: Reducer<Cloud>;
@@ -22,6 +24,7 @@ const Model: ModelType = {
   namespace: 'cloud',
   state: {
     list: [],
+    comments: [],
   },
   effects: {
     *list(action, { call, put }) {
@@ -30,6 +33,15 @@ const Model: ModelType = {
         type: 'setState',
         payload: {
           list: res,
+        },
+      });
+    },
+    *comments(action, { call, put }) {
+      const res = yield call(comments, action.payload);
+      yield put({
+        type: 'setState',
+        payload: {
+          comments: res,
         },
       });
     },

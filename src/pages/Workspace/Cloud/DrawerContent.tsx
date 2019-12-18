@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'dva';
 import { Typography, Divider, Icon, Rate } from 'antd';
+
+import CommentList from './CommentList';
 
 const { Title, Paragraph } = Typography;
 
-export const IconText = ({ type, text }: any) => (
+export const IconText = ({ text, ...others }: any) => (
   <span style={{fontSize: 12}}>
-    <Icon type={type} style={{ marginRight: 4 }} />
+    <Icon {...others} style={{ margin: 4 }} />
     {text}
   </span>
 );
 
-export default (props: any) => {
-  const { title, desc, rating, star, download } = props;
+const DrawerContent = (props: any) => {
+  const { dispatch, comments, id, title, desc, rating, star, download } = props;
+
+  useEffect(() => {
+    dispatch({
+      type: 'cloud/comments',
+      payload: id,
+    })
+  }, [id]);
 
   return (
     <div>
@@ -28,6 +38,12 @@ export default (props: any) => {
         <Divider type="vertical" />
         <IconText type="download" text={download} key="download" />
       </Paragraph>
+      <CommentList dataSource={comments} />
     </div>
   );
 };
+
+export default connect(({ cloud, loading }: any) => ({
+  comments: cloud.comments,
+  loading: loading.models.cloud,
+}))(DrawerContent);
