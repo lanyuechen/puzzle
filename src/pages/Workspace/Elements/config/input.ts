@@ -95,37 +95,37 @@ export default [
             type: 'Row',
             props: {
               gutter: 8,
-              children: [
-                {
-                  type: 'Col',
-                  props: {
-                    span: 5,
-                    children: [
-                      {
-                        type: 'Input',
-                        props: {
-                          defaultValue: '0571',
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  type: 'Col',
-                  props: {
-                    span: 8,
-                    children: [
-                      {
-                        type: 'Input',
-                        props: {
-                          defaultValue: '26888888',
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
             },
+            children: [
+              {
+                type: 'Col',
+                props: {
+                  span: 5,
+                },
+                children: [
+                  {
+                    type: 'Input',
+                    props: {
+                      defaultValue: '0571',
+                    },
+                  },
+                ],
+              },
+              {
+                type: 'Col',
+                props: {
+                  span: 8,
+                },
+                children: [
+                  {
+                    type: 'Input',
+                    props: {
+                      defaultValue: '26888888',
+                    },
+                  },
+                ],
+              },
+            ],
           },
         ],
       },

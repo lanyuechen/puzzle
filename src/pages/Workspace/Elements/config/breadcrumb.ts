@@ -18,7 +18,7 @@ export default [
               {
                 type: 'a',
                 props: {
-                  href: 'javascript:;',
+                  href: '',
                   children: 'Application Center',
                 },
               },
@@ -30,7 +30,7 @@ export default [
               {
                 type: 'a',
                 props: {
-                  href: 'javascript:;',
+                  href: '',
                   children: 'Application List',
                 },
               },

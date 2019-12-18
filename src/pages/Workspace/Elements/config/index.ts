@@ -2,6 +2,7 @@ import button from './button';
 import input from './input';
 import icon from './icon';
 import typography from './typography';
+import grid from './grid';
 import layout from './layout';
 import breadcrumb from './breadcrumb';
 
@@ -21,6 +22,10 @@ export default [
   {
     type: 'Typography',
     groups: typography,
+  },
+  {
+    type: 'Grid',
+    groups: grid,
   },
   {
     type: 'Layout',
