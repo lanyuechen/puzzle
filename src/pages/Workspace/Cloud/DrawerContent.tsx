@@ -1,7 +1,7 @@
 import React from 'react';
-import { Typography, Divider, Icon } from 'antd';
+import { Typography, Divider, Icon, Rate } from 'antd';
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Paragraph } = Typography;
 
 export const IconText = ({ type, text }: any) => (
   <span style={{fontSize: 12}}>
@@ -11,22 +11,23 @@ export const IconText = ({ type, text }: any) => (
 );
 
 export default (props: any) => {
-  const { title, desc } = props;
+  const { title, desc, rating, star, download } = props;
 
   return (
     <div>
-      <Typography>
-        <Title level={4}>{title}</Title>
-        <Paragraph>
-          {desc}
-        </Paragraph>
-        <Paragraph>
-          <IconText type="star-o" text="12" key="star" />
-          <Divider type="vertical" />
-          <IconText type="download" text="2" key="download" />
-        </Paragraph>
-        <Divider /> 
-      </Typography>
+      <Title level={4}>{title}</Title>
+      <div>
+        <Rate allowHalf value={rating / 2} style={{fontSize: 14}} />&nbsp;
+        <small>{rating}</small>
+      </div>
+      <Paragraph>
+        {desc}
+      </Paragraph>
+      <Paragraph>
+        <IconText type="star-o" text={star} key="star" />
+        <Divider type="vertical" />
+        <IconText type="download" text={download} key="download" />
+      </Paragraph>
     </div>
   );
 };

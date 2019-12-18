@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'dva';
-import { Input, List, Typography, Drawer, Skeleton, Tag, Badge } from 'antd';
+import { Input, List, Typography, Drawer, Skeleton, Tag } from 'antd';
 
 import DrawerContent, { IconText } from './DrawerContent';
 
