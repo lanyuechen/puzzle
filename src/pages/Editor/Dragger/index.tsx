@@ -15,7 +15,7 @@ const Dragger: React.FC<any> = (props) => {
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
-    end: (item: any, monitor: any) => { // 每次drop都删除旧的元素，以此实现移动元素
+    end: (item: any, monitor: any) => {
       if (!path.length) {
         return;
       }
@@ -41,12 +41,14 @@ const Dragger: React.FC<any> = (props) => {
         return;
       }
 
-      if (!item.path) {
+      if (!item.path) { // 如果path不存在，说明是新组件，直接添加
         // 添加新组件
         onChange(path.concat('children'), {
           $push: [ withId(item.data) ],
         });
-      } else if (item.path.join('.') !== path.join('.')) {
+      } else if (item.path.slice(0, -2).join('.') === path.join('.')) { // 如果拖动组件最终为该组件的父组件，则取消操作
+        return;
+      } else if (item.path.join('.') !== path.join('.')) { // 如果拖动组件和目标组件不一致，则执行拖动操作
         // 添加新组件
         onChange(path.concat('children'), {
           $push: [ withId(item.data) ],
