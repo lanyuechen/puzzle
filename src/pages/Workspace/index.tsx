@@ -5,9 +5,11 @@ import { DndProvider } from 'react-dnd';
 import _ from 'lodash';
 import { Tabs, Layout, Icon } from 'antd';
 
+import Editor from '../Editor';
+
 import Elements from './Elements';
 import Project from './Project';
-import Editor from '../Editor';
+import Cloud from './Cloud';
 import Welcome from './Welcome';
 
 import style from './style.less';
@@ -65,8 +67,6 @@ const Workspace = (props: any) => {
     });
   };
 
-  console.log('++++++++++===', actives)
-
   return (
     <DndProvider backend={HTML5Backend}>
       <WorkspaceContext.Provider value={{libs: antd}}>
@@ -88,7 +88,7 @@ const Workspace = (props: any) => {
                   <Elements />
                 </Tabs.TabPane>
                 <Tabs.TabPane key="web" tab={<Icon type="global" />}>
-                  global
+                  <Cloud />
                 </Tabs.TabPane>
               </Tabs>
             </Layout.Sider>

@@ -7,6 +7,7 @@ import Editor from '../Editor';
 import Elements from '../Workspace/Elements';
 
 import { read } from '@/services/git';
+import Cloud from '@/pages/Workspace/Cloud';
 
 const Test = function(props: any): any {
   const { workspace, dispatch } = props;
@@ -25,6 +26,12 @@ const Test = function(props: any): any {
       payload: data,
     });
   };
+
+  return (
+    <div style={{width: 211, height: '100%', border: '1px solid #ddd'}}>
+      <Cloud />
+    </div>
+  );
 
   return (
     <DndProvider backend={HTML5Backend}>
