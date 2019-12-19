@@ -105,13 +105,6 @@ export default [
           children: '文本文本文本文本...',
         },
       },
-      {
-        type: 'Typography.Text',
-        props: {
-          ellipsis: true,
-          children: '单行溢出文本单行溢出文本单行溢出文本单行溢出文本单行溢出文本单行溢出文本单行溢出文本单行溢出文本单行溢出文本单行溢出文本',
-        },
-      },
     ],
   },
   {
@@ -130,6 +123,13 @@ export default [
         props: {
           copyable: true,
           children: '可复制文本可复制文本...',
+        },
+      },
+      {
+        type: 'Typography.Paragraph',
+        props: {
+          ellipsis: true,
+          children: '单行溢出文本单行溢出文本单行溢出文本单行溢出文本单行溢出文本单行溢出文本单行溢出文本单行溢出文本单行溢出文本单行溢出文本',
         },
       },
       {

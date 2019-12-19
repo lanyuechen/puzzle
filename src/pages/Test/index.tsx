@@ -32,7 +32,8 @@ const Test = function(props: any): any {
     <div style={{padding: 20}}>
       <Input.Group compact>
         <Magic 
-          ref={ref} 
+          ref={ref}
+          onChange={(ref: any) => drag(drop(ref))}
           style={{
             border: '1px dashed #ccc',
             background: isOver ? 'rgba(0, 0, 0, 0.1)' : '#fff',

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'dva';
-import { Input, List, Typography, Drawer, Skeleton, Tag } from 'antd';
+import { Input, List, Typography, Drawer, Spin, Tag } from 'antd';
 
 import DrawerContent, { IconText } from './DrawerContent';
 
@@ -45,7 +45,7 @@ const Cloud = (props: any) => {
     >
       <Input.Search placeholder="搜索" onSearch={handleSearch} />
 
-      <Skeleton loading={loading} active>
+      <Spin spinning={loading}>
         <List itemLayout="vertical">
           {list.map((item: any, i: number) => (
             <List.Item 
@@ -65,7 +65,7 @@ const Cloud = (props: any) => {
             </List.Item>
           ))}
         </List>
-      </Skeleton>
+      </Spin>
       
       <Drawer
         width={'calc(100% - 256px)'}

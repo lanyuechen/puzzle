@@ -5,8 +5,6 @@ import { withId } from '@/models/workspace';
 
 import Magic from './Magic';
 
-import style from './style.less';
-
 const Dragger: React.FC<any> = (props) => {
   const { children, onChange, onClick, path, currentPath, type = 'container', data } = props;
 
@@ -132,31 +130,20 @@ const Dragger: React.FC<any> = (props) => {
     <Magic
       ref={ref}
       onClick={handleClick}
+      onChange={(ref: any) => drag(drop(ref))}
       style={{
-        border: '1px solid #ccc',
-        background: isOver ? 'rgba(0, 0, 0, 0.1)' : '#fff',
-        opacity: isDragging ? 0 : 1,
-        borderColor: selected ? '#23c132' : '#ccc',
+        margin: 8,
+        maxWidth: 'calc(100% - 16px)',
+        outline: '#ccc dashed 1px',
+        opacity: isDragging ? 0.2 : 1,
+        outlineColor: selected ? '#23c132' : '#ccc',
+        boxShadow: isOver ? '1px 1px 10px rgba(0, 0, 0, 0.5)' : undefined,
+        overflow: children.type === 'div' ? 'hidden' : undefined,
+        minHeight: children.type === 'div' ? 30 : undefined,
       }}
     >
       {children}
     </Magic>
-  )
-
-  return (
-    <div 
-      ref={ref}
-      className={style[type]}
-      onClick={handleClick}
-      style={{
-        background: isOver ? 'rgba(0, 0, 0, 0.1)' : undefined,
-        opacity: isDragging ? 0 : 1,
-        display: (type === 'container') || data.block ? 'block' : 'inline-block',
-        borderColor: selected ? '#23c132' : undefined,
-      }}
-    >
-      {children}
-    </div>
   );
 }
 

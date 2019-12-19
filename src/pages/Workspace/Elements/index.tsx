@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useDrag } from 'react-dnd';
 import { Collapse, Icon } from 'antd';
 import { Component } from '@/models/workspace';
 import _ from 'lodash';
 
 import CodeBox from './CodeBox';
-
+import Magic from '../../Editor/Dragger/Magic';
 import config from './config';
 
 import style from './style.less';
@@ -72,9 +72,25 @@ const Elements: React.FC<any> = (props) => {
 const Block: React.FC<any> = (props) => {
   const { children, data } = props;
 
+  const ref = useRef(null);
+
   const [, drag] = useDrag({
     item: { type: 'PUZZLE', data },
   });
+
+  drag(ref);
+
+  return (
+    <Magic
+      ref={ref}
+      onChange={(ref: any) => drag(ref)}
+      style={{
+        margin: 4,
+      }}
+    >
+      {children}
+    </Magic>
+  );
 
   return (
     <span ref={drag} className={style.block}>
