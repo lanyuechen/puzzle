@@ -1,95 +1,55 @@
-import React, { useEffect } from 'react';
-import { connect } from 'dva';
+import React, { useRef } from 'react';
 
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
-import Editor from '../Editor';
-import Elements from '../Workspace/Elements';
 
-import { read } from '@/services/git';
-import Cloud from '@/pages/Workspace/Cloud';
-import CmtList from '@/pages/Workspace/Cloud/CommentList';
+import { useDrag, useDrop } from 'react-dnd';
 
-const dataSource = [
-  {
-    user: {
-      name: '王富贵',
-    },
-    msg: {
-      like: 10,
-      dislike: 2,
-      content: 'We supply a series .',
-    },
-    children: [
-      {
-        user: {
-          name: '李安娜',
-        },
-        msg: {
-          like: 14,
-          dislike: 0,
-          content: 'yes! I can!',
-        },
-      },
-      {
-        user: {
-          name: '王富贵',
-        },
-        msg: {
-          like: 14,
-          dislike: 0,
-          content: 'balabala bbaa fol sd fs dfs ersd fsd fsd f!sfs sfsdf',
-        },
-      },
-    ],
-  },
-  {
-    user: {
-      name: '李安娜',
-    },
-    msg: {
-      like: 109,
-      dislike: 5,
-      content: 'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-    },
-  },
-];
+import Magic from '../Editor/Dragger/Magic';
+
+import { Button, Input } from 'antd';
 
 const Test = function(props: any): any {
-  const { workspace, dispatch } = props;
-  const { component, projects, actives, current } = workspace;
+  const ref = useRef(null);
 
-  useEffect(() => {
-    dispatch({
-      type: 'workspace/load',
-    });
-  }, []);
+  const [ { isDragging }, drag ] = useDrag({
+    item: { type: 'PUZZLE' },
+    collect: monitor => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
 
-  const handleEdit = (path: string, data: any) => {
-    dispatch({
-      type: 'workspace/setComponent',
-      path,
-      payload: data,
-    });
-  };
+  const [ { isOver }, drop ] = useDrop({
+    accept: 'PUZZLE',
+    collect: monitor => ({
+      isOver: monitor.canDrop() && monitor.isOver({shallow: true}),
+    }),
+  });
 
-  return (
-    <CmtList dataSource={dataSource} />
-  )
+  drag(drop(ref));
 
   return (
-    <div style={{width: 211, height: '100%', border: '1px solid #ddd'}}>
-      <Cloud />
+    <div style={{padding: 20}}>
+      <Input.Group compact>
+        <Magic 
+          ref={ref} 
+          style={{
+            border: '1px dashed #ccc',
+            background: isOver ? 'rgba(0, 0, 0, 0.1)' : '#fff',
+            opacity: isDragging ? 0 : 1,
+            borderColor: false ? '#23c132' : '#ccc',
+          }}
+        >
+          <Input defaultValue="0571" style={{ width: '20%' }} />
+        </Magic>
+        <Input style={{ width: '30%' }} defaultValue="26888888" />
+      </Input.Group>
     </div>
-  );
-
-  return (
-    <DndProvider backend={HTML5Backend}>
-      <Elements />
-    </DndProvider>
   );
 }
 
-export default connect(({ workspace }: any) => ({
-  workspace
-}))(Test);
+export default () => (
+  <DndProvider backend={HTML5Backend}>
+    <Test />
+  </DndProvider>
+)

@@ -3,6 +3,8 @@ import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 import { withId } from '@/models/workspace';
 
+import Magic from './Magic';
+
 import style from './style.less';
 
 const Dragger: React.FC<any> = (props) => {
@@ -125,6 +127,21 @@ const Dragger: React.FC<any> = (props) => {
   const selected = currentPath && path.join() === currentPath.join();
 
   drag(drop(ref));
+
+  return (
+    <Magic
+      ref={ref}
+      onClick={handleClick}
+      style={{
+        border: '1px solid #ccc',
+        background: isOver ? 'rgba(0, 0, 0, 0.1)' : '#fff',
+        opacity: isDragging ? 0 : 1,
+        borderColor: selected ? '#23c132' : '#ccc',
+      }}
+    >
+      {children}
+    </Magic>
+  )
 
   return (
     <div 
