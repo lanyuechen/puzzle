@@ -10,7 +10,7 @@ import style from './style.less';
 const Dragger: React.FC<any> = (props) => {
   const { children, onChange, onClick, path, currentPath, type = 'container', data } = props;
 
-  const ref = useRef(null);
+  const ref: any = useRef(null);
 
   const [ { isDragging }, drag ] = useDrag({
     item: { type: 'PUZZLE', data, path },
