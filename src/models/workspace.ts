@@ -22,6 +22,7 @@ export interface Component {
 export interface Workspace {
   projects: Project[];
   actives: string[];
+  expands: string[];
   current?: string;
   component: {[key: string]: Component};
 }
@@ -39,6 +40,7 @@ export interface ModelType {
     setActiveProjects: Reducer<Workspace>;
     setProject: Reducer<Workspace>;
     setComponent: Reducer<Workspace>;
+    setExpands: Reducer<Workspace>;
   };
 }
 
@@ -58,6 +60,7 @@ const Model: ModelType = {
   state: {
     projects: [],
     actives: [],
+    expands: [],
     component: {}
   },
   effects: {
@@ -120,7 +123,19 @@ const Model: ModelType = {
           [action.path]: action.payload,
         },
       };
-    }
+    },
+    setExpands(state: Workspace, action) {
+      let expands = [];
+      if (state.expands.includes(action.payload)) {
+        expands = state.expands.filter((d: string) => d !== action.payload);
+      } else {
+        expands = [...state.expands, action.payload];
+      }
+      return {
+        ...state,
+        expands,
+      };
+    },
   },
 };
 

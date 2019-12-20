@@ -12,7 +12,7 @@ let action: string;
 let actionPath: any[]; // 定义在函数中会读不到
 
 const Project = (props: any) => {
-  const { dispatch, projects, current } = props;
+  const { dispatch, projects, expands, current } = props;
 
   const [ nameModalVisible, setNameModalVisible ] = useState(false);
 
@@ -105,7 +105,6 @@ const Project = (props: any) => {
       <Tree.TreeNode
         title={title}
         key={path.join('.')}
-        isLeaf={node.isFile}
         selectable={false}
         children={node.children && node.children.map((d: any, i: number) => renderTreeNode(d, [...path, 'children', i]))}
       />
@@ -119,6 +118,11 @@ const Project = (props: any) => {
         type: 'workspace/setCurrentProject',
         payload: key,
       });
+    } else {
+      dispatch({
+        type: 'workspace/setExpands',
+        payload: key,
+      })
     }
   };
 
@@ -128,7 +132,7 @@ const Project = (props: any) => {
         className={style.tree}
         onSelect={handleSelect}
         selectedKeys={[current]}
-        defaultExpandAll
+        expandedKeys={expands}
       >
         {projects.map((d: any, i: number) => renderTreeNode(d, [i]))}
       </Tree.DirectoryTree>

@@ -22,7 +22,7 @@ export const WorkspaceContext = createContext({
 
 const Workspace = (props: any) => {
   const { dispatch, workspace } = props;
-  const { component, projects, actives, current } = workspace;
+  const { component, projects, actives, expands, current } = workspace;
   const [ theme, setTheme ] = useState(localStorage.theme || 'dark');
 
   useEffect(() => {
@@ -82,7 +82,7 @@ const Workspace = (props: any) => {
             <Layout.Sider className={style.sider} theme="light" width={256}>
               <Tabs tabPosition="left" className={style.tabsLeft}>
                 <Tabs.TabPane key="files" tab={<Icon type="folder" />}>
-                  <Project projects={projects} current={current} dispatch={dispatch} />
+                  <Project projects={projects} current={current} expands={expands} dispatch={dispatch} />
                 </Tabs.TabPane>
                 <Tabs.TabPane key="antd" tab={<Icon type="ant-design" />}>
                   <Elements />
