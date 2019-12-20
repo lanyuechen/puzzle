@@ -5,7 +5,7 @@ import { DndProvider } from 'react-dnd';
 
 import { useDrag, useDrop } from 'react-dnd';
 
-import Magic from '../Editor/Dragger/Magic';
+import Magic from '@/components/Magic';
 
 import { Button, Input } from 'antd';
 

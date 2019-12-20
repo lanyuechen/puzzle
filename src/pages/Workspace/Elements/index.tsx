@@ -5,7 +5,7 @@ import { Component } from '@/models/workspace';
 import _ from 'lodash';
 
 import CodeBox from './CodeBox';
-import Magic from '../../Editor/Dragger/Magic';
+import Magic from '@/components/Magic';
 import config from './config';
 
 import style from './style.less';

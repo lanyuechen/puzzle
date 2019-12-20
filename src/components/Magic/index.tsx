@@ -9,7 +9,7 @@ const Magic = forwardRef((props: any, outerRef: any) => {
   useEffect(() => {
     const target = _.get(ref, 'current.children.0');
     outerRef.current = target;  // ref指向容器下第一个元素，元素拖动需要
-    props.onChange(outerRef)
+    props.onChange(outerRef);
   }, []);
 
   const ref = useRef(null);

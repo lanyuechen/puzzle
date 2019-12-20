@@ -3,7 +3,7 @@ import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 import { withId } from '@/models/workspace';
 
-import Magic from './Magic';
+import Magic from '@/components/Magic';
 
 const Dragger: React.FC<any> = (props) => {
   const { children, onChange, onClick, path, currentPath, type = 'container', data } = props;
