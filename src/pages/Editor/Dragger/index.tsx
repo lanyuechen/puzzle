@@ -137,7 +137,7 @@ const Dragger: React.FC<any> = (props) => {
         outline: '#ccc dashed 1px',
         opacity: isDragging ? 0.2 : 1,
         outlineColor: selected ? '#23c132' : '#ccc',
-        boxShadow: isOver ? '1px 1px 10px rgba(0, 0, 0, 0.5)' : undefined,
+        boxShadow: isOver ? 'inset 0 0 10px rgba(0, 0, 0, 0.5)' : undefined,
         overflow: children.type === 'div' ? 'hidden' : undefined,
         minHeight: children.type === 'div' ? 30 : undefined,
       }}
