@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { Input } from 'antd';
-
-import EditableTable from './EditableTable';
+import ReactJson from 'react-json-view'
 
 export default function(props: any) {
   const { path, data, onChange } = props;
@@ -10,13 +8,19 @@ export default function(props: any) {
   if (!data) {
     return null;
   }
+
+  const handleEdit = ({ updated_src }: any) => {
+    onChange([...path, 'props'], {$set: updated_src})
+  }
+
   return (
-    <React.Fragment>
-      <Input placeholder="组件名称" />
-      <EditableTable
-        data={data.props}
-        onChange={(value: any) => onChange([...path, 'props'], {$set: value})}
-      />
-    </React.Fragment>
-  )
+    <ReactJson
+      name="props"
+      src={data.props}
+      enableClipboard={false}
+      onEdit={handleEdit}
+      onAdd={handleEdit}
+      onDelete={handleEdit}
+    />
+  );
 }

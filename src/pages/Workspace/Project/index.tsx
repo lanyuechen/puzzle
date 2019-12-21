@@ -12,11 +12,13 @@ let action: string;
 let actionPath: any[]; // 定义在函数中会读不到
 
 const Project = (props: any) => {
-  const { dispatch, projects, current } = props;
+  const { dispatch, projects, expands, current } = props;
 
   const [ nameModalVisible, setNameModalVisible ] = useState(false);
 
-  const handleMenuClick = (key: string, path: any[]) => {
+  const handleMenuClick = (e: any, key: string, path: any[]) => {
+    e.stopPropagation();
+    
     action = key;
     actionPath = path;
     if (key === 'delete') {
@@ -69,9 +71,8 @@ const Project = (props: any) => {
   const renderTreeNode = (node: any, path: any[] = []) => {
     const menu = (
       <Menu
-        onClick={({ key }: any) => handleMenuClick(key, path)}
+        onClick={({ key, domEvent }: any) => handleMenuClick(domEvent, key, path)}
         selectable={false}
-        theme="dark"
       >
         {!node.isFile && <Menu.Item key="new-file">新建文件</Menu.Item>}
         {!node.isFile && <Menu.Item key="new-folder">新建文件夹</Menu.Item>}
@@ -104,7 +105,6 @@ const Project = (props: any) => {
       <Tree.TreeNode
         title={title}
         key={path.join('.')}
-        isLeaf={node.isFile}
         children={node.children && node.children.map((d: any, i: number) => renderTreeNode(d, [...path, 'children', i]))}
       />
     );
@@ -117,6 +117,11 @@ const Project = (props: any) => {
         type: 'workspace/setCurrentProject',
         payload: key,
       });
+    } else {
+      dispatch({
+        type: 'workspace/setExpands',
+        payload: key,
+      })
     }
   };
 
@@ -126,7 +131,7 @@ const Project = (props: any) => {
         className={style.tree}
         onSelect={handleSelect}
         selectedKeys={[current]}
-        defaultExpandAll
+        expandedKeys={expands}
       >
         {projects.map((d: any, i: number) => renderTreeNode(d, [i]))}
       </Tree.DirectoryTree>

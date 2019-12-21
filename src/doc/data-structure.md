@@ -35,6 +35,7 @@ interface Project {
 ### Component
 | 属性 | 类型 | 描述 | 默认值 | 是否必须 |
 | ---- | ---- | ---- | ---- | ---- |
+| id | string | 组件id，(如果id不存在，系统将会在第一次加载时为每一个组件随机生成id) | - | 是 |
 | type | string | 组件类型，可以使antd组件的索引或html标签 | - | 是 |
 | ref | string[] | 组件的引用目录，如果存在ref，表明该组件为引用组件，这时type为复合组件的类名(生成代码时需要) | - | 否 |
 | props | object | 组件props属性，同react组件的props | - | 否 |
@@ -43,6 +44,7 @@ interface Project {
 
 ```ts
 interface Component {
+  id: string;
   type: string;
   ref?: string[];
   props?: any;

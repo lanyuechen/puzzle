@@ -1,7 +1,7 @@
 export default [
   {
     path: '/',
-    redirect: '/workspace',
+    redirect: '/test',
   },
   {
     path: '/home',

@@ -1,8 +1,8 @@
 import { Effect } from 'dva';
 import { Reducer } from 'redux';
-import { updateByPath } from '@/utils/utils';
 
 import { load, save } from '@/services/workspace';
+import uuid from '@/utils/uuid';
 
 export interface Project {
   name: string;
@@ -11,6 +11,7 @@ export interface Project {
 }
 
 export interface Component {
+  id: string;
   type: string;
   ref?: string[];
   props?: any;
@@ -21,6 +22,7 @@ export interface Component {
 export interface Workspace {
   projects: Project[];
   actives: string[];
+  expands: string[];
   current?: string;
   component: {[key: string]: Component};
 }
@@ -38,7 +40,19 @@ export interface ModelType {
     setActiveProjects: Reducer<Workspace>;
     setProject: Reducer<Workspace>;
     setComponent: Reducer<Workspace>;
+    setExpands: Reducer<Workspace>;
   };
+}
+
+export const withId = (data: Component): Component => {
+  if (typeof(data) !== 'object') {
+    return data;
+  }
+  return {
+    ...data,
+    id: data.id || uuid(),
+    children: data.children && data.children.map(withId),
+  }
 }
 
 const Model: ModelType = {
@@ -46,6 +60,7 @@ const Model: ModelType = {
   state: {
     projects: [],
     actives: [],
+    expands: [],
     component: {}
   },
   effects: {
@@ -53,7 +68,13 @@ const Model: ModelType = {
       const res = yield call(load);
       yield put({
         type: 'setWorkspace',
-        payload: res,
+        payload: {
+          ...res,
+          component: Object.entries(res.component).reduce((p: any, [k, v]: any) => ({
+            ...p,
+            [k]: withId(v),
+          }), {}),
+        },
       });
     },
     *save(action, { call, select }) {
@@ -81,9 +102,11 @@ const Model: ModelType = {
       };
     },
     setActiveProjects(state: Workspace, action) {
+      const { current } = state;
       return {
         ...state,
         actives: action.payload,
+        current: action.payload.includes(current) ? current : action.payload[0],
       };
     },
     setProject(state: Workspace, action) {
@@ -100,7 +123,19 @@ const Model: ModelType = {
           [action.path]: action.payload,
         },
       };
-    }
+    },
+    setExpands(state: Workspace, action) {
+      let expands = [];
+      if (state.expands.includes(action.payload)) {
+        expands = state.expands.filter((d: string) => d !== action.payload);
+      } else {
+        expands = [...state.expands, action.payload];
+      }
+      return {
+        ...state,
+        expands,
+      };
+    },
   },
 };
 

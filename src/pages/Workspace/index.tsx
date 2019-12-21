@@ -4,10 +4,13 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import _ from 'lodash';
 import { Tabs, Layout, Icon } from 'antd';
+import SplitPane from 'react-split-pane';
+
+import Editor from '../Editor';
 
 import Elements from './Elements';
 import Project from './Project';
-import Editor from '../Editor';
+import Cloud from './Cloud';
 import Welcome from './Welcome';
 
 import style from './style.less';
@@ -20,7 +23,7 @@ export const WorkspaceContext = createContext({
 
 const Workspace = (props: any) => {
   const { dispatch, workspace } = props;
-  const { component, projects, actives, current } = workspace;
+  const { component, projects, actives, expands, current } = workspace;
   const [ theme, setTheme ] = useState(localStorage.theme || 'dark');
 
   useEffect(() => {
@@ -76,47 +79,54 @@ const Workspace = (props: any) => {
               style={{float: 'right', marginTop: 5, cursor: 'pointer'}}
             />
           </Layout.Header>
-          <Layout className={style.body}>
-            <Layout.Sider className={style.sider} theme="light" width={256}>
-              <Tabs tabPosition="left" className={style.tabsLeft}>
-                <Tabs.TabPane key="files" tab={<Icon type="folder" />}>
-                  <Project projects={projects} current={current} dispatch={dispatch} />
-                </Tabs.TabPane>
-                <Tabs.TabPane key="antd" tab={<Icon type="appstore" />}>
-                  <Elements />
-                </Tabs.TabPane>
-                <Tabs.TabPane key="web" tab={<Icon type="global" />}>
-                  global
-                </Tabs.TabPane>
-              </Tabs>
-            </Layout.Sider>
-            <Layout.Content className={style.content}>
-              {actives && actives.length > 0 ? (
-                <Tabs
-                  className={style.tabsRight}
-                  type="editable-card"
-                  hideAdd
-                  activeKey={current}
-                  onEdit={(key: any, action: any) => handleTabsChange(key, action)}
-                  onChange={(key: string) => handleTabsChange(key, 'select')}
-                >
-                  {actives.map((path: any) => (
-                    <Tabs.TabPane
-                      key={path} 
-                      tab={_.get(projects, path, {}).name}
-                    >
-                      <Editor
-                        data={component[path]}
-                        onChange={(data: any) => handleEdit(path, data)}
-                      />
-                    </Tabs.TabPane>
-                  ))}
+          <Layout.Content>
+            <SplitPane 
+              split="vertical" 
+              minSize={128} 
+              defaultSize={256} 
+              paneStyle={{overflow: 'hidden'}}
+            >
+              <div className={style.sider}>
+                <Tabs tabPosition="left" className={style.tabsLeft}>
+                  <Tabs.TabPane key="files" tab={<Icon type="folder" />}>
+                    <Project projects={projects} current={current} expands={expands} dispatch={dispatch} />
+                  </Tabs.TabPane>
+                  <Tabs.TabPane key="antd" tab={<Icon type="ant-design" />}>
+                    <Elements />
+                  </Tabs.TabPane>
+                  <Tabs.TabPane key="web" tab={<Icon type="global" />}>
+                    <Cloud />
+                  </Tabs.TabPane>
                 </Tabs>
-              ) : (
-                <Welcome />
-              )}
-            </Layout.Content>
-          </Layout>
+              </div>
+              <div className={style.content}>
+                {actives && actives.length > 0 ? (
+                  <Tabs
+                    className={style.tabsRight}
+                    type="editable-card"
+                    hideAdd
+                    activeKey={current}
+                    onEdit={(key: any, action: any) => handleTabsChange(key, action)}
+                    onChange={(key: string) => handleTabsChange(key, 'select')}
+                  >
+                    {actives.filter((path: any) => _.get(projects, path)).map((path: any) => (
+                      <Tabs.TabPane
+                        key={path} 
+                        tab={_.get(projects, path, {}).name}
+                      >
+                        <Editor
+                          data={component[path]}
+                          onChange={(data: any) => handleEdit(path, data)}
+                        />
+                      </Tabs.TabPane>
+                    ))}
+                  </Tabs>
+                ) : (
+                  <Welcome />
+                )}
+              </div>
+            </SplitPane>
+          </Layout.Content>
         </Layout>
       </WorkspaceContext.Provider>
     </DndProvider>
