@@ -12,6 +12,7 @@ import Elements from './Elements';
 import Project from './Project';
 import Cloud from './Cloud';
 import Welcome from './Welcome';
+import explode from '@/utils/explode';
 
 import style from './style.less';
 
@@ -73,6 +74,7 @@ const Workspace = (props: any) => {
       <WorkspaceContext.Provider value={{libs: antd}}>
         <Layout>
           <Layout.Header className={style.header}>
+            <a onClick={explode}>爆炸</a>
             <Icon 
               type={theme === 'dark' ? 'frown' : 'smile'}
               onClick={handleTheme}

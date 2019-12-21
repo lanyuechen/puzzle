@@ -9,6 +9,8 @@ import Magic from '@/components/Magic';
 
 import { Button, Input } from 'antd';
 
+import explode from '@/utils/explode';
+
 const Test = function(props: any): any {
   const ref = useRef(null);
 
@@ -30,6 +32,7 @@ const Test = function(props: any): any {
 
   return (
     <div style={{padding: 20}}>
+      <Button onClick={explode}>爆炸</Button>
       <Input.Group compact>
         <Magic 
           ref={ref}
