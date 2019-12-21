@@ -105,7 +105,6 @@ const Project = (props: any) => {
       <Tree.TreeNode
         title={title}
         key={path.join('.')}
-        selectable={false}
         children={node.children && node.children.map((d: any, i: number) => renderTreeNode(d, [...path, 'children', i]))}
       />
     );

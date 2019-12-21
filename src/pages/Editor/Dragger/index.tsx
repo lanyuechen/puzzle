@@ -139,7 +139,7 @@ const Dragger: React.FC<any> = (props) => {
         outlineColor: selected ? '#23c132' : '#ccc',
         boxShadow: isOver ? 'inset 0 0 10px rgba(0, 0, 0, 0.5)' : undefined,
         overflow: children.type === 'div' ? 'hidden' : undefined,
-        minHeight: children.type === 'div' ? 30 : undefined,
+        minHeight: children.type === 'div' ? 30 : 8,
       }}
     >
       {children}

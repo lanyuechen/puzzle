@@ -19,6 +19,9 @@ const Elements: React.FC<any> = (props) => {
       return defaultValue;
     }
     return children.map((child: any, i: number) => {
+      if (typeof(child) === 'string') {
+        return child;
+      }
       const { type, props = {}, children } = child;
       const C = _.get(antd, type) || type;
       return (
@@ -90,12 +93,6 @@ const Block: React.FC<any> = (props) => {
     >
       {children}
     </Magic>
-  );
-
-  return (
-    <span ref={drag} className={style.block}>
-      {children}
-    </span>
   );
 }
 

@@ -10,15 +10,19 @@ export default [
             type: 'Col',
             props: {
               span: 12,
-              children: 'col-12'
             },
+            children: [
+              'col-12-1',
+            ],
           },
           {
             type: 'Col',
             props: {
               span: 12,
-              children: 'col-12'
             },
+            children: [
+              'col-12-2',
+            ],
           },
         ],
       },
@@ -29,22 +33,28 @@ export default [
             type: 'Col',
             props: {
               span: 8,
-              children: 'col-8'
             },
+            children: [
+              'col-8-1',
+            ],
           },
           {
             type: 'Col',
             props: {
               span: 8,
-              children: 'col-8'
             },
+            children: [
+              'col-8-2',
+            ],
           },
           {
             type: 'Col',
             props: {
               span: 8,
-              children: 'col-8'
             },
+            children: [
+              'col-8-3',
+            ],
           },
         ],
       },
@@ -55,29 +65,37 @@ export default [
             type: 'Col',
             props: {
               span: 6,
-              children: 'col-6'
             },
+            children: [
+              'col-6-1',
+            ],
           },
           {
             type: 'Col',
             props: {
               span: 6,
-              children: 'col-6'
             },
+            children: [
+              'col-6-2',
+            ],
           },
           {
             type: 'Col',
             props: {
               span: 6,
-              children: 'col-6'
             },
+            children: [
+              'col-6-3',
+            ],
           },
           {
             type: 'Col',
             props: {
               span: 6,
-              children: 'col-6'
             },
+            children: [
+              'col-6-4',
+            ],
           },
         ],
       },

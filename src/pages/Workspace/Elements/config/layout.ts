@@ -31,32 +31,32 @@ export default [
         children: [
           {
             type: 'Layout.Header',
-            props: {
-              children: 'Header',
-            },
+            children: [
+              'Header',
+            ],
           },
           {
             type: 'Layout',
             children: [
               {
                 type: 'Layout.Sider',
-                props: {
-                  children: 'Sider',
-                },
+                children: [
+                  'Sidebar',
+                ],
               },
               {
                 type: 'Layout.Content',
-                props: {
-                  children: 'Content',
-                },
+                children: [
+                  'Content',
+                ],
               },
             ],
           },
           {
             type: 'Layout.Footer',
-            props: {
-              children: 'Footer',
-            },
+            children: [
+              'Footer',
+            ],
           },
         ],
       },
