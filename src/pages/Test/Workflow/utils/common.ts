@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import update from 'immutability-helper';
 import evt from './event';
 import _ from 'lodash';
@@ -15,6 +15,7 @@ export const yaml2json = (data: string) => {
 }
 
 export function updateByPath(data: any, path: string, value: any) {
+  _.set(data, path, _.get(data, path)); // 防止undefined
   const spec = path.split('.').reduceRight((p: any, n: string) => ({[n]: p}), {$set: value});
   return update(data, spec);
 }
@@ -71,6 +72,34 @@ export function calcCondition(data: any, condition: string) {
   } catch(err) {
     return false;
   }
+}
+
+export const useValidate = (rules: string[], value: any): any => {
+  const [ err, setErr ] = useState<any>([]);
+  const ref = useRef(value);
+
+  useEffect(() => {
+    if (ref.current !== value && rules) {
+      for (let rule of rules) {
+        const d = rule.split('|').map((d: string) => d.trim());
+        if (d[0] === 'required') {
+          if (!value) {
+            setErr(['error', d[1]]);
+            return;
+          }
+        } else if (d[0] === 'pattern') {
+          const reg = eval(`${d.slice(1, -1).join('|')}`);
+          if (!reg.test(value)) {
+            setErr(['error', d[d.length - 1]]);
+            return;
+          }
+        }
+      }
+    }
+    setErr([]);
+  }, [value]);
+
+  return err;
 }
 
 export const useEvent = (data: any, config: any, onChange: Function) => {

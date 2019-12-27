@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Layout, Steps, Form, Button } from 'antd';
+import { Layout, Steps, Form } from 'antd';
 import _ from 'lodash';
 
-import FormInput from './Form/Input';
+import FormItem from './Form';
 
-import { updateByPath, isTrue, trimEmpty, json2yaml } from './utils/common';
+import { updateByPath, trimEmpty, json2yaml } from './utils/common';
 
 const Workflow = (props: any) => {
   const { config } = props;
@@ -26,18 +26,17 @@ const Workflow = (props: any) => {
 
   return (
     <Layout>
-      <Layout.Sider theme="light">
+      <Layout.Sider theme="light" style={{padding: 16}}>
         <Steps direction="vertical" size="small" current={current} onChange={setCurrent}>
           {config.map((d: any, i: number) => (
             <Steps.Step key={i} title={d.step} description={d.desc} />
           ))}
         </Steps>
       </Layout.Sider>
-      <Layout.Content>
+      <Layout.Content style={{padding: 16, height: '100vh', overflow: 'auto'}}>
         <Form>
           {work.map((d: any, i: number) => {
-            const show = isTrue(data, d.show, true);
-            return show && <FormInput key={i} config={d} data={data} onChange={handleChange} />;
+            return <FormItem key={i} config={d} data={data} onChange={handleChange} />
           })}
         </Form>
 
