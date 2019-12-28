@@ -54,6 +54,7 @@ const explode = (dom, rect = dom && dom.getBoundingClientRect(), level = 0) => {
 
 export default () => {
   document.body.style.perspective = '1000px';
+  document.body.style.background = '#000';
   // document.body.style.perspectiveOrigin = 'center';
 
   const scene = document.body;
@@ -69,5 +70,5 @@ export default () => {
     const ry = (y - rect.y) / rect.height * 90 - 45;
     container.style.transform = `rotateX(${ry}deg) rotateY(${-rx}deg)`;
   })
-  explode(container);
+  // explode(container);
 }

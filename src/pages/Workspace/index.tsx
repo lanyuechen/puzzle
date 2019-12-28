@@ -74,7 +74,6 @@ const Workspace = (props: any) => {
       <WorkspaceContext.Provider value={{ libs: antd }}>
         <Layout>
           <Layout.Header className={style.header}>
-            <a onClick={explode}>爆炸</a>
             <Icon
               type={theme === 'dark' ? 'frown' : 'smile'}
               onClick={handleTheme}

@@ -19,6 +19,7 @@ export default function(props: any) {
       src={data.props}
       enableClipboard={false}
       displayDataTypes={false}
+      displayObjectSize={false}
       onEdit={handleEdit}
       onAdd={handleEdit}
       onDelete={handleEdit}
