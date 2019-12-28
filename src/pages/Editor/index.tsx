@@ -49,7 +49,7 @@ const Editor: React.FC<any> = (props) => {
       </Tabs>
       <Drawer
         title="属性"
-        placement="right"
+        placement="left"
         visible={!!current}
         onClose={() => setCurrent(null)}
         mask={false}

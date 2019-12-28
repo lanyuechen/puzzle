@@ -109,35 +109,33 @@ const Workspace = (props: any) => {
               <SplitPane
                 split="horizontal"
                 primary="second"
-                minSize={0}
-                defaultSize={0}
+                minSize={24}
+                defaultSize={24}
                 paneStyle={{ overflow: 'hidden' }}
               >
-                <div>
-                  {actives && actives.length > 0 ? (
-                    <Tabs
-                      className={style.tabsRight}
-                      type="editable-card"
-                      hideAdd
-                      activeKey={current}
-                      onEdit={(key: any, action: any) => handleTabsChange(key, action)}
-                      onChange={(key: string) => handleTabsChange(key, 'select')}
-                    >
-                      {actives
-                        .filter((path: any) => _.get(projects, path))
-                        .map((path: any) => (
-                          <Tabs.TabPane key={path} tab={_.get(projects, path, {}).name}>
-                            <Editor
-                              data={component[path]}
-                              onChange={(data: any) => handleEdit(path, data)}
-                            />
-                          </Tabs.TabPane>
-                        ))}
-                    </Tabs>
-                  ) : (
-                    <Welcome />
-                  )}
-                </div>
+                {actives && actives.length > 0 ? (
+                  <Tabs
+                    className={style.tabsRight}
+                    type="editable-card"
+                    hideAdd
+                    activeKey={current}
+                    onEdit={(key: any, action: any) => handleTabsChange(key, action)}
+                    onChange={(key: string) => handleTabsChange(key, 'select')}
+                  >
+                    {actives
+                      .filter((path: any) => _.get(projects, path))
+                      .map((path: any) => (
+                        <Tabs.TabPane key={path} tab={_.get(projects, path, {}).name}>
+                          <Editor
+                            data={component[path]}
+                            onChange={(data: any) => handleEdit(path, data)}
+                          />
+                        </Tabs.TabPane>
+                      ))}
+                  </Tabs>
+                ) : (
+                  <Welcome />
+                )}
                 <div>props</div>
               </SplitPane>
             </SplitPane>

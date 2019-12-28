@@ -13,10 +13,12 @@ const explode = (dom, rect = dom && dom.getBoundingClientRect(), level = 0) => {
   }
 
   if (dom.children) {
-    [...dom.children].map(d => ({
-      dom: d,
-      rect: d.getBoundingClientRect(),
-    })).forEach(d => {
+    [...dom.children].reverse().map(d => {
+      return {
+        dom: d,
+        rect: d.getBoundingClientRect(),
+      }
+    }).forEach(d => {
       explode(d.dom, d.rect, level + 1);
     });
   }
@@ -26,9 +28,9 @@ const explode = (dom, rect = dom && dom.getBoundingClientRect(), level = 0) => {
     transformStyle: 'preserve-3d',
     transform: `translateZ(${1 * level}px)`,
     overflow: 'initial',
-    position: 'fixed',
-    left: `${left}px`,
-    top: `${top}px`,
+    // position: 'fixed',
+    // left: `${left}px`,
+    // top: `${top}px`,
     width: `${width}px`,
     height: `${height}px`,
   });
@@ -52,11 +54,13 @@ const explode = (dom, rect = dom && dom.getBoundingClientRect(), level = 0) => {
 
 export default () => {
   document.body.style.perspective = '1000px';
-  document.body.style.perspectiveOrigin = 'center';
+  // document.body.style.perspectiveOrigin = 'center';
 
   const scene = document.body;
   const rect = scene.getBoundingClientRect();
   const container = document.getElementById('root');
+  const a = document.querySelector('#root > div');
+
 
   document.body.addEventListener('mousemove', event => {
     const x = event.pageX;
