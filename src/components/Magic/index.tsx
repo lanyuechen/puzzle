@@ -33,7 +33,7 @@ const Magic = forwardRef((props: any, outerRef: any) => {
         ...children,
         props: {
           ...children.props,
-          style: _.merge(children.props.style, props.style),
+          style: Object.assign({}, children.props.style, props.style),
         }
       }}
     </div>
