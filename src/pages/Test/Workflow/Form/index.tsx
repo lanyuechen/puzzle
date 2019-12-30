@@ -5,11 +5,13 @@ import { isTrue } from '../utils/common';
 import Input from './Input';
 import Switch from './Switch';
 import List from './List';
+import MultiSelect from './MultiSelect';
 
 const forms = {
   input: Input,
   switch: Switch,
   list: List,
+  'multi-select': MultiSelect,
 };
 
 const FormItem = (props: any) => {

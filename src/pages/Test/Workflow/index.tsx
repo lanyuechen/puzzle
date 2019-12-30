@@ -6,6 +6,8 @@ import FormItem from './Form';
 
 import { updateByPath, trimEmpty, json2yaml } from './utils/common';
 
+import style from './style.less';
+
 const Workflow = (props: any) => {
   const { config } = props;
 
@@ -25,7 +27,7 @@ const Workflow = (props: any) => {
   };
 
   return (
-    <Layout>
+    <Layout className={style.workflow}>
       <Layout.Sider theme="light" style={{padding: 16}}>
         <Steps direction="vertical" size="small" current={current} onChange={setCurrent}>
           {config.map((d: any, i: number) => (

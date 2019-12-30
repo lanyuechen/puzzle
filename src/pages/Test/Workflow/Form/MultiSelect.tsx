@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Switch } from 'antd';
+import { Form, Select } from 'antd';
 import _ from 'lodash';
 
 import evt from '../utils/event';
@@ -13,9 +13,9 @@ export default (props: any) => {
   useEvent(data, config, onChange);
   const [ status, msg ] = useValidate(config.rules, value);
 
-  const handleChange = (checked: boolean) => {
-    evt.emit(config.path, checked);
-    onChange(config.path, checked);
+  const handleChange = (value: any[]) => {
+    evt.emit(config.path, value);
+    onChange(config.path, value);
   }
 
   return (
@@ -24,13 +24,18 @@ export default (props: any) => {
       validateStatus={status}
       help={msg}
     >
-      <Switch
-        checkedChildren="是"
-        unCheckedChildren="否"
-        checked={value}
+      <Select
+        mode="multiple"
         disabled={isTrue(data, config.disabled)}
+        placeholder={config.placeholder}
+        value={value}
         onChange={handleChange}
-      />
+      >
+        {config.options && config.options.map((option: any) => {
+          const o = option.split('|');
+          return <Select.Option key={o[0]} value={o[0]}>{o[1] || o[0]}</Select.Option>;  
+        })}
+      </Select>
     </Form.Item>
   )
 }

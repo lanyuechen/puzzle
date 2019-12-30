@@ -1,10 +1,12 @@
 import React from 'react';
-import X from './X'
+
+import Workflow from './Workflow';
+import config, { demo } from './Workflow/config';
 
 export default function(props: any): any {
   return (
     <div>
-      <X width={400} height={300} />
+      <Workflow config={config} data={demo} />      
     </div>
   );
 }

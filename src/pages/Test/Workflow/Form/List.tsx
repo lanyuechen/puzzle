@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Row, Col } from 'antd';
+import { Form, Button, Row, Col, Icon } from 'antd';
 import _ from 'lodash';
 
 import evt from '../utils/event';
@@ -21,8 +21,10 @@ export default (props: any) => {
     }
   }
 
-  const handleAdd = () => {
-    onChange(config.path, [...value, undefined]);
+  const handleAdd = (idx: number) => {
+    const newValue = [...value];
+    newValue.splice(idx + 1, 0, undefined);
+    onChange(config.path, newValue);
   }
 
   const handleRemove = (idx: number) => {
@@ -35,10 +37,20 @@ export default (props: any) => {
       validateStatus={status}
       help={msg}
     >
-      <div style={{border: '1px solid #ddd', padding: 8}}>
+      <div>
+        {!value.length && (
+          <Button onClick={() => handleAdd(0)} type="dashed" block>
+            <Icon type="plus-circle" /> 添加
+          </Button>
+        )}
         {value.map((d: any, i: number) => (
           <div key={i}>
-            <a onClick={() => handleRemove(i)} style={{float: 'right', marginLeft: 8}}>删除</a>
+            <a onClick={() => handleRemove(i)} style={{float: 'right', marginLeft: 8}}>
+              <Icon type="delete" />
+            </a>
+            <a onClick={() => handleAdd(i)} style={{float: 'right', marginLeft: 8}}>
+              <Icon type="plus-circle" />
+            </a>
             <Row gutter={8} style={{overflow: 'hidden'}}>
               {React.Children.map(children, (child: any) => (
                 <Col span={Math.floor(24 / React.Children.count(children))}>
@@ -55,9 +67,6 @@ export default (props: any) => {
             </Row>
           </div>
         ))}
-        <div>
-          <Button type="dashed" onClick={handleAdd}>添加</Button>
-        </div>
       </div>
     </Form.Item>
   )

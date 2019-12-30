@@ -8,6 +8,7 @@
 | disabled |
 | show |
 | linkage |
+| options |
 
 type
 - input

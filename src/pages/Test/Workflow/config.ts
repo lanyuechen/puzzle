@@ -38,6 +38,15 @@ export default [
               },
             ],
           },
+          {
+            path: 'tags',
+            type: 'multi-select',
+            options: [
+              'k8s-master',
+              'k8s-worker|xxxx',
+              'ceph',
+            ],
+          },
         ],
       },
     ]
