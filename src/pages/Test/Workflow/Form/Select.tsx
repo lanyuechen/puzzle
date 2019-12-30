@@ -6,7 +6,6 @@ export default (props: any) => {
 
   return (
     <Select
-      mode="multiple"
       {...otherProps}
     >
       {options && options.map((option: any) => {

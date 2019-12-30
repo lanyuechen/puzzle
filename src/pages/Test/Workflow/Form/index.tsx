@@ -1,17 +1,20 @@
 import React from 'react';
 
 import { isTrue } from '../utils/common';
+import enhance from './enhance';
 
 import Input from './Input';
 import Switch from './Switch';
 import List from './List';
 import MultiSelect from './MultiSelect';
+import Select from './Select';
 
 const forms = {
-  input: Input,
-  switch: Switch,
+  input: enhance(Input),
+  switch: enhance(Switch),
   list: List,
-  'multi-select': MultiSelect,
+  'multi-select': enhance(MultiSelect),
+  select: enhance(Select),
 };
 
 const FormItem = (props: any) => {

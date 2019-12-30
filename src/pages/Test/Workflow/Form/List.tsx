@@ -3,7 +3,7 @@ import { Form, Button, Row, Col, Icon } from 'antd';
 import _ from 'lodash';
 
 import evt from '../utils/event';
-import { isTrue, useEvent, useValidate, updateByPath } from '../utils/common';
+import { useEvent, useValidate, updateByPath } from '../utils/common';
 
 export default (props: any) => {
   const { config, data, onChange, children } = props;
