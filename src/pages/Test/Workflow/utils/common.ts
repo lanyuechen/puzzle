@@ -14,6 +14,14 @@ export const yaml2json = (data: string) => {
   return JSON.parse(yaml.safeLoad(data));
 }
 
+export const getLabel = (config: any) => {
+  if (config.label) {
+    return config.label;
+  }
+  const label = config.path.split('.').pop();
+  return isNaN(label) ? label : '';
+}
+
 export function updateByPath(data: any, path: string, value: any) {
   _.set(data, path, _.get(data, path)); // 防止undefined
   const spec = path.split('.').reduceRight((p: any, n: string) => ({[n]: p}), {$set: value});

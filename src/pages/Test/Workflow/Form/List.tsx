@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Button, Row, Col, Icon } from 'antd';
 import _ from 'lodash';
 
-import { useEvent, useValidate } from '../utils/common';
+import { useEvent, useValidate, getLabel } from '../utils/common';
 
 export default (props: any) => {
   const { config, data, onChange, children } = props;
@@ -24,7 +24,7 @@ export default (props: any) => {
 
   return (
     <Form.Item
-      label={config.label || (config.path || '').split('.').pop()}
+      label={getLabel(config)}
       validateStatus={status}
       help={msg}
     >

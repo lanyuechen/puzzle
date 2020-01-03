@@ -3,7 +3,7 @@ import { Form } from 'antd';
 import _ from 'lodash';
 
 import evt from '../utils/event';
-import { isTrue, useEvent, useValidate } from '../utils/common';
+import { isTrue, useEvent, useValidate, getLabel } from '../utils/common';
 
 export default (C: any) => (props: any) => {
   const { config, data, onChange } = props;
@@ -20,7 +20,7 @@ export default (C: any) => (props: any) => {
 
   return (
     <Form.Item
-      label={config.label || (config.path || '').split('.').pop()}
+      label={getLabel(config)}
       validateStatus={status}
       help={msg}
     >
