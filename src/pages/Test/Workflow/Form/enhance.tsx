@@ -20,7 +20,7 @@ export default (C: any) => (props: any) => {
 
   return (
     <Form.Item
-      label={config.label || config.path}
+      label={config.label || (config.path || '').split('.').pop()}
       validateStatus={status}
       help={msg}
     >

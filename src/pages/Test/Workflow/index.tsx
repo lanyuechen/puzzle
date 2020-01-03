@@ -37,11 +37,10 @@ const Workflow = (props: any) => {
       </Layout.Sider>
       <Layout.Content style={{padding: 16, height: '100vh', overflow: 'auto'}}>
         <Form>
-          {work.map((d: any, i: number) => {
-            return <FormItem key={i} config={d} data={data} onChange={handleChange} />
-          })}
+          {work.map((d: any, i: number) => (
+            <FormItem key={i} config={d} data={data} onChange={handleChange} />
+          ))}
         </Form>
-
         <pre>{json2yaml(trimEmpty(data, config))}</pre>
       </Layout.Content>
     </Layout>

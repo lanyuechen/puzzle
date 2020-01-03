@@ -2,8 +2,7 @@ import React from 'react';
 import { Form, Button, Row, Col, Icon } from 'antd';
 import _ from 'lodash';
 
-import evt from '../utils/event';
-import { useEvent, useValidate, updateByPath } from '../utils/common';
+import { useEvent, useValidate } from '../utils/common';
 
 export default (props: any) => {
   const { config, data, onChange, children } = props;
@@ -12,14 +11,6 @@ export default (props: any) => {
   const [ status, msg ] = useValidate(config.rules, _.get(data, config.path));
 
   const value = _.get(data, config.path) || [];
-
-  const handleChange = (i: number, path: string, v: any) => {
-    if (path) {
-      onChange(config.path, updateByPath(value, `${i}.${path}`, v));
-    } else {
-      onChange(config.path, updateByPath(value, `${i}`, v));
-    }
-  }
 
   const handleAdd = (idx: number) => {
     const newValue = [...value];
@@ -33,7 +24,7 @@ export default (props: any) => {
 
   return (
     <Form.Item
-      label={config.label || config.path}
+      label={config.label || (config.path || '').split('.').pop()}
       validateStatus={status}
       help={msg}
     >
@@ -58,8 +49,10 @@ export default (props: any) => {
                     ...child,
                     props: {
                       ...child.props,
-                      data: d,
-                      onChange: (path: string, value: any) => handleChange(i, path, value),
+                      config: {
+                        ...child.props.config,
+                        path: [config.path, `${i}`, child.props.config.path].filter(v => v).join('.'),
+                      },
                     }
                   }}
                 </Col>
