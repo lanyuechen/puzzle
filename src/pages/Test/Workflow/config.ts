@@ -1,17 +1,6 @@
 export default [
   {
     step: '安装须知',
-
-  },
-  {
-    step: '安装方式',
-    work: [
-      {
-        path: '$isAllInOne',
-        label: '是否混合部署',
-        type: 'switch',
-      },
-    ]
   },
   {
     step: '机器列表',
@@ -26,7 +15,8 @@ export default [
             type: 'input',
           },
           {
-            path: 'ips',
+            path: 'manual.ipAddresses',
+            label: 'ips',
             type: 'list',
             work: [
               {
@@ -42,11 +32,15 @@ export default [
             ],
           },
           {
+            path: 'manual.user',
+            type: 'input',
+          },
+          {
             path: 'tags',
             type: 'multi-select',
             options: [
               'k8s-master',
-              'k8s-worker|xxxx',
+              'k8s-worker|这是k8s-worker',
               'ceph',
             ],
           },
@@ -92,9 +86,6 @@ export const demo = {
   "machines": [
     {
       "name": "C-001",
-      "ips": [
-        "1.1.1.1"
-      ],
       "tags": [
         "k8s-master"
       ],
@@ -107,9 +98,6 @@ export const demo = {
     },
     {
       "name": "C-003",
-      "ips": [
-        "2.2.2.2"
-      ],
       "manual": {
         "ipAddresses": [
           "3.3.3.3"
