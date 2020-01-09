@@ -48,6 +48,51 @@ export default [
       },
     ]
   },
+  {
+    step: 'Storage',
+    work: [
+      {
+        path: 'storage.ceph.$enable',
+        type: 'switch',
+      },
+      {
+        path: 'storage.ceph.cephHAMode',
+        type: 'radio-button',
+        options: [
+          'auto',
+          'enable',
+          'disable',
+        ],
+        show: 'storage.ceph.$enable|===|true',
+      },
+      {
+        path: 'storage.ceph.clusterNetwork',
+        show: 'storage.ceph.$enable|===|true',
+      },
+      {
+        path: 'storage.ceph.publicNetwork',
+        show: 'storage.ceph.$enable|===|true',
+      },
+      {
+        path: 'storage.dynamicLPV.dynamicLPVPaths',
+      },
+      {
+        path: 'storage.defaultStorgeClass',
+        type: 'radio-button',
+        options: [
+          'ceph',
+          'dynamicLPV'
+        ],
+        disabled: 'storage.ceph.$enable|===|false',
+        linkage: [
+          {
+            condition: 'storage.ceph.$enable|===|false',
+            value: 'dynamicLPV'
+          }
+        ]
+      },
+    ],
+  },
   // {
   //   step: '安装前须知',
   //   work: [
@@ -106,4 +151,11 @@ export const demo = {
       }
     }
   ],
+  "storage": {
+    "ceph": {
+      "$enable": true,
+      "cephHAMode": "auto"
+    },
+    "defaultStorgeClass": "ceph"
+  },
 }

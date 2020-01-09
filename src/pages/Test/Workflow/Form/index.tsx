@@ -8,6 +8,7 @@ import Switch from './Switch';
 import List from './List';
 import MultiSelect from './MultiSelect';
 import Select from './Select';
+import RadioButton from './RadioButton';
 
 const forms = {
   input: enhance(Input),
@@ -15,6 +16,7 @@ const forms = {
   list: List,
   'multi-select': enhance(MultiSelect),
   select: enhance(Select),
+  'radio-button': enhance(RadioButton),
 };
 
 const FormItem = (props: any) => {

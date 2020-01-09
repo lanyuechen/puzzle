@@ -8,11 +8,11 @@ export const json2yaml = (data: any) => {
   return yaml.safeDump(data, {
     skipInvalid: true,
   });
-}
+};
 
 export const yaml2json = (data: string) => {
   return JSON.parse(yaml.safeLoad(data));
-}
+};
 
 export const getLabel = (config: any) => {
   if (config.label) {
@@ -20,22 +20,22 @@ export const getLabel = (config: any) => {
   }
   const label = config.path.split('.').pop();
   return isNaN(label) ? label : '';
-}
+};
 
 export function updateByPath(data: any, path: string, value: any) {
   _.set(data, path, _.get(data, path)); // 防止undefined
-  const spec = path.split('.').reduceRight((p: any, n: string) => ({[n]: p}), {$set: value});
+  const spec = path.split('.').reduceRight((p: any, n: string) => ({ [n]: p }), { $set: value });
   return update(data, spec);
 }
 
 export function isTrue(data: any, condition: any, defaultValue = false) {
-  if (!condition || !condition.length) {
+  if (!condition) {
     return defaultValue;
   }
-  if (typeof(condition) === 'boolean') {
+  if (typeof condition === 'boolean') {
     return condition;
   }
-  if (typeof(condition) === 'string') {
+  if (typeof condition === 'string') {
     condition = [condition];
   }
 
@@ -44,11 +44,12 @@ export function isTrue(data: any, condition: any, defaultValue = false) {
 
 function trimHide(data: any, config: any) {
   config.forEach((d: any) => {
-    d.work && d.work.forEach((w: any) => {
-      if (!isTrue(data, w.show, true)) {
-        data = updateByPath(data, w.path, undefined);
-      }
-    });
+    d.work &&
+      d.work.forEach((w: any) => {
+        if (!isTrue(data, w.show, true)) {
+          data = updateByPath(data, w.path, undefined);
+        }
+      });
   });
   return data;
 }
@@ -57,19 +58,22 @@ export function trimEmpty(data: any, config: any) {
   data = trimHide(data, config);
 
   return JSON.parse(JSON.stringify(data), (key, val) => {
-      if (val === null) {
-          return undefined;
-      }
-      if (typeof val === 'object') {
-          if (Object.keys(val).length) {
-              return val;
-          }
-          return undefined;
-      }
-      if (val !== undefined && val !== '') {
-          return val;
+    if (val === null) {
+      return undefined;
+    }
+    if (key.indexOf('$') === 0) {
+      return undefined;
+    }
+    if (typeof val === 'object') {
+      if (Object.keys(val).length) {
+        return val;
       }
       return undefined;
+    }
+    if (val !== undefined && val !== '') {
+      return val;
+    }
+    return undefined;
   });
 }
 
@@ -77,13 +81,13 @@ export function calcCondition(data: any, condition: string) {
   condition = condition.split('|').join('');
   try {
     return eval(`(data.${condition.trim()})`); // todo 条件判断
-  } catch(err) {
+  } catch (err) {
     return false;
   }
 }
 
 export const useValidate = (rules: string[], value: any): any => {
-  const [ err, setErr ] = useState<any>([]);
+  const [err, setErr] = useState<any>([]);
   const ref = useRef(value);
 
   useEffect(() => {
@@ -108,7 +112,7 @@ export const useValidate = (rules: string[], value: any): any => {
   }, [value]);
 
   return err;
-}
+};
 
 export const useEvent = (data: any, config: any, onChange: Function) => {
   const ref = useRef(data);
@@ -131,7 +135,7 @@ export const useEvent = (data: any, config: any, onChange: Function) => {
           evt.off(key, handle);
         });
       }
-    }
+    };
   }, []);
 
   const handle = () => {
@@ -143,5 +147,5 @@ export const useEvent = (data: any, config: any, onChange: Function) => {
         }
       }
     }, 0);
-  }
-}
+  };
+};
