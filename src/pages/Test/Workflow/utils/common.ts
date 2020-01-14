@@ -18,6 +18,7 @@ export const getLabel = (config: any) => {
   if (config.label) {
     return config.label;
   }
+  return config.path;
   const label = config.path.split('.').pop();
   return isNaN(label) ? label : '';
 };
@@ -95,12 +96,13 @@ export function trimEmpty(data: any, config: any) {
   });
 }
 
-export const useValidate = (rules: string[], value: any): any => {
+export const useValidate = (rules: any, value: any): any => {
   const [err, setErr] = useState<any>([]);
   const ref = useRef(value);
 
   useEffect(() => {
     if (ref.current !== value && rules) {
+      rules = Array.isArray(rules) ? rules : [rules];
       for (let rule of rules) {
         const d = rule.split('|').map((d: string) => d.trim());
         if (d[0] === 'required') {

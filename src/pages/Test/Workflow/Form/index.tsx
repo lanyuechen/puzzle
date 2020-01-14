@@ -11,9 +11,9 @@ import Select from './Select';
 import RadioButton from './RadioButton';
 
 const forms = {
+  list: List,
   input: enhance(Input),
   switch: enhance(Switch),
-  list: List,
   'multi-select': enhance(MultiSelect),
   select: enhance(Select),
   'radio-button': enhance(RadioButton),

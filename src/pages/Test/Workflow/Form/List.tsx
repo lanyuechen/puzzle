@@ -24,7 +24,7 @@ export default (props: any) => {
 
   return (
     <Form.Item
-      label={getLabel(config)}
+      // label={getLabel(config)}
       validateStatus={status}
       help={msg}
     >
@@ -36,10 +36,10 @@ export default (props: any) => {
         )}
         {value.map((d: any, i: number) => (
           <div key={i}>
-            <a onClick={() => handleRemove(i)} style={{float: 'right', marginLeft: 8}}>
+            <a onClick={() => handleRemove(i)} style={{float: 'right', margin: '24px 0 0 8px'}}>
               <Icon type="delete" />
             </a>
-            <a onClick={() => handleAdd(i)} style={{float: 'right', marginLeft: 8}}>
+            <a onClick={() => handleAdd(i)} style={{float: 'right', margin: '24px 0 0 8px'}}>
               <Icon type="plus-circle" />
             </a>
             <Row gutter={8} style={{overflow: 'hidden'}}>

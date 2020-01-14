@@ -21,13 +21,10 @@ export default [
             work: [
               {
                 path: '',
+                label: 'ip',
                 type: 'input',
-                disabled: [
-                  'machines[0].name|===|"foo"'
-                ],
-                rules: [
-                  'pattern|/^(\\d{1}|[1-9]{1}\\d{1}|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d{1}|[1-9]{1}\\d{1}|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d{1}|[1-9]{1}\\d{1}|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d{1}|[1-9]{1}\\d{1}|1\\d\\d|2[0-4]\\d|25[0-5])$/|ip格式错误'
-                ]
+                disabled: 'machines[0].name|===|"foo"',
+                rules: 'pattern|/^(\\d{1}|[1-9]{1}\\d{1}|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d{1}|[1-9]{1}\\d{1}|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d{1}|[1-9]{1}\\d{1}|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d{1}|[1-9]{1}\\d{1}|1\\d\\d|2[0-4]\\d|25[0-5])$/|ip格式错误',
               },
             ],
           },
@@ -67,7 +64,7 @@ export default [
       },
       {
         path: 'storage.ceph.clusterNetwork',
-        show: 'storage.ceph.$enable|===|true',
+        show: 'storage.ceph.$enable',
       },
       {
         path: 'storage.ceph.publicNetwork',

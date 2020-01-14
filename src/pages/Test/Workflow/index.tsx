@@ -36,7 +36,7 @@ const Workflow = (props: any) => {
         </Steps>
       </Layout.Sider>
       <Layout.Content style={{padding: 16, height: '100vh', overflow: 'auto'}}>
-        <Form>
+        <Form layout="vertical">
           {work.map((d: any, i: number) => (
             <FormItem key={i} config={d} data={data} onChange={handleChange} />
           ))}
