@@ -42,6 +42,24 @@ export function isTrue(data: any, condition: any, defaultValue = false) {
   return !condition.find((d: string) => !calcCondition(data, d));
 }
 
+export function calcCondition(data: any, condition: string) {
+  if (/^\(.*=> /.test(condition)) { //函数
+    try {
+      const fn = eval(condition);
+      return fn(data);
+    } catch (err) {
+      return false;
+    }
+  }
+
+  condition = condition.split('|').join('');
+  try {
+    return eval(`(data.${condition.trim()})`); // todo 条件判断
+  } catch (err) {
+    return false;
+  }
+}
+
 function trimHide(data: any, config: any) {
   config.forEach((d: any) => {
     d.work &&
@@ -75,15 +93,6 @@ export function trimEmpty(data: any, config: any) {
     }
     return undefined;
   });
-}
-
-export function calcCondition(data: any, condition: string) {
-  condition = condition.split('|').join('');
-  try {
-    return eval(`(data.${condition.trim()})`); // todo 条件判断
-  } catch (err) {
-    return false;
-  }
 }
 
 export const useValidate = (rules: string[], value: any): any => {

@@ -71,7 +71,8 @@ export default [
       },
       {
         path: 'storage.ceph.publicNetwork',
-        show: 'storage.ceph.$enable|===|true',
+        // show: 'storage.ceph.$enable|===|true',
+        show: '(data) => data.storage.ceph.$enable',
       },
       {
         path: 'storage.dynamicLPV.dynamicLPVPaths',
