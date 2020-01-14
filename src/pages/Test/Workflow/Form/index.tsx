@@ -9,10 +9,12 @@ import List from './List';
 import MultiSelect from './MultiSelect';
 import Select from './Select';
 import RadioButton from './RadioButton';
+import { InputNumber } from 'antd';
 
 const forms = {
   list: List,
   input: enhance(Input),
+  number: enhance(InputNumber),
   switch: enhance(Switch),
   'multi-select': enhance(MultiSelect),
   select: enhance(Select),
