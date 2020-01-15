@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import update from 'immutability-helper';
 import evt from './event';
 import _ from 'lodash';
+import judge from './condition';
+
 const yaml = require('js-yaml');
 
 export const json2yaml = (data: any) => {
@@ -33,32 +35,8 @@ export function isTrue(data: any, condition: any, defaultValue = false) {
   if (!condition) {
     return defaultValue;
   }
-  if (typeof condition === 'boolean') {
-    return condition;
-  }
-  if (typeof condition === 'string') {
-    condition = [condition];
-  }
 
-  return !condition.find((d: string) => !calcCondition(data, d));
-}
-
-export function calcCondition(data: any, condition: string) {
-  if (/^\(.*=> /.test(condition)) { //函数
-    try {
-      const fn = eval(condition);
-      return fn(data);
-    } catch (err) {
-      return false;
-    }
-  }
-
-  condition = condition.split('|').join('');
-  try {
-    return eval(`(data.${condition.trim()})`); // todo 条件判断
-  } catch (err) {
-    return false;
-  }
+  return judge(data, condition);
 }
 
 function trimHide(data: any, config: any) {
@@ -133,26 +111,30 @@ export const useEvent = (data: any, config: any, onChange: Function) => {
   }, [data]);
 
   useEffect(() => {
+    const paths: string[] = [];
     if (config.linkage) {
       config.linkage.forEach((d: any) => {
-        const key = d.condition.split('|')[0];
-        evt.on(key, handle);
+        const conditions = Array.isArray(d.condition) ? d.condition : [d.condition];
+        conditions.forEach((c: string) => {
+          const [ heads ] = c.split(':');
+          if (heads) {
+            heads.split(',').forEach((key: string) => {
+              paths.push(key.trim());
+            })
+          }
+        });
       });
     }
+    paths.forEach((path: any) => evt.on(path, handle));
     return () => {
-      if (config.linkage) {
-        config.linkage.forEach((d: any) => {
-          const key = d.condition.split('|')[0];
-          evt.off(key, handle);
-        });
-      }
+      paths.forEach((path: any) => evt.off(path, handle));
     };
   }, []);
 
   const handle = () => {
     setTimeout(() => {
       if (config.linkage) {
-        const res = config.linkage.find((d: any) => calcCondition(ref.current, d.condition));
+        const res = config.linkage.find((d: any) => judge(ref.current, d.condition));
         if (res) {
           onChange(config.path, res.value);
         }

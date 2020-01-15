@@ -23,7 +23,6 @@ export default [
                 path: '',
                 label: 'ip',
                 type: 'input',
-                disabled: 'machines[0].name|===|"foo"',
                 rules: 'pattern|/^(\\d{1}|[1-9]{1}\\d{1}|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d{1}|[1-9]{1}\\d{1}|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d{1}|[1-9]{1}\\d{1}|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d{1}|[1-9]{1}\\d{1}|1\\d\\d|2[0-4]\\d|25[0-5])$/|ip格式错误',
               },
             ],
@@ -60,16 +59,15 @@ export default [
           'enable',
           'disable',
         ],
-        show: 'storage.ceph.$enable|===|true',
+        show: 'storage.ceph.$enable: storage.ceph.$enable',
       },
       {
         path: 'storage.ceph.clusterNetwork',
-        show: 'storage.ceph.$enable',
+        show: 'storage.ceph.$enable: storage.ceph.$enable',
       },
       {
         path: 'storage.ceph.publicNetwork',
-        // show: 'storage.ceph.$enable|===|true',
-        show: '(data) => data.storage.ceph.$enable',
+        show: 'storage.ceph.$enable: function(){return this.storage.ceph.$enable}',
       },
       {
         path: 'storage.dynamicLPV.dynamicLPVPaths',
@@ -81,10 +79,10 @@ export default [
           'ceph',
           'dynamicLPV'
         ],
-        disabled: 'storage.ceph.$enable|===|false',
+        disabled: 'storage.ceph.$enable: !storage.ceph.$enable',
         linkage: [
           {
-            condition: 'storage.ceph.$enable|===|false',
+            condition: 'storage.ceph.$enable: !storage.ceph.$enable',
             value: 'dynamicLPV'
           }
         ]
@@ -178,22 +176,22 @@ export default [
         path: 'pharos.metrics.mongodbSize',
         type: 'number',
         placeholder: '100',
-        show: 'pharos.metrics.pharosMetrics|===|"enable"'
+        show: 'pharos.metrics.pharosMetrics: pharos.metrics.pharosMetrics === "enable"'
       },
       {
         path: 'pharos.metrics.mongodbReplicas',
         type: 'number',
         placeholder: '3',
-        show: 'pharos.metrics.pharosMetrics|===|"enable"'
+        show: 'pharos.metrics.pharosMetrics: pharos.metrics.pharosMetrics === "enable"'
       },
       {
         path: 'pharos.log.pharosLog',
         type: 'radio-button',
         options: ['enable', 'disable'],
-        disabled: 'pharos.metrics.pharosMetrics|===|"disable"',
+        disabled: 'pharos.metrics.pharosMetrics: pharos.metrics.pharosMetrics === "disable"',
         linkage: [
           {
-            condition: 'pharos.metrics.pharosMetrics|===|"disable"',
+            condition: 'pharos.metrics.pharosMetrics: pharos.metrics.pharosMetrics === "disable"',
             value: 'disable',
           },
         ],
@@ -202,37 +200,37 @@ export default [
         path: 'pharos.log.elasticsearchSize',
         type: 'number',
         placeholder: '100',
-        show: 'pharos.log.pharosLog|===|"enable"',
+        show: 'pharos.log.pharosLog: pharos.log.pharosLog === "enable"',
       },
       {
         path: 'pharos.log.elasticsearchMemory',
         type: 'number',
         placeholder: '8',
-        show: 'pharos.log.pharosLog|===|"enable"',
+        show: 'pharos.log.pharosLog: pharos.log.pharosLog === "enable"',
       },
       {
         path: 'pharos.log.elasticsearchReplicas',
         type: 'number',
         placeholder: '3',
-        show: 'pharos.log.pharosLog|===|"enable"',
+        show: 'pharos.log.pharosLog: pharos.log.pharosLog === "enable"',
       },
       {
         path: 'pharos.log.kafkaSize',
         type: 'number',
         placeholder: '100',
-        show: 'pharos.log.pharosLog|===|"enable"',
+        show: 'pharos.log.pharosLog: pharos.log.pharosLog === "enable"',
       },
       {
         path: 'pharos.log.kafkaMemory',
         type: 'number',
         placeholder: '8',
-        show: 'pharos.log.pharosLog|===|"enable"',
+        show: 'pharos.log.pharosLog: pharos.log.pharosLog === "enable"',
       },
       {
         path: 'pharos.log.kafkaReplicas',
         type: 'number',
         placeholder: '3',
-        show: 'pharos.log.pharosLog|===|"enable"',
+        show: 'pharos.log.pharosLog: pharos.log.pharosLog === "enable"',
       },
     ]
   },
@@ -248,10 +246,10 @@ export default [
         path: 'gpu.virtualGPU',
         type: 'radio-button',
         options: ['enable', 'disable'],
-        disabled: 'gpu.nvidiaDriverVersion|===|"384.183-1"',
+        disabled: 'gpu.nvidiaDriverVersion: gpu.nvidiaDriverVersion === "384.183-1"',
         linkage: [
           {
-            condition: 'gpu.nvidiaDriverVersion|===|"384.183-1"',
+            condition: 'gpu.nvidiaDriverVersion: gpu.nvidiaDriverVersion === "384.183-1"',
             value: 'disable',
           },
         ],
@@ -260,7 +258,7 @@ export default [
         path: 'gpu.vGPUS',
         type: 'number',
         placeholder: '4',
-        disabled: 'gpu.nvidiaDriverVersion|===|"384.183-1"',
+        disabled: 'gpu.nvidiaDriverVersion: gpu.nvidiaDriverVersion === "384.183-1"',
       },
     ],
   },
@@ -306,57 +304,27 @@ export default [
       },
       {
         path: 'diamond.authentication.mysql',
-        show: 'diamond.authentication.installIAM|===|"enable"',
+        show: 'diamond.authentication.installIAM: diamond.authentication.installIAM === "enable"',
       },
       {
         path: 'diamond.authentication.host',
-        show: 'diamond.authentication.installIAM|===|"enable"',
+        show: 'diamond.authentication.installIAM: diamond.authentication.installIAM === "enable"',
       },
       {
         path: 'diamond.authentication.port',
         type: 'number',
-        show: 'diamond.authentication.installIAM|===|"enable"',
+        show: 'diamond.authentication.installIAM: diamond.authentication.installIAM === "enable"',
       },
       {
         path: 'diamond.authentication.user',
-        show: 'diamond.authentication.installIAM|===|"enable"',
+        show: 'diamond.authentication.installIAM: diamond.authentication.installIAM === "enable"',
       },
       {
         path: 'diamond.authentication.password',
-        show: 'diamond.authentication.installIAM|===|"enable"',
+        show: 'diamond.authentication.installIAM: diamond.authentication.installIAM === "enable"',
       },
     ],
   },
-  // {
-  //   step: '安装前须知',
-  //   work: [
-  //     {
-  //       path: 'name',
-  //       rules: [
-  //         'required|名称不能为空',
-  //         'pattern|\\d{6}|格式不正确',
-  //       ],
-  //     },
-  //     {
-  //       path: 'foo.bar.value',
-  //       type: 'input',
-  //       placeholder: 'foo.bar.value',
-  //       label: '数值',
-  //       disabled: [
-  //         'name|===|"foo"'
-  //       ],
-  //       show: [
-  //         'name|!==|"bar"'
-  //       ],
-  //       linkage: [
-  //         {
-  //           condition: 'name|===|"xxx"',
-  //           value: 'linkage'
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // },
 ]
 
 export const demo = {
