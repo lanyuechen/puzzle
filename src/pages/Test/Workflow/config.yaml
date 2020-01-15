@@ -1,40 +1,35 @@
+# path 简写方式：path|type|label|placeholder
+# path 简写方式：path|type|label
+# path 简写方式：path|type
+# path 简写方式：path||label
+# path 简写方式：path|||placeholder
+# path 简写方式：|||placeholder
+
 - step: 安装须知
 - step: 机器列表
   work:
-  - path: machines
-    label: 机器列表
-    type: list
+  - path: machines|list|机器列表
     work:
-    - path: name
-      type: input
-    - path: manual.ipAddresses
-      type: list
+    - name
+    - path: manual.ipAddresses|list
       work:
-      - path: ''
-        label: ip
-        type: input
+      - path: '||ip'
         rules: pattern|/^(\d{1}|[1-9]{1}\d{1}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1}|[1-9]{1}\d{1}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1}|[1-9]{1}\d{1}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1}|[1-9]{1}\d{1}|1\d\d|2[0-4]\d|25[0-5])$/|ip格式错误
-    - path: manual.user
-      type: input
-    - path: tags
-      type: multi-select
+    - manual.user|input
+    - path: tags|multi-select
       options: 'k8s-master|k8s-worker: 这是k8s-worker|ceph'
 - step: Storage
   work:
-  - path: storage.ceph.$enable
-    type: switch
-  - path: storage.ceph
-    type: group
+  - storage.ceph.$enable|switch
+  - path: storage.ceph|group
     show: storage.ceph.$enable
     work:
-    - path: cephHAMode
-      type: radio-button
+    - path: cephHAMode|radio-button
       options: auto|enable|disable
-    - path: clusterNetwork
-    - path: publicNetwork
+    - clusterNetwork
+    - publicNetwork
   - path: storage.dynamicLPV.dynamicLPVPaths
-  - path: storage.defaultStorgeClass
-    type: radio-button
+  - path: storage.defaultStorgeClass|radio-button
     options: ceph|dynamicLPV
     disabled: 'storage.ceph.$enable: (a) => !a'
     linkage:
@@ -42,124 +37,83 @@
       value: dynamicLPV
 - step: OSS
   work:
-  - path: oss.receiverEmail
-    placeholder: diamond@sensetime.com
-  - path: oss.smtpAuthUsername
-    placeholder: alertmanager
-  - path: oss.smtpAuthPassword
-    placeholder: password
-  - path: oss.smtpFrom
-    placeholder: alertmanager@example.org
-  - path: oss.smtpSmarthost
-    placeholder: localhost:25
+  - oss.receiverEmail|||diamond@sensetime.com
+  - oss.smtpAuthUsername|||alertmanager
+  - oss.smtpAuthPassword|||password
+  - oss.smtpFrom|||alertmanager@example.org
+  - oss.smtpSmarthost|||localhost:25
 - step: kubernetes
   work:
-  - path: kubernetes.k8sHAMode
-    type: radio-button
+  - path: kubernetes.k8sHAMode|radio-button
     options: enable|disable
-  - path: kubernetes.k8sWorkerNums
-    type: number
-    placeholder: '0'
-  - path: kubernetes.etcdDataDir
-    placeholder: password
-  - path: kubernetes.kubeletRootDir
-    placeholder: "/var/lib/kubelet"
+  - kubernetes.k8sWorkerNums|number||0
+  - kubernetes.etcdDataDir|||password
+  - kubernetes.kubeletRootDir|||/var/lib/kubelet
 - step: docker
   work:
-  - path: docker.insecureRegistry
-    type: list
+  - path: docker.insecureRegistry|list
     work:
     - placeholder: insecureRegistry
-  - path: docker.graph
-    placeholder: "/var/lib/docker"
-  - path: docker.logOptMaxSize
-    placeholder: 100m
-  - path: docker.logOptMaxFile
-    type: number
-    placeholder: '5'
+  - docker.graph|||/var/lib/docker
+  - docker.logOptMaxSize|||100m
+  - docker.logOptMaxFile|number||5
 - step: pharos
   work:
-  - path: pharos.metrics.pharosMetrics
-    type: radio-button
+  - path: pharos.metrics.pharosMetrics|radio-button
     options: enable|disable
-  - path: pharos.metrics.mongodbSize
-    type: number
-    placeholder: '100'
+  - path: pharos.metrics.mongodbSize|number||100
     show: 'pharos.metrics.pharosMetrics: "enable"'
-  - path: pharos.metrics.mongodbReplicas
-    type: number
-    placeholder: '3'
+  - path: pharos.metrics.mongodbReplicas|number||3
     show: 'pharos.metrics.pharosMetrics: "enable"'
-  - path: pharos.log.pharosLog
-    type: radio-button
+  - path: pharos.log.pharosLog|radio-button
     options: enable|disable
     disabled: 'pharos.metrics.pharosMetrics: "disable"'
     linkage:
     - condition: 'pharos.metrics.pharosMetrics: "disable"'
       value: disable
-  - path: pharos.log
-    type: group
+  - path: pharos.log|group
     show: 'pharos.log.pharosLog: "enable"'
     sub:
       type: number
     work:
-    - path: elasticsearchSize
-      placeholder: '100'
-    - path: elasticsearchMemory
-      placeholder: '8'
-    - path: elasticsearchReplicas
-      placeholder: '3'
-    - path: kafkaSize
-      placeholder: '100'
-    - path: kafkaMemory
-      placeholder: '8'
-    - path: kafkaReplicas
-      placeholder: '3'
+    - elasticsearchSize|||100
+    - elasticsearchMemory|||8
+    - elasticsearchReplicas|||3
+    - kafkaSize|||100
+    - kafkaMemory|||8
+    - kafkaReplicas|||3
 - step: gpu
   work:
-  - path: gpu.nvidiaDriverVersion
-    type: radio-button
+  - path: gpu.nvidiaDriverVersion|radio-button
     options: '384.183-1|410.129-1'
-  - path: gpu.virtualGPU
-    type: radio-button
+  - path: gpu.virtualGPU|radio-button
     options: enable|disable
     disabled: 'gpu.nvidiaDriverVersion: "384.183-1"'
     linkage:
     - condition: 'gpu.nvidiaDriverVersion: "384.183-1"'
       value: disable
-  - path: gpu.vGPUS
-    type: number
-    placeholder: '4'
+  - path: gpu.vGPUS|number||4
     disabled: 'gpu.nvidiaDriverVersion: "384.183-1"'
 - step: diamond
   work:
-  - path: diamond.diamondDNS
-    type: radio-button
+  - path: diamond.diamondDNS|radio-button
     options: enable|disable
-  - path: diamond.upstreamDNS
-    placeholder: 8.8.8.8
-  - path: diamond.offlineDockerRegistry
-    type: radio-button
+  - diamond.upstreamDNS|||8.8.8.8
+  - path: diamond.offlineDockerRegistry|radio-button
     options: enable|disable
-  - path: diamond.enableServices
-    type: switch
-  - path: diamond.diamondNTP
-    type: radio-button
+  - diamond.enableServices|switch
+  - path: diamond.diamondNTP|radio-button
     options: enable|disable
-  - path: diamond.upstreamNtpServer
-    type: list
+  - path: diamond.upstreamNtpServer|list
     work:
     - placeholder: upstreamNtpServer
-  - path: diamond.authentication.installIAM
-    type: radio-button
+  - path: diamond.authentication.installIAM|radio-button
     options: enable|disable
-  - path: diamond.authentication
-    type: group
+  - path: diamond.authentication|group
     show: 'diamond.authentication.installIAM: "enable"'
     work:
-    - path: mysql
-    - path: host
-    - path: port
-      type: number
-    - path: user
-    - path: password
+    - mysql
+    - host
+    - port|number
+    - user
+    - password

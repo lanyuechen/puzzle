@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { isTrue, prepareOptions } from '../utils/common';
+import { isTrue } from '../utils/common';
+import { prepareConfig } from '../utils/prepare';
 import enhance from './enhance';
 
 import List from './List';
@@ -24,7 +25,9 @@ const forms = {
 };
 
 const FormItem = (props: any) => {
-  const { config, data, onChange } = props;
+  const { data, onChange } = props;
+
+  const config = prepareConfig(props.config);
 
   const show = isTrue(data, config.show, true);
   if (!show) {
@@ -34,15 +37,12 @@ const FormItem = (props: any) => {
   const C = forms[config.type] || forms.input;
   return (
     <C 
-      config={{
-        ...config,
-        options: prepareOptions(config.options),
-      }} 
+      config={config} 
       data={data} 
       onChange={onChange}
     >
       {config.work && config.work.map((d: any, i: number) => (
-        <FormItem key={i} config={d} data={data} onChange={onChange} />
+        <FormItem key={i} config={prepareConfig(d)} data={data} onChange={onChange} />
       ))}
     </C>
   );

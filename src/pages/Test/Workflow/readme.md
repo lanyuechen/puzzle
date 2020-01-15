@@ -24,7 +24,14 @@
 
 具体可以参考demo。
 
-`path|type|label|placeholder`
+- path 简写方式：`path|type|label|placeholder`
+- path 简写方式：`path|type|label`
+- path 简写方式：`path|type`
+- path 简写方式：`path||label`
+- path 简写方式：`path|||placeholder`
+- path 简写方式：`|||placeholder`
+
+除`path`外没有其他属性，则可以直接指定一个path字符串作为表单项的配置
 
 ### type
 
