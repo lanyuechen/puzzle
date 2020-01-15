@@ -41,8 +41,8 @@ export function isTrue(data: any, condition: any, defaultValue = false) {
 
 function trimHide(data: any, config: any) {
   config.forEach((d: any) => {
-    d.work &&
-      d.work.forEach((w: any) => {
+    d.items &&
+      d.items.forEach((w: any) => {
         if (!isTrue(data, w.show, true)) {
           data = updateByPath(data, w.path, undefined);
         }

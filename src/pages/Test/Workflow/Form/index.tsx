@@ -41,7 +41,7 @@ const FormItem = (props: any) => {
       data={data} 
       onChange={onChange}
     >
-      {config.work && config.work.map((d: any, i: number) => (
+      {config.items && config.items.map((d: any, i: number) => (
         <FormItem key={i} config={prepareConfig(d)} data={data} onChange={onChange} />
       ))}
     </C>

@@ -19,7 +19,7 @@ const Workflow = (props: any) => {
     ref.current = data;
   }, [data]);
 
-  const work = config[current].work || [];
+  const items = config[current].items || [];
 
   const handleChange = (path: string, value: any) => {
     // console.log('[workflow onChange]', ref.current, path, value);
@@ -37,7 +37,7 @@ const Workflow = (props: any) => {
       </Layout.Sider>
       <Layout.Content style={{padding: 16, height: '100vh', overflow: 'auto'}}>
         <Form layout="vertical">
-          {work.map((d: any, i: number) => (
+          {items.map((d: any, i: number) => (
             <FormItem key={i} config={d} data={data} onChange={handleChange} />
           ))}
         </Form>

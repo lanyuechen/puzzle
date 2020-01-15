@@ -12,7 +12,7 @@
 | [show](#show) | [condition](#condition) | 表单项显示条件 | true | - |
 | [linkage](#linkage) | array | 表单项关联设置 | - | - |
 | [rules](#rules) | valid rules | 表单项验证规则设置 | - | - |
-| work | array | 表单定义数组，当type为`容器组件`时有效，表示子表单 | - | - |
+| items | array | 表单定义数组，当type为`容器组件`时有效，表示子表单 | - | - |
 
 ### path
 

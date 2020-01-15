@@ -1,29 +1,22 @@
-# path 简写方式：path|type|label|placeholder
-# path 简写方式：path|type|label
-# path 简写方式：path|type
-# path 简写方式：path||label
-# path 简写方式：path|||placeholder
-# path 简写方式：|||placeholder
-
 - step: 安装须知
 - step: 机器列表
-  work:
+  items:
   - path: machines|list|机器列表
-    work:
+    items:
     - name
     - path: manual.ipAddresses|list
-      work:
+      items:
       - path: '||ip'
         rules: pattern|/^(\d{1}|[1-9]{1}\d{1}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1}|[1-9]{1}\d{1}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1}|[1-9]{1}\d{1}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1}|[1-9]{1}\d{1}|1\d\d|2[0-4]\d|25[0-5])$/|ip格式错误
     - manual.user|input
     - path: tags|multi-select
       options: 'k8s-master|k8s-worker: 这是k8s-worker|ceph'
 - step: Storage
-  work:
+  items:
   - storage.ceph.$enable|switch
   - path: storage.ceph|group
     show: storage.ceph.$enable
-    work:
+    items:
     - path: cephHAMode|radio-button
       options: auto|enable|disable
     - clusterNetwork
@@ -36,35 +29,36 @@
     - condition: 'storage.ceph.$enable: (a) => !a'
       value: dynamicLPV
 - step: OSS
-  work:
+  items:
   - oss.receiverEmail|||diamond@sensetime.com
   - oss.smtpAuthUsername|||alertmanager
   - oss.smtpAuthPassword|||password
   - oss.smtpFrom|||alertmanager@example.org
   - oss.smtpSmarthost|||localhost:25
 - step: kubernetes
-  work:
+  items:
   - path: kubernetes.k8sHAMode|radio-button
     options: enable|disable
   - kubernetes.k8sWorkerNums|number||0
   - kubernetes.etcdDataDir|||password
   - kubernetes.kubeletRootDir|||/var/lib/kubelet
 - step: docker
-  work:
+  items:
   - path: docker.insecureRegistry|list
-    work:
+    items:
     - placeholder: insecureRegistry
   - docker.graph|||/var/lib/docker
   - docker.logOptMaxSize|||100m
   - docker.logOptMaxFile|number||5
 - step: pharos
-  work:
+  items:
   - path: pharos.metrics.pharosMetrics|radio-button
     options: enable|disable
-  - path: pharos.metrics.mongodbSize|number||100
+  - path: pharos.metrics|group
     show: 'pharos.metrics.pharosMetrics: "enable"'
-  - path: pharos.metrics.mongodbReplicas|number||3
-    show: 'pharos.metrics.pharosMetrics: "enable"'
+    items:
+    - mongodbSize|number||100
+    - mongodbReplicas|number||3
   - path: pharos.log.pharosLog|radio-button
     options: enable|disable
     disabled: 'pharos.metrics.pharosMetrics: "disable"'
@@ -75,7 +69,7 @@
     show: 'pharos.log.pharosLog: "enable"'
     sub:
       type: number
-    work:
+    items:
     - elasticsearchSize|||100
     - elasticsearchMemory|||8
     - elasticsearchReplicas|||3
@@ -83,7 +77,7 @@
     - kafkaMemory|||8
     - kafkaReplicas|||3
 - step: gpu
-  work:
+  items:
   - path: gpu.nvidiaDriverVersion|radio-button
     options: '384.183-1|410.129-1'
   - path: gpu.virtualGPU|radio-button
@@ -95,7 +89,7 @@
   - path: gpu.vGPUS|number||4
     disabled: 'gpu.nvidiaDriverVersion: "384.183-1"'
 - step: diamond
-  work:
+  items:
   - path: diamond.diamondDNS|radio-button
     options: enable|disable
   - diamond.upstreamDNS|||8.8.8.8
@@ -105,13 +99,13 @@
   - path: diamond.diamondNTP|radio-button
     options: enable|disable
   - path: diamond.upstreamNtpServer|list
-    work:
+    items:
     - placeholder: upstreamNtpServer
   - path: diamond.authentication.installIAM|radio-button
     options: enable|disable
   - path: diamond.authentication|group
     show: 'diamond.authentication.installIAM: "enable"'
-    work:
+    items:
     - mysql
     - host
     - port|number
