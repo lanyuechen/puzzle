@@ -3,9 +3,10 @@ import React from 'react';
 import { isTrue } from '../utils/common';
 import enhance from './enhance';
 
+import List from './List';
+import Group from './Group';
 import Input from './Input';
 import Switch from './Switch';
-import List from './List';
 import MultiSelect from './MultiSelect';
 import Select from './Select';
 import RadioButton from './RadioButton';
@@ -13,6 +14,7 @@ import { InputNumber } from 'antd';
 
 const forms = {
   list: List,
+  group: Group,
   input: enhance(Input),
   number: enhance(InputNumber),
   switch: enhance(Switch),

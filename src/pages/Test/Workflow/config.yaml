@@ -27,17 +27,18 @@
   work:
   - path: storage.ceph.$enable
     type: switch
-  - path: storage.ceph.cephHAMode
-    type: radio-button
-    options:
-    - auto
-    - enable
-    - disable
+  - path: storage.ceph
+    type: group
     show: storage.ceph.$enable
-  - path: storage.ceph.clusterNetwork
-    show: storage.ceph.$enable
-  - path: storage.ceph.publicNetwork
-    show: storage.ceph.$enable
+    work:
+    - path: cephHAMode
+      type: radio-button
+      options:
+      - auto
+      - enable
+      - disable
+    - path: clusterNetwork
+    - path: publicNetwork
   - path: storage.dynamicLPV.dynamicLPVPaths
   - path: storage.defaultStorgeClass
     type: radio-button
@@ -111,30 +112,24 @@
     linkage:
     - condition: 'pharos.metrics.pharosMetrics: "disable"'
       value: disable
-  - path: pharos.log.elasticsearchSize
-    type: number
-    placeholder: '100'
+  - path: pharos.log
+    type: group
     show: 'pharos.log.pharosLog: "enable"'
-  - path: pharos.log.elasticsearchMemory
-    type: number
-    placeholder: '8'
-    show: 'pharos.log.pharosLog: "enable"'
-  - path: pharos.log.elasticsearchReplicas
-    type: number
-    placeholder: '3'
-    show: 'pharos.log.pharosLog: "enable"'
-  - path: pharos.log.kafkaSize
-    type: number
-    placeholder: '100'
-    show: 'pharos.log.pharosLog: "enable"'
-  - path: pharos.log.kafkaMemory
-    type: number
-    placeholder: '8'
-    show: 'pharos.log.pharosLog: "enable"'
-  - path: pharos.log.kafkaReplicas
-    type: number
-    placeholder: '3'
-    show: 'pharos.log.pharosLog: "enable"'
+    sub:
+      type: number
+    work:
+    - path: elasticsearchSize
+      placeholder: '100'
+    - path: elasticsearchMemory
+      placeholder: '8'
+    - path: elasticsearchReplicas
+      placeholder: '3'
+    - path: kafkaSize
+      placeholder: '100'
+    - path: kafkaMemory
+      placeholder: '8'
+    - path: kafkaReplicas
+      placeholder: '3'
 - step: gpu
   work:
   - path: gpu.nvidiaDriverVersion
@@ -185,14 +180,13 @@
     options:
     - enable
     - disable
-  - path: diamond.authentication.mysql
+  - path: diamond.authentication
+    type: group
     show: 'diamond.authentication.installIAM: "enable"'
-  - path: diamond.authentication.host
-    show: 'diamond.authentication.installIAM: "enable"'
-  - path: diamond.authentication.port
-    type: number
-    show: 'diamond.authentication.installIAM: "enable"'
-  - path: diamond.authentication.user
-    show: 'diamond.authentication.installIAM: "enable"'
-  - path: diamond.authentication.password
-    show: 'diamond.authentication.installIAM: "enable"'
+    work:
+    - path: mysql
+    - path: host
+    - path: port
+      type: number
+    - path: user
+    - path: password
