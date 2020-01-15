@@ -22,7 +22,7 @@ const Workflow = (props: any) => {
   const work = config[current].work || [];
 
   const handleChange = (path: string, value: any) => {
-    console.log('[workflow onChange]', ref.current, path, value);
+    // console.log('[workflow onChange]', ref.current, path, value);
     setData(updateByPath(ref.current, path, value));
   };
 

@@ -2,13 +2,14 @@ import _ from 'lodash';
 
 /**
  * condition
- * path[, path, ...]: condition
- * foo.bar: foo.bar === "bar"
- * foo.bar: foo.bar > 10 && foo.bar < 100 
- * foo.bar, foo.tar: foo.bar > 10 && foo.tar === 10
- * foo.bar: function(){return this.enable}
- * :data.foo.bar === "bar"
- * true/false
+ * path[, path, ...]: (path[, path, ...]) => expression
+ * foo.bar: (a) => a === 1                 // 等价于`foo.bar === 1`
+ * foo.bar, foo.tar: (a, b) => a + b > 10  // 等价于`foo.bar + foo.tar > 10`
+ * 简写模式：
+ * foo.bar: 1  // 等价于`foo.bar: (a) => a === 1`
+ * foo.bar     // 等价于`foo.bar: true`
+ * 特殊情况：
+ * :() => expression  // 无依赖项（冒号不能省略）
  */
 
 export default (data: any, condition: any) => {
@@ -26,24 +27,16 @@ function calc(data: any, condition: string) {
   const [ paths, ...others ] = condition.split(':');
   condition = others.join(':').trim();  // 防止条件中出现冒号
 
-  if (/^function/.test(condition)) { //函数
-    try {
-      const fn = eval(`const fn = ${condition}`);
-      return fn.call(data);
-    } catch (err) {
-      return false;
-    }
-  }
-
-  if (paths) {
-    paths.split(',').forEach((path: any) => {
-      path = path.trim();
-      condition = condition.replace(new RegExp(path.replace(/\./g, '\\.').replace(/\$/g, '\\$'), 'g'), 'data.$&');
-    });
-  }
-
   try {
-    return eval(condition); // todo 条件判断
+    const fn = eval(condition);
+    const params = paths ? paths.split(',').map((path: string) => _.get(data, path.trim())) : [];
+    if (typeof fn === 'function') {
+      return fn(...params);
+    }
+    if (fn === undefined) {
+      return params[0];
+    }
+    return params[0] === fn;
   } catch (err) {
     return false;
   }

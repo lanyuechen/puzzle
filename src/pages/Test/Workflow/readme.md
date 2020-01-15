@@ -91,14 +91,18 @@ rules = 'pattern|/^\\d{6}/|该字段格式不正确';
 
 判定条件分为几种情况:
 
-1. 可以单独指定条件或者以数组的方式，如果是数组方式，数组中所有条件为`And`的关系
+可以单独指定条件或者以数组的方式，如果是数组方式，数组中所有条件为`OR`的关系
 
-```js
-disabled = 'foo.bar|===|"bar"';
-show = [
-  'foo.bar|>|10',
-  'foo.bar|<|100',
-]
-```
+格式： `path[, path, ...]: (path[, path, ...]) => expression`
 
-format string \| func string
+冒号前的`path`表示依赖的字段，当对应字段的值变化时，会触发该表单项的变化（linkage），冒号后面为js函数，其参数顺序与依赖顺序一致。
+
+* foo.bar: (a) => a === 1                 // 等价于`foo.bar === 1`
+* foo.bar, foo.tar: (a, b) => a + b > 10  // 等价于`foo.bar + foo.tar > 10`
+
+简写模式：
+* foo.bar: 1  // 等价于`foo.bar: (a) => a === 1`
+* foo.bar     // 等价于`foo.bar: true`
+
+特殊情况：
+* :() => expression  // 无依赖项（冒号不能省略）
