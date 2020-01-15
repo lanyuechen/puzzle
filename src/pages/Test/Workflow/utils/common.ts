@@ -25,6 +25,21 @@ export const getLabel = (config: any) => {
   return isNaN(label) ? label : '';
 };
 
+export const prepareOptions = (options: any) => {
+  if (!options) {
+    return [];
+  }
+  if (typeof(options) === 'string') {
+    options = options.split('|');
+  }
+  return options.map((option: string) => {
+    let [ key, ...value ]: any = option.split(':');
+    key = key.trim();
+    value = value.join(':').trim();
+    return [key, value || key];
+  });
+}
+
 export function updateByPath(data: any, path: string, value: any) {
   _.set(data, path, _.get(data, path)); // 防止undefined
   const spec = path.split('.').reduceRight((p: any, n: string) => ({ [n]: p }), { $set: value });

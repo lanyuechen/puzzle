@@ -9,10 +9,9 @@ export default (props: any) => {
       {...otherProps}
       onChange={(e: any) => onChange(e.target.value)}
     >
-      {options && options.map((option: any) => {
-        const o = option.split('|');
-        return <Radio.Button key={o[0]} value={o[0]}>{o[1] || o[0]}</Radio.Button>;  
-      })}
+      {options.map((o: any) => (
+        <Radio.Button key={o[0]} value={o[0]}>{o[1]}</Radio.Button>
+      ))}
     </Radio.Group>
   )
 }

@@ -5,6 +5,7 @@
 | [path](#path) | string | 属性路径 | - | - |
 | [type](#type) | string | 表单项类型 | input | - |
 | [options](#options) | array | 当type为`select`、`radio`等类型时表单的选择项 | - | - |
+| sub | object | 当type为`group`时，表示传递给子组件的属性，用于简化配置 | - | - |
 | label | string | 表单项标题，如果该属性不存在，则使用`path`作为标题 | - | - |
 | placeholder | string | 表单项placeholder | - | - |
 | [disabled](#disabled) | [condition](#condition) | 表单项禁用条件 | false | - |
@@ -22,6 +23,8 @@
 - `path`属性可以为空，这种情况一般只用在`list`组件下，将子组件的值直接赋予数组(而不是数组元素的某一属性)，这种用法可以使用多选、标签等方式取代。
 
 具体可以参考demo。
+
+`path|type|label|placeholder`
 
 ### type
 
@@ -51,8 +54,9 @@
 ### options
 
 ```js
+options = 'foo: 选项1 | bar: 选项2';
 options = ['foo', 'bar'];
-options = ['foo|选项1', 'bar|选项2'];
+options = ['foo: 选项1', 'bar: 选项2'];
 ```
 
 ### disabled

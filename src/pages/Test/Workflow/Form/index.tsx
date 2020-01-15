@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { isTrue } from '../utils/common';
+import { isTrue, prepareOptions } from '../utils/common';
 import enhance from './enhance';
 
 import List from './List';
@@ -33,7 +33,14 @@ const FormItem = (props: any) => {
 
   const C = forms[config.type] || forms.input;
   return (
-    <C config={config} data={data} onChange={onChange}>
+    <C 
+      config={{
+        ...config,
+        options: prepareOptions(config.options),
+      }} 
+      data={data} 
+      onChange={onChange}
+    >
       {config.work && config.work.map((d: any, i: number) => (
         <FormItem key={i} config={d} data={data} onChange={onChange} />
       ))}
