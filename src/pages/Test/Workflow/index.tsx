@@ -12,7 +12,7 @@ const Workflow = (props: any) => {
   const { config } = props;
 
   const [current, setCurrent] = useState(0);
-  const [data, setData] = useState(props.data);
+  const [data, setData] = useState(props.data || {});
   const ref = useRef(data);
 
   useEffect(() => {

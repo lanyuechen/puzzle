@@ -13,7 +13,7 @@ export const json2yaml = (data: any) => {
 };
 
 export const yaml2json = (data: string) => {
-  return JSON.parse(yaml.safeLoad(data));
+  return yaml.safeLoad(data);
 };
 
 export const getLabel = (config: any) => {
